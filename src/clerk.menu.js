@@ -11,9 +11,22 @@ function ClerkMenuDirectiveFactory($rootScope, topicRegistry, config) {
             var putNamespaceOnScope = function () {
                 $scope.namespace = config.namespace;
             };
-            topicRegistry.subscribe('config.initialized', putNamespaceOnScope);
+
+            var putLocalePrefixOnScope = function (locale) {
+                $scope.localePrefix = locale + '/';
+            };
+
+            function subscribeI18nLocale () {
+                topicRegistry.subscribe('i18n.locale', putLocalePrefixOnScope);
+            }
+
+            topicRegistry.subscribe('config.initialized', function () {
+                putNamespaceOnScope();
+                if(config.supportedLanguages) subscribeI18nLocale();
+            });
+
             $scope.$on('$destroy', function () {
-                topicRegistry.unsubscribe('config.initialized', putNamespaceOnScope);
+                topicRegistry.unsubscribe('i18n.locale', putLocalePrefixOnScope);
             });
         }
     };
