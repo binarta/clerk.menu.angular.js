@@ -1,0 +1,59 @@
+<div checkpoint-permission-for="i18n.message.add" ng-if="permitted">
+    <div id="binarta-clerk-menu-wrapper">
+        <div id="binarta-clerk-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <ul>
+                            <li class="toggle-edit-mode pull-left">
+                                <toggle-edit-mode></toggle-edit-mode>
+                            </li>
+                            <li class="support pull-right">
+                                <a href="mailto:support@thinkerit.be?subject=Support {{namespace}}">
+                                    <i class="fa fa-question"></i>
+                                </a>
+                            </li>
+                            <li class="pull-right dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                                    <i class="fa fa-wrench"></i> clerk
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="change-my-password">
+                                        <a href="#!/{{localePrefix}}changemypassword">
+                                            <i class="fa fa-user fa-fw"></i> change password
+                                        </a>
+                                    </li>
+                                    <li class="messages">
+                                        <a href="#!/{{localePrefix}}messages">
+                                            <i class="fa fa-comments fa-fw"></i> edit messages
+                                        </a>
+                                    </li>
+                                    <li class="orders" checkpoint-permission-for="purchase.order.find.all" ng-show="permitted">
+                                        <a href="#!/{{localePrefix}}admin/orders">
+                                            <i class="fa fa-barcode fa-fw"></i> list orders
+                                        </a>
+                                    </li>
+                                    <li class="conditions">
+                                        <a href="#!/{{localePrefix}}conditions">
+                                            <i class="fa fa-eye fa-fw"></i> conditions
+                                        </a>
+                                    </li>
+                                    <li class="logout" ng-controller="SignoutController">
+                                        <a href="" ng-click="submit()">
+                                            <i class="fa fa-sign-out fa-fw"></i> logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="pull-right seo hidden">
+                                <a href="" ng-click="openSEOModal()">
+                                    <i class="fa fa-globe"></i> SEO
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

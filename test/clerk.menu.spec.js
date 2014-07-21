@@ -2,7 +2,7 @@ describe('clerk menu module', function () {
     beforeEach(module('clerk.menu'));
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config;
+        var scope, directive, registry, config, route;
 
         beforeEach(inject(function ($rootScope, topicRegistry, topicRegistryMock) {
             scope = $rootScope.$new();
@@ -10,7 +10,11 @@ describe('clerk menu module', function () {
             config = {
                 namespace: 'namespace'
             };
-            directive = ClerkMenuDirectiveFactory($rootScope, topicRegistry, config);
+            route = {routes: []};
+            route.routes['/template/clerk-menu'] = {
+                templateUrl: 'clerk-menu.html'
+            };
+            directive = ClerkMenuDirectiveFactory(topicRegistry, config, route);
         }));
 
         it('restricted to element', function () {
@@ -18,14 +22,8 @@ describe('clerk menu module', function () {
         });
 
         it('template url', function () {
-            expect(directive.templateUrl()).toEqual('app/partials/clerk-menu.html');
+            expect(directive.templateUrl).toEqual('clerk-menu.html');
         });
-
-        it('template url can be overridden by rootScope', inject(function ($rootScope) {
-            $rootScope.clerkMenuTemplateUrl = 'overridden-template.html';
-
-            expect(directive.templateUrl()).toEqual('overridden-template.html');
-        }));
 
         describe('on link', function () {
             beforeEach(function () {

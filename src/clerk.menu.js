@@ -1,12 +1,10 @@
 angular.module('clerk.menu', ['notifications', 'config'])
-    .directive('clerkMenu', ['$rootScope', 'topicRegistry', 'config', ClerkMenuDirectiveFactory]);
+    .directive('clerkMenu', ['topicRegistry', 'config', '$route', ClerkMenuDirectiveFactory]);
 
-function ClerkMenuDirectiveFactory($rootScope, topicRegistry, config) {
+function ClerkMenuDirectiveFactory(topicRegistry, config, $route) {
     return {
         restrict: 'E',
-        templateUrl: function () {
-            return $rootScope.clerkMenuTemplateUrl ? $rootScope.clerkMenuTemplateUrl : 'app/partials/clerk-menu.html'
-        },
+        templateUrl: $route.routes['/template/clerk-menu'].templateUrl,
         link: function ($scope) {
             var putNamespaceOnScope = function () {
                 $scope.namespace = config.namespace;
