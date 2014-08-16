@@ -1,5 +1,5 @@
-<div checkpoint-permission-for="i18n.message.add">
-    <div id="binarta-clerk-menu-wrapper" ng-if="permitted">
+<div checkpoint-is-authenticated>
+    <div id="binarta-clerk-menu-wrapper" style="display:none;" ng-if="authenticated">
         <div id="binarta-clerk-menu">
             <div class="container">
                 <div class="row">
@@ -46,9 +46,10 @@
                                 </ul>
                             </li>
                             <li class="pull-right seo hidden">
-                                <a href="" ng-click="openSEOModal()">
+                                <button ng-click="openSEOModal()"
+                                        checkpoint-permission-for="edit.mode" ng-disabled="!permitted">
                                     <i class="fa fa-globe"></i> SEO
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </div>

@@ -1,31 +1,32 @@
 angular.module('clerk.menu', ['notifications', 'config'])
-    .directive('clerkMenu', ['topicRegistry', 'config', '$route', ClerkMenuDirectiveFactory]);
+    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', 'activeUserHasPermission', 'resourceLoader', ClerkMenuDirectiveFactory]);
 
-function ClerkMenuDirectiveFactory(topicRegistry, config, $route) {
+function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHasPermission, resourceLoader) {
+    var componentsDir = config.componentsDir || 'bower_components';
+    var styling = config.styling ? config.styling + '/' : '';
+
     return {
         restrict: 'E',
-        templateUrl: $route.routes['/template/clerk-menu'].templateUrl,
-        link: function ($scope) {
-            var putNamespaceOnScope = function () {
-                $scope.namespace = config.namespace;
-            };
+        templateUrl: componentsDir + '/binarta.clerk.menu.angular/template/' + styling + 'clerk-menu.html',
+        link: function (scope) {
+            scope.namespace = config.namespace;
+            if(config.supportedLanguages) putLocalePrefixOnScope();
 
-            var putLocalePrefixOnScope = function (locale) {
-                $scope.localePrefix = locale + '/';
-            };
-
-            function subscribeI18nLocale () {
-                topicRegistry.subscribe('i18n.locale', putLocalePrefixOnScope);
+            function putLocalePrefixOnScope() {
+                ngRegisterTopicHandler(scope, 'i18n.locale', function (locale) {
+                    scope.localePrefix = locale + '/';
+                });
             }
 
-            topicRegistry.subscribe('config.initialized', function () {
-                putNamespaceOnScope();
-                if(config.supportedLanguages) subscribeI18nLocale();
-            });
-
-            $scope.$on('$destroy', function () {
-                topicRegistry.unsubscribe('i18n.locale', putLocalePrefixOnScope);
-            });
+            activeUserHasPermission({
+                yes: function () {
+                    resourceLoader.add(componentsDir + '/binarta.clerk.menu.angular/css/clerk-menu.css');
+                },
+                no: function () {
+                    resourceLoader.remove(componentsDir + '/binarta.clerk.menu.angular/css/clerk-menu.css');
+                },
+                scope: scope
+            }, 'edit.mode');
         }
     };
 }

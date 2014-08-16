@@ -1,78 +1,127 @@
 describe('clerk menu module', function () {
     beforeEach(module('clerk.menu'));
+    beforeEach(module('notifications'));
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, route;
+        var scope, directive, registry, config, topics, response, usecase, permission, resourceLoader, resource;
 
-        beforeEach(inject(function ($rootScope, topicRegistry, topicRegistryMock) {
+        beforeEach(inject(function ($rootScope, ngRegisterTopicHandler, topicRegistryMock) {
             scope = $rootScope.$new();
             registry = topicRegistryMock;
             config = {
                 namespace: 'namespace'
             };
-            route = {routes: []};
-            route.routes['/template/clerk-menu'] = {
-                templateUrl: 'clerk-menu.html'
+            topics = ngRegisterTopicHandler;
+            usecase = function (it, p) {
+                response = it;
+                permission = p;
             };
-            directive = ClerkMenuDirectiveFactory(topicRegistry, config, route);
+            resource = '';
+            resourceLoader = {
+                add: function(r) {
+                    resource = r;
+                },
+                remove: function(r) {
+                    resource = r;
+                }
+            };
+            directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
         }));
 
         it('restricted to element', function () {
             expect(directive.restrict).toEqual('E');
         });
 
-        it('template url', function () {
-            expect(directive.templateUrl).toEqual('clerk-menu.html');
+        it('default template url', function () {
+            expect(directive.templateUrl).toEqual('bower_components/binarta.clerk.menu.angular/template/clerk-menu.html');
+        });
+
+        it('template url with specific styling', function () {
+            config.styling = 'bootstrap3';
+            directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
+
+            expect(directive.templateUrl).toEqual('bower_components/binarta.clerk.menu.angular/template/bootstrap3/clerk-menu.html');
+        });
+
+        it('template url with specific components directory', function () {
+            config.componentsDir = 'components';
+            directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
+
+            expect(directive.templateUrl).toEqual('components/binarta.clerk.menu.angular/template/clerk-menu.html');
         });
 
         describe('on link', function () {
+            var cssResource = '/binarta.clerk.menu.angular/css/clerk-menu.css';
+
             beforeEach(function () {
                 directive.link(scope);
             });
 
-            describe('when config is initialized', function () {
-                it('namespace is available on scope', function () {
-                    registry['config.initialized']();
+            it('namespace is available on scope', function () {
+                expect(scope.namespace).toEqual('namespace');
+            });
 
-                    expect(scope.namespace).toEqual('namespace');
+            it('if localization is not supported then there is no locale prefix', function () {
+                expect(scope.localePrefix).toBeUndefined();
+            });
+
+            describe('if localization is supported', function () {
+                beforeEach(function () {
+                    config.supportedLanguages = 'locale';
+                    directive.link(scope);
                 });
 
-                describe('if localization is supported', function () {
+                describe('when i18n locale notification received', function () {
                     beforeEach(function () {
-                        config.supportedLanguages = 'locale';
-                        registry['config.initialized']();
+                        registry['i18n.locale']('locale');
                     });
 
-                    describe('when i18n locale notification received', function () {
-                        beforeEach(function () {
-                            registry['i18n.locale']('locale');
-                        });
-
-                        it('put locale prefix on scope', function () {
-                            expect(scope.localePrefix).toEqual('locale/');
-                        });
-                    });
-
-                    describe('when scope is destroyed', function() {
-                        beforeEach(function () {
-                            scope.$destroy();
-                        });
-
-                        it('unsubscribe i18n.locale', function () {
-                            expect(registry['i18n.locale']).toBeUndefined();
-                        });
+                    it('put locale prefix on scope', function () {
+                        expect(scope.localePrefix).toEqual('locale/');
                     });
                 });
+            });
 
-                describe('if localization is not supported', function () {
-                    beforeEach(function () {
-                        registry['config.initialized']();
-                    });
+            it('triggers usecase', function () {
+                expect(response).toBeDefined();
+            });
 
-                    it('locale is empty', function () {
-                        expect(scope.localePrefix).toBeUndefined();
-                    });
-                });
+            it('user must have edit.mode permission', function () {
+                expect(permission).toEqual('edit.mode');
+            });
+
+            it('scope is given to usecase', function () {
+                expect(response.scope).toEqual(scope);
+            });
+
+            it('when authorized', function () {
+                response.yes();
+
+                expect(resource).toEqual('bower_components' + cssResource);
+            });
+
+            it('when authorized and different components dir', function () {
+                config.componentsDir = 'components';
+                directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
+                directive.link(scope);
+                response.yes();
+
+                expect(resource).toEqual('components' + cssResource);
+            });
+
+            it('when not authenticated', function () {
+                response.no();
+
+                expect(resource).toEqual('bower_components' + cssResource);
+            });
+
+            it('when not authorized and different components dir', function () {
+                config.componentsDir = 'components';
+                directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
+                directive.link(scope);
+                response.no();
+
+                expect(resource).toEqual('components' + cssResource);
             });
         });
     });
