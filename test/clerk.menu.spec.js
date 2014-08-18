@@ -1,9 +1,12 @@
 describe('clerk menu module', function () {
+    angular.module('angularx', []);
+
     beforeEach(module('clerk.menu'));
     beforeEach(module('notifications'));
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, topics, response, usecase, permission, resourceLoader, resource;
+        var scope, directive, registry, config, topics, response, usecase, permission, resourceLoader, resource,
+            templateSpy, templateArgs;
 
         beforeEach(inject(function ($rootScope, ngRegisterTopicHandler, topicRegistryMock) {
             scope = $rootScope.$new();
@@ -25,29 +28,20 @@ describe('clerk menu module', function () {
                     resource = r;
                 }
             };
-            directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
+            templateSpy = {
+                setTemplateUrl: function (args){
+                    templateArgs = args;
+                }
+            };
+            directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader, templateSpy);
         }));
 
         it('restricted to element', function () {
             expect(directive.restrict).toEqual('E');
         });
 
-        it('default template url', function () {
-            expect(directive.templateUrl).toEqual('bower_components/binarta.clerk.menu.angular/template/clerk-menu.html');
-        });
-
-        it('template url with specific styling', function () {
-            config.styling = 'bootstrap3';
-            directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
-
-            expect(directive.templateUrl).toEqual('bower_components/binarta.clerk.menu.angular/template/bootstrap3/clerk-menu.html');
-        });
-
-        it('template url with specific components directory', function () {
-            config.componentsDir = 'components';
-            directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
-
-            expect(directive.templateUrl).toEqual('components/binarta.clerk.menu.angular/template/clerk-menu.html');
+        it('template', function () {
+            expect(directive.template).toEqual('<div ng-include="templateUrl"></div>');
         });
 
         describe('on link', function () {
@@ -55,6 +49,15 @@ describe('clerk menu module', function () {
 
             beforeEach(function () {
                 directive.link(scope);
+            });
+
+            it('setTemplateUrl is called', function () {
+                expect(templateArgs).toEqual({
+                    scope: scope,
+                    module: 'clerk.menu',
+                    name: 'clerk-menu.html',
+                    permission: 'edit.mode'
+                });
             });
 
             it('namespace is available on scope', function () {
@@ -102,7 +105,7 @@ describe('clerk menu module', function () {
 
             it('when authorized and different components dir', function () {
                 config.componentsDir = 'components';
-                directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
+                directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader, templateSpy);
                 directive.link(scope);
                 response.yes();
 
@@ -117,7 +120,7 @@ describe('clerk menu module', function () {
 
             it('when not authorized and different components dir', function () {
                 config.componentsDir = 'components';
-                directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader);
+                directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader, templateSpy);
                 directive.link(scope);
                 response.no();
 

@@ -1,14 +1,18 @@
-angular.module('clerk.menu', ['notifications', 'config'])
-    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', 'activeUserHasPermission', 'resourceLoader', ClerkMenuDirectiveFactory]);
+angular.module('clerk.menu', ['notifications', 'config', 'angularx'])
+    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', 'activeUserHasPermission', 'resourceLoader', 'binTemplate', ClerkMenuDirectiveFactory]);
 
-function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHasPermission, resourceLoader) {
-    var componentsDir = config.componentsDir || 'bower_components';
-    var styling = config.styling ? config.styling + '/' : '';
-
+function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHasPermission, resourceLoader, binTemplate) {
     return {
         restrict: 'E',
-        templateUrl: componentsDir + '/binarta.clerk.menu.angular/template/' + styling + 'clerk-menu.html',
+        template: '<div ng-include="templateUrl"></div>',
         link: function (scope) {
+            binTemplate.setTemplateUrl({
+                scope: scope,
+                module: 'clerk.menu',
+                name: 'clerk-menu.html',
+                permission: 'edit.mode'
+            });
+
             scope.namespace = config.namespace;
             if(config.supportedLanguages) putLocalePrefixOnScope();
 
@@ -17,6 +21,8 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHas
                     scope.localePrefix = locale + '/';
                 });
             }
+
+            var componentsDir = config.componentsDir || 'bower_components';
 
             activeUserHasPermission({
                 yes: function () {
