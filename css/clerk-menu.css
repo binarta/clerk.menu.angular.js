@@ -30,18 +30,10 @@
     border-left: 1px solid #222529;
 }
 
-#binarta-clerk-menu a {
-    height: 33px;
-    line-height: 33px;
-}
-
+#binarta-clerk-menu a,
 #binarta-clerk-menu button {
     height: 35px;
     line-height: 35px;
-}
-
-#binarta-clerk-menu a,
-#binarta-clerk-menu button {
     display: block;
     padding: 0 20px;
     font-size: 14px;

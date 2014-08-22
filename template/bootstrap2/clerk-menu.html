@@ -23,7 +23,7 @@
                                             <i class="fa fa-user fa-fw"></i> change password
                                         </a>
                                     </li>
-                                    <li class="messages">
+                                    <li class="messages" ng-if="settings.messages != false">
                                         <a href="#!/{{localePrefix}}messages">
                                             <i class="fa fa-comments fa-fw"></i> edit messages
                                         </a>
@@ -33,7 +33,7 @@
                                             <i class="fa fa-barcode fa-fw"></i> list orders
                                         </a>
                                     </li>
-                                    <li class="conditions">
+                                    <li class="conditions" ng-if="settings.conditions != false">
                                         <a href="#!/{{localePrefix}}conditions">
                                             <i class="fa fa-eye fa-fw"></i> conditions
                                         </a>

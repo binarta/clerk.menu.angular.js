@@ -5,13 +5,15 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHas
     return {
         restrict: 'E',
         template: '<div ng-include="templateUrl"></div>',
-        link: function (scope) {
+        link: function (scope, el, attrs) {
             binTemplate.setTemplateUrl({
                 scope: scope,
                 module: 'clerk.menu',
                 name: 'clerk-menu.html',
                 permission: 'edit.mode'
             });
+
+            if (attrs.settings) scope.settings = scope.$eval(attrs.settings);
 
             scope.namespace = config.namespace;
             if(config.supportedLanguages) putLocalePrefixOnScope();

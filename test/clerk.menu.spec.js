@@ -48,7 +48,7 @@ describe('clerk menu module', function () {
             var cssResource = '/binarta.clerk.menu.angular/css/clerk-menu.css';
 
             beforeEach(function () {
-                directive.link(scope);
+                directive.link(scope, null, {});
             });
 
             it('setTemplateUrl is called', function () {
@@ -71,7 +71,7 @@ describe('clerk menu module', function () {
             describe('if localization is supported', function () {
                 beforeEach(function () {
                     config.supportedLanguages = 'locale';
-                    directive.link(scope);
+                    directive.link(scope, null, {});
                 });
 
                 describe('when i18n locale notification received', function () {
@@ -106,7 +106,7 @@ describe('clerk menu module', function () {
             it('when authorized and different components dir', function () {
                 config.componentsDir = 'components';
                 directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader, templateSpy);
-                directive.link(scope);
+                directive.link(scope, null, {});
                 response.yes();
 
                 expect(resource).toEqual('components' + cssResource);
@@ -121,10 +121,22 @@ describe('clerk menu module', function () {
             it('when not authorized and different components dir', function () {
                 config.componentsDir = 'components';
                 directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader, templateSpy);
-                directive.link(scope);
+                directive.link(scope, null, {});
                 response.no();
 
                 expect(resource).toEqual('components' + cssResource);
+            });
+        });
+
+        describe('set template settings to scope', function () {
+            beforeEach(function () {
+                directive.link(scope, null, {
+                    settings: '{setting: true}'
+                });
+            });
+
+            it('should be on scope', function () {
+                expect(scope.settings).toEqual({setting: true});
             });
         });
     });
