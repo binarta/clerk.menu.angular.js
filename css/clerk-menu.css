@@ -50,6 +50,9 @@
     -o-transition:background .2s ease, border-color .2s ease;
     transition:background .2s ease, border-color .2s ease;
     -webkit-font-smoothing: inherit;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+     box-sizing: border-box;
 }
 
 #binarta-clerk-menu a:hover,
