@@ -36,6 +36,10 @@ describe('clerk menu module', function () {
             directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader, templateSpy);
         }));
 
+        it('creates a child scope', function () {
+            expect(directive.scope).toBeTruthy();
+        });
+
         it('restricted to element', function () {
             expect(directive.restrict).toEqual('E');
         });

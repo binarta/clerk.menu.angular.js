@@ -3,6 +3,7 @@ angular.module('clerk.menu', ['notifications', 'config', 'angularx'])
 
 function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHasPermission, resourceLoader, binTemplate) {
     return {
+        scope: true,
         restrict: 'E',
         template: '<div ng-include="templateUrl"></div>',
         link: function (scope, el, attrs) {
