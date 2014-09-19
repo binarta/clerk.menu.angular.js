@@ -38,6 +38,11 @@
                                             <i class="fa fa-eye fa-fw"></i> conditions
                                         </a>
                                     </li>
+                                    <li class="admin" ng-if="settings.admin">
+                                        <a href="#!/{{localePrefix}}admin">
+                                            <i class="fa fa-lock fa-fw"></i> admin
+                                        </a>
+                                    </li>
                                     <li class="logout" ng-controller="SignoutController">
                                         <a href="" ng-click="submit()">
                                             <i class="fa fa-sign-out fa-fw"></i> logout
