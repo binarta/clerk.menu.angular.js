@@ -1,7 +1,7 @@
 angular.module('clerk.menu', ['notifications', 'config', 'angularx'])
-    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', 'activeUserHasPermission', 'resourceLoader', 'binTemplate', ClerkMenuDirectiveFactory]);
+    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', 'activeUserHasPermission', 'resourceLoader', 'binTemplate', 'i18nRendererInstaller', '$location', 'account', ClerkMenuDirectiveFactory]);
 
-function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHasPermission, resourceLoader, binTemplate) {
+function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHasPermission, resourceLoader, binTemplate, i18nRendererInstaller, $location, account) {
     return {
         scope: true,
         restrict: 'E',
@@ -27,6 +27,31 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHas
 
             var componentsDir = config.componentsDir || 'bower_components';
 
+            i18nRendererInstaller({
+                open: function(args) {
+                    scope.submit = function (translation) {
+                        args.submit(translation);
+                        scope.init();
+                    };
+                    scope.cancel = function () {
+                        scope.init();
+                    };
+                    scope.translation = args.translation;
+                    scope.editor = args.editor || 'default';
+                }
+            });
+
+            scope.init = function () {
+                scope.translation = undefined;
+                scope.editor = undefined;
+            };
+
+            account.getMetadata().then(function(metadata) {
+                scope.user = metadata;
+            }, function() {
+                scope.user = {};
+            });
+
             activeUserHasPermission({
                 yes: function () {
                     resourceLoader.add(componentsDir + '/binarta.clerk.menu.angular/css/clerk-menu.css');
@@ -36,6 +61,10 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, activeUserHas
                 },
                 scope: scope
             }, 'edit.mode');
+
+            var host = $location.host();
+            var hostToCheck = 'binarta.com';
+            scope.published = host.indexOf(hostToCheck, host.length - hostToCheck.length) == -1;
         }
     };
 }

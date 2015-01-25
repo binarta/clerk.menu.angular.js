@@ -1,0 +1,417 @@
+@background-color: #d6dadb;
+@border-color: #c0c0c0;
+@shadow-color: #c2c3c2;
+@button-color: #00AFD0;
+@black: #222222;
+@white: #ffffff;
+
+@border-bottom-height: 4px;
+@total-height: 60px;
+
+#binarta-clerk-menu-top-fix {
+  height: @total-height;
+}
+
+#binarta-clerk-menu-wrapper {
+  display: block !important;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1035;
+}
+
+#binarta-clerk-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-size: 0;
+  min-width: 320px;
+  height: @total-height;
+  background-color: @background-color;
+  background-size: 14px 14px;
+  border-bottom: @border-bottom-height solid @border-color;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  box-sizing: border-box;
+
+  .btn-primary {
+    background: @button-color;
+    border-color: darken(@button-color, 5%);
+  }
+
+  .btn-default {
+    background: @background-color;
+    border-color: darken(@background-color, 10%);
+  }
+
+  .binarta-clerk-menu-left {
+    float: left;
+  }
+
+  .binarta-clerk-menu-brand-small {
+    display: block;
+  }
+  .binarta-clerk-menu-brand-normal {
+    display: none;
+  }
+
+  .visible-xs {
+    display: block;
+  }
+  .hidden-xs {
+    display: none;
+  }
+
+  .binarta-clerk-menu-buttons {
+    float: right;
+  }
+
+  .btn-clerk-menu {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    height: @total-height - @border-bottom-height;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.4;
+    text-decoration: none;
+    text-shadow: 0 1px 0 darken(@white, 10%);
+    color: @black;
+    outline: none;
+    background: none;
+    border: none;
+    transition: background .1s ease;
+    box-sizing: border-box;
+    border-radius: 0;
+
+    i {
+      font-size: 24px;
+      line-height: 24px;
+    }
+  }
+  .clerk-menu-item {
+    display: inline-block;
+  }
+
+  .open .btn-clerk-menu,
+  .btn-clerk-menu.active {
+    background-color: @button-color;
+    color: @white;
+    text-shadow: 0 1px 1px @black;
+    & i {
+      animation-duration: 1s;
+      animation-name: swing;
+    }
+  }
+  .open {
+    .dropdown-menu {
+      animation-name: fadeInDown;
+      top: @total-height;
+      display: block;
+      li {
+        a {
+          padding: 15px;
+          &:hover {
+            background: @button-color;
+            color: @white;
+          }
+        }
+      }
+    }
+  }
+  .dropdown-menu {
+    background: @background-color;
+    position: fixed;
+    display: none;
+    font-size: 14px;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    border-bottom: @border-bottom-height solid @border-color;
+    width: 100%;
+    border-radius: 0;
+    z-index: -1;
+    animation-duration: 0.1s;
+
+    &.i18n-menu {
+      .i18n-menu-editor {
+        padding: 10px;
+      }
+    }
+
+    form {
+      margin-bottom: 15px;
+    }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      background: @white;
+      border: none;
+      outline: none;
+      padding: 10px;
+      resize: none;
+      border-radius: 3px;
+      box-sizing: border-box;
+      box-shadow: inset 0 0 1px 3px lighten(@border-color, 20%);
+    }
+
+    .mce-tinymce {
+      border: 1px solid @border-color;
+    }
+
+    .input-group .form-control:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .input-group-addon {
+      padding: 10px;
+      border: none;
+      outline: none;
+      box-shadow: inset 0 0 1px 3px lighten(@border-color, 20%);
+      background: lighten(@border-color, 20%);
+    }
+
+    p {
+      padding: 10px 0 0 0;
+      margin: 0;
+      font-weight: 100;
+    }
+    img {
+      width: 60px;
+    }
+
+    .icons-list {
+      max-height: 400px;
+      overflow-y: scroll;
+      background: @white;
+      border-radius: 3px;
+      box-shadow: inset 0 0 1px 3px lighten(@border-color, 20%);
+      padding: 10px;
+      button {
+        background: none;
+        border: none;
+        font-size: 25px;
+        padding: 6px;
+        &:hover {
+          color: @button-color;
+        }
+      }
+    }
+
+    .clerk-menu-contact-thank-you-message {
+      position: absolute;
+      width: 100px;
+      right: 50px;
+      top: 36px;
+      color: darken(@button-color, 5%);
+    }
+
+    .dropdown-menu-buttons {
+      text-align: right;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  #binarta-clerk-menu {
+
+    .binarta-clerk-menu-brand {
+      img {
+        padding: 12px 12px 14px 12px;
+      }
+    }
+
+    .open {
+      .account-menu {
+        li {
+          border-bottom: 1px solid @border-color;
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+
+    .btn-clerk-menu {
+      padding: 10px 10px 22px 10px;
+
+      span {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 10px;
+      }
+    }
+
+    .btn-clerk-menu-edit,
+    .btn-clerk-menu-publish {
+      border: 2px solid @button-color;
+      span {
+        width: 100%;
+        background-color: @button-color;
+        color: @white;
+        text-shadow: 0 1px 1px @black;
+      }
+
+      &.active,
+      &:hover {
+        border: 2px solid @button-color;
+        span {
+          background-color: @button-color;
+        }
+      }
+    }
+
+    .btn-clerk-menu-publish {
+      padding-top: 3px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  @total-height: 40px;
+
+  #binarta-clerk-menu-top-fix {
+    height: @total-height;
+  }
+
+  #binarta-clerk-menu {
+    height: @total-height;
+
+    .binarta-clerk-menu-brand {
+      img {
+        padding: 3px 15px;
+      }
+    }
+
+    .binarta-clerk-menu-brand-small {
+      display: none;
+    }
+    .binarta-clerk-menu-brand-normal {
+      display: block;
+    }
+
+    .visible-xs {
+      display: none;
+    }
+    .hidden-xs {
+      display: block;
+    }
+
+    .clerk-menu-item {
+      position: relative;
+    }
+
+    .btn-clerk-menu {
+      height: @total-height - @border-bottom-height;
+
+      padding: 11px 12px 11px (12px + 26px);
+      font-size: 14px;
+      line-height: 14px;
+      font-weight: 100;
+
+      & > * {
+        vertical-align: middle;
+      }
+
+      i {
+        position: absolute;
+        left: 12px;
+        top: 0;
+        padding: 8px 0;
+        font-size: 20px;
+        line-height: 20px;
+        width: 26px;
+      }
+      span {
+        padding-left: 3px;
+      }
+      &:hover:enabled {
+        background-color: @button-color;
+        color: @white;
+        text-shadow: 0 1px 1px @black;
+      }
+    }
+
+    .btn-clerk-menu-edit,
+    .btn-clerk-menu-publish {
+      @push-height: 3px;
+
+      font-weight: bold;
+      position:relative;
+      text-decoration:none;
+      margin:0 auto;
+      border:solid 1px darken(@background-color, 15%);
+      background: @background-color;
+      text-align:center;
+      top: -@push-height;
+      transition: all 0.1s;
+      box-shadow: 0 @push-height 0 darken(@background-color, 15%);
+
+      &:hover {
+        box-shadow: 0 @push-height 0 darken(@button-color, 15%);
+      }
+      &.active {
+        box-shadow: inset 0 0 0 darken(@button-color, 10%);
+        top: 0;
+      }
+    }
+
+    .btn-clerk-menu-publish {
+      img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 2px 6px 4px 10px;
+      }
+      &:active {
+        box-shadow: inset 0 0 0 darken(@button-color, 10%);
+        top: 0;
+      }
+    }
+
+    .open {
+      .dropdown-menu {
+        top: @total-height - @border-bottom-height;
+      }
+    }
+    .dropdown-menu {
+      position: absolute;
+      left: -4px;
+      width: 380px;
+      border-left: @border-bottom-height solid @border-color;
+      border-right: @border-bottom-height solid @border-color;
+      &.i18n-menu {
+        width: 500px;
+      }
+      &.help-menu {
+        width: 350px;
+      }
+      &.account-menu {
+        width: 210px;
+        left: inherit;
+        right: -4px;
+      }
+
+      .clerk-menu-contact-thank-you-message {
+        right: 60px;
+        top: 45px;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  #binarta-clerk-menu {
+    .btn-clerk-menu {
+      padding: 11px 16px 11px (16px + 26px);
+    }
+  }
+}
