@@ -8,6 +8,13 @@
 @border-bottom-height: 4px;
 @total-height: 60px;
 
+/** Fix for fullscreen mode of tinyMCE **/
+.mce-fullscreen {
+  #binarta-clerk-menu {
+    top: -@total-height;
+  }
+}
+
 #binarta-clerk-menu-top-fix {
   height: @total-height;
 }
@@ -277,6 +284,13 @@
 
 @media (min-width: 768px) {
   @total-height: 40px;
+
+  /** Fix for fullscreen mode of tinyMCE **/
+  .mce-fullscreen {
+    #binarta-clerk-menu {
+      top: -@total-height;
+    }
+  }
 
   #binarta-clerk-menu-top-fix {
     height: @total-height;

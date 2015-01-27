@@ -1,3 +1,7 @@
+/** Fix for fullscreen mode of tinyMCE **/
+.mce-fullscreen #binarta-clerk-menu {
+  top: -60px;
+}
 #binarta-clerk-menu-top-fix {
   height: 60px;
 }
@@ -234,6 +238,10 @@
   }
 }
 @media (min-width: 768px) {
+  /** Fix for fullscreen mode of tinyMCE **/
+  .mce-fullscreen #binarta-clerk-menu {
+    top: -40px;
+  }
   #binarta-clerk-menu-top-fix {
     height: 40px;
   }
