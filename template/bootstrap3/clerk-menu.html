@@ -3,7 +3,7 @@
     <div id="binarta-clerk-menu-wrapper" style="display:none;" ng-if="authenticated">
         <div id="binarta-clerk-menu">
             <div class="binarta-clerk-menu-left">
-                <div class="binarta-clerk-menu-brand" ng-if="!published">
+                <div class="binarta-clerk-menu-brand" ng-if="published">
                     <a href="http://binarta.com">
                         <img src="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo.png"
                              srcset="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo.png 1x,
@@ -19,7 +19,7 @@
                              class="binarta-clerk-menu-brand-small">
                     </a>
                 </div>
-                <div ng-if="published">
+                <div ng-if="!published">
                     <a class="btn-clerk-menu btn-clerk-menu-publish" href="http://binarta.com/applications">
                         <img src="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small.png"
                              srcset="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small.png 1x,
