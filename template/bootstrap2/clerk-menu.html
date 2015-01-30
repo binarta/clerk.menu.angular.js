@@ -33,7 +33,7 @@
 
 
             <div class="binarta-clerk-menu-buttons">
-                <div class="clerk-menu-item" ng-class="{true:'open'}[translation && editing]">
+                <div class="clerk-menu-item" ng-class="{true:'open'}[translation != undefined && editing]">
                     <button toggle-edit-mode ng-click="toggleEditMode()"
                             accesskey="e"
                             class="btn-clerk-menu btn-clerk-menu-edit" ng-class="{true:'active'}[editing]"
@@ -421,91 +421,34 @@
                 </div>
                 <div class="clerk-menu-item">
                     <button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button"
-                            id="seoMenu" role="button" aria-expanded="true" ng-click="init()" disabled>
+                            id="seoMenu" role="button" aria-expanded="true" ng-click="init()">
                         <i class="fa fa-globe fa-fw"></i>
                         <span>SEO</span>
                     </button>
-                    <!--<div class="dropdown-menu" role="menu" aria-labelledby="seoMenu">-->
-                    <!--<form class="col-xs-12">-->
-                    <!--<div class="form-group">-->
-                    <!--<label for="inputDefaultTitle">-->
-                    <!--Standaard paginatitel-->
-                    <!--</label>-->
-                    <!--<input class="form-control" type="text" id="inputDefaultTitle" ng-model="seo.input.defaultTitle">-->
-                    <!--<span class="help-block">-->
-                    <!--<small>-->
-                    <!--<i class="fa fa-info-circle"></i>-->
-                    <!--Wordt gebruikt indien je hieronder geen paginatitel opgeeft.-->
-                    <!--</small>-->
-                    <!--</span>-->
-                    <!--</div>-->
-
-                    <!--<div class="form-group">-->
-                    <!--<label for="inputTitle">-->
-                    <!--Paginatitel-->
-                    <!--</label>-->
-                    <!--<input class="form-control" type="text" id="inputTitle" ng-model="seo.input.title">-->
-                    <!--</div>-->
-
-                    <!--<div class="form-group">-->
-                    <!--<label class="control-label" for="inputDescription">-->
-                    <!--Paginabeschrijving-->
-                    <!--</label>-->
-                    <!--<textarea class="form-control" id="inputDescription" rows="3" ng-model="seo.input.description"></textarea>-->
-                    <!--</div>-->
-                    <!--</form>-->
-                    <!--<div class="col-xs-12 text-right">-->
-                    <!--<button type="submit" class="btn btn-primary" ng-click="save()">Opslaan</button>-->
-                    <!--</div>-->
-                    <!--</div>-->
+                    <div class="dropdown-menu" role="menu" aria-labelledby="seoMenu">
+                        <div class="coming-soon">
+                            Deze functionaliteit is momenteel nog niet beschikbaar. Binnekort zal je hier met een Essential en hoger de title en omschrijving van al je pagina's kunnen aanpassen.
+                        </div>
+                    </div>
                 </div>
                 <div class="clerk-menu-item">
-                    <a class="btn-clerk-menu" href="mailto:support@binarta.com?subject=Support {{namespace}}">
+                    <a class="btn-clerk-menu" href="https://binarta.com/#!/contact/Support {{namespace}}?email={{user.email}}">
                         <i class="fa fa-life-ring fa-fw"></i>
                         <span>HELP</span>
                     </a>
                 </div>
-                <!--<div class="clerk-menu-item">-->
-                <!--<button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button"-->
-                <!--id="helpMenu" role="button" aria-expanded="true" ng-click="init()">-->
-                <!--<i class="fa fa-life-ring fa-fw"></i>-->
-                <!--<span>HELP</span>-->
-                <!--</button>-->
-                <!--<div class="dropdown-menu help-menu" role="menu" aria-labelledby="helpMenu"-->
-                <!--ng-controller="ContactUsController" ng-submit="submit()">-->
-                <!--<div class="col-xs-9">-->
-                <!--<p>Heb je een vraag? Wij helpen je graag!</p>-->
-                <!--</div>-->
-                <!--<div class="col-xs-3">-->
-                <!--<span class="clerk-menu-contact-thank-you-message" ng-show="sent">Dank u wel! -</span>-->
-                <!--<img src="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/very-happy.png"-->
-                <!--srcset="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/very-happy.png 1x,-->
-                <!--//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/very-happy@2x.png 2x,-->
-                <!--//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/very-happy@3x.png 3x"-->
-                <!--alt="support"-->
-                <!--class="pull-right">-->
-                <!--</div>-->
-                <!--<form class="col-xs-12">-->
-                <!--<input type="hidden" ng-model="name" ng-init="name = user.alias">-->
-                <!--<input type="hidden" ng-model="replyTo" ng-init="replyTo = user.email">-->
-                <!--<input type="hidden" ng-model="subject" ng-init="subject = 'support request for ' + namespace">-->
-                <!--<textarea rows="6" ng-model="message" required></textarea>-->
-                <!--<div class="text-right">-->
-                <!--<button type="submit" class="btn btn-primary" ng-disabled="sending"-->
-                <!--analytics-on="click" analytics-category="clerk-menu" analytics-event="click-request-support">-->
-                <!--<span ng-show="sending"><i class="fa fa-spinner fa-spin"></i></span>-->
-                <!--Verstuur-->
-                <!--</button>-->
-                <!--</div>-->
-                <!--</form>-->
-                <!--</div>-->
-                <!--</div>-->
                 <div class="clerk-menu-item">
-                    <a class="btn-clerk-menu" href="#!/{{localePrefix}}admin" ng-click="init()" disabled>
+                    <button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button"
+                            id="adminMenu" role="button" aria-expanded="false" ng-click="init()">
                         <i class="fa fa-cog fa-fw"></i>
                         <span class="visible-xs">INST</span>
                         <span class="hidden-xs">INSTELLINGEN</span>
-                    </a>
+                    </button>
+                    <div class="dropdown-menu admin-menu" role="menu" aria-labelledby="adminMenu">
+                        <div class="coming-soon">
+                            Deze functionaliteit is momenteel nog niet beschikbaar. Binnekort zal je via deze link je applicatie verder kunnen configureren.
+                        </div>
+                    </div>
                 </div>
                 <div class="clerk-menu-item">
                     <button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button"

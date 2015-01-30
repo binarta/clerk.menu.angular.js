@@ -191,6 +191,10 @@
 #binarta-clerk-menu .dropdown-menu .dropdown-menu-buttons {
   text-align: right;
 }
+
+#binarta-clerk-menu .dropdown-menu .coming-soon {
+  padding: 10px;
+}
 @media (max-width: 767px) {
   #binarta-clerk-menu .binarta-clerk-menu-brand img {
     padding: 12px 12px 14px 12px;
@@ -353,6 +357,10 @@
   #binarta-clerk-menu .dropdown-menu .clerk-menu-contact-thank-you-message {
     right: 60px;
     top: 45px;
+  }
+  #binarta-clerk-menu .dropdown-menu.admin-menu {
+    left: inherit;
+    right: -4px;
   }
 }
 @media (min-width: 992px) {
