@@ -1,12 +1,81 @@
 describe('clerk menu module', function () {
     angular.module('angularx', []);
 
+    var editModeRendererSpy, editModeRendererClosedSpy;
+    angular.module('toggle.edit.mode', [])
+        .service('editModeRenderer', function () {
+            this.open = function (args) {
+                editModeRendererSpy = args;
+            };
+            this.close = function () {
+                editModeRendererClosedSpy = true
+            };
+        });
+
+    var i18nRendererInstallerSpy;
+    angular.module('i18n', [])
+        .factory('i18nRendererInstaller', function () {
+            return function (args) {
+                i18nRendererInstallerSpy = args;
+            };
+        });
+
+
     beforeEach(module('clerk.menu'));
     beforeEach(module('notifications'));
 
+
+    describe('on run', function () {
+        beforeEach(inject(function ($rootScope) {
+            $rootScope.$digest();
+        }));
+
+        it('install i18nRenderer', function () {
+            expect(i18nRendererInstallerSpy).toEqual({open: jasmine.any(Function)});
+        });
+
+        describe('when i18nRenderer is opened', function () {
+            var submitSpy;
+
+            beforeEach(function () {
+                i18nRendererInstallerSpy.open({
+                    submit: function (translation) {
+                        submitSpy = translation;
+                    },
+                    translation: 'translation',
+                    editor: 'editor',
+                    template: 'template'
+                });
+            });
+
+            it('editModeRenderer is called', function () {
+                expect(editModeRendererSpy).toEqual({
+                    ctx: {
+                        submit: jasmine.any(Function),
+                        cancel: jasmine.any(Function),
+                        translation: 'translation',
+                        editor: 'editor'
+                    }, template: 'template'
+                });
+            });
+
+            it('and editModeRenderer submit is called', function () {
+                editModeRendererSpy.ctx.submit('test');
+
+                expect(submitSpy).toEqual('test');
+                expect(editModeRendererClosedSpy).toBeTruthy();
+            });
+
+            it('and editModeRenderer cancel is called', function () {
+                editModeRendererSpy.ctx.cancel();
+
+                expect(editModeRendererClosedSpy).toBeTruthy();
+            });
+        });
+    });
+
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, topics, response, usecase, permission, resourceLoader, resource,
-            templateSpy, templateArgs, rendererSpy, $location, host, account, user;
+        var scope, directive, registry, config, topics, $location, host, account, user;
 
         beforeEach(inject(function ($rootScope, ngRegisterTopicHandler, topicRegistryMock, $q) {
             scope = $rootScope.$new();
@@ -15,29 +84,6 @@ describe('clerk menu module', function () {
                 namespace: 'namespace'
             };
             topics = ngRegisterTopicHandler;
-            usecase = function (it, p) {
-                response = it;
-                permission = p;
-            };
-            resource = '';
-            resourceLoader = {
-                add: function(r) {
-                    resource = r;
-                },
-                remove: function(r) {
-                    resource = r;
-                }
-            };
-            templateSpy = {
-                setTemplateUrl: function (args){
-                    templateArgs = args;
-                }
-            };
-            var i18nRendererInstaller = function (renderer) {
-                rendererSpy = {
-                    open: renderer.open
-                };
-            };
 
             host = 'test.binarta.com';
             $location = {
@@ -58,7 +104,7 @@ describe('clerk menu module', function () {
                 }
             };
 
-            directive = ClerkMenuDirectiveFactory(topics, config, usecase, resourceLoader, templateSpy, i18nRendererInstaller, $location, account);
+            directive = ClerkMenuDirectiveFactory(topics, config, $location, account);
         }));
 
         it('creates a child scope', function () {
@@ -70,7 +116,7 @@ describe('clerk menu module', function () {
         });
 
         it('template', function () {
-            expect(directive.template).toEqual('<div ng-include="templateUrl"></div>');
+            expect(directive.template).toEqual(jasmine.any(String));
         });
 
         describe('on link', function () {
@@ -78,15 +124,6 @@ describe('clerk menu module', function () {
 
             beforeEach(function () {
                 directive.link(scope, null, {});
-            });
-
-            it('setTemplateUrl is called', function () {
-                expect(templateArgs).toEqual({
-                    scope: scope,
-                    module: 'clerk.menu',
-                    name: 'clerk-menu.html',
-                    permission: 'edit.mode'
-                });
             });
 
             it('namespace is available on scope', function () {
@@ -112,128 +149,6 @@ describe('clerk menu module', function () {
                         expect(scope.localePrefix).toEqual('locale/');
                     });
                 });
-            });
-
-            it('triggers usecase', function () {
-                expect(response).toBeDefined();
-            });
-
-            it('user must have edit.mode permission', function () {
-                expect(permission).toEqual('edit.mode');
-            });
-
-            it('scope is given to usecase', function () {
-                expect(response.scope).toEqual(scope);
-            });
-
-            it('when authorized', function () {
-                response.yes();
-
-                expect(resource).toEqual('bower_components' + cssResource);
-            });
-
-            it('when authorized and different components dir', function () {
-                config.componentsDir = 'components';
-                directive.link(scope, null, {});
-                response.yes();
-
-                expect(resource).toEqual('components' + cssResource);
-            });
-
-            it('when not authenticated', function () {
-                response.no();
-
-                expect(resource).toEqual('bower_components' + cssResource);
-            });
-
-            it('when not authorized and different components dir', function () {
-                config.componentsDir = 'components';
-                directive.link(scope, null, {});
-                response.no();
-
-                expect(resource).toEqual('components' + cssResource);
-            });
-
-            it('clerk menu renderer is installed', function () {
-                expect(rendererSpy.open).toEqual(jasmine.any(Function));
-            });
-
-            describe('when renderer is opened', function () {
-                var submitSpy;
-
-                var args = {
-                    translation: 'translation',
-                    editor: 'editor',
-                    submit: function (translation) {
-                        submitSpy = translation;
-                    }
-                };
-
-                beforeEach(function () {
-                    rendererSpy.open(args);
-                });
-
-                it('puts translation on scope', function () {
-                    expect(scope.translation).toEqual(args.translation);
-                });
-
-                it('puts editor type on scope', function () {
-                    expect(scope.editor).toEqual(args.editor);
-                });
-
-                it('when editor is not defined, set to default', function () {
-                    rendererSpy.open({});
-
-                    expect(scope.editor).toEqual('default');
-                });
-
-                it('puts cancel function on scope', function () {
-                    expect(scope.cancel).toEqual(jasmine.any(Function));
-                });
-
-                describe('on cancel', function () {
-                    beforeEach(function () {
-                        scope.cancel();
-                    });
-
-                    it('resets scope values', function () {
-                        expect(scope.translation).toBeUndefined();
-                        expect(scope.editor).toBeUndefined();
-                    });
-                });
-
-                it('puts submit function on scope', function () {
-                    expect(scope.submit).toEqual(jasmine.any(Function));
-                });
-
-                describe('on submit', function () {
-                    var translation = 'updatedTranslation';
-
-                    beforeEach(function () {
-                        scope.submit(translation);
-                    });
-
-                    it('submit is propagated', function () {
-                        expect(submitSpy).toEqual(translation);
-                    });
-
-                    it('resets scope values', function () {
-                        expect(scope.translation).toBeUndefined();
-                        expect(scope.editor).toBeUndefined();
-                    });
-                });
-            });
-        });
-
-        describe('set template settings to scope', function () {
-            beforeEach(function () {
-                directive.link(scope, null, {
-                    settings: '{setting: true}'
-                });
-            });
-
-            it('should be on scope', function () {
-                expect(scope.settings).toEqual({setting: true});
             });
         });
 
@@ -286,6 +201,18 @@ describe('clerk menu module', function () {
                 scope.$digest();
 
                 expect(scope.user).toEqual(user);
+            });
+        });
+
+        describe('when edit.mode.renderer is broadcasted', function () {
+            beforeEach(function () {
+                directive.link(scope);
+
+                scope.$broadcast('edit.mode.renderer', {open: true});
+            });
+
+            it('put value on scope', function () {
+                expect(scope.editModeOpened).toBeTruthy();
             });
         });
     });

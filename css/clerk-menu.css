@@ -82,13 +82,11 @@
 #binarta-clerk-menu .clerk-menu-item {
   display: inline-block;
 }
-#binarta-clerk-menu .open .btn-clerk-menu,
 #binarta-clerk-menu .btn-clerk-menu.active {
   background-color: #00afd0;
   color: #ffffff;
   text-shadow: 0 1px 1px #222222;
 }
-#binarta-clerk-menu .open .btn-clerk-menu i,
 #binarta-clerk-menu .btn-clerk-menu.active i {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -110,29 +108,37 @@
 }
 #binarta-clerk-menu .dropdown-menu {
   background: #d6dadb;
+  width: 100%;
   position: fixed;
   display: none;
   font-size: 14px;
   margin: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 0;
   border: none;
   border-bottom: 4px solid #c0c0c0;
-  width: 100%;
   border-radius: 0;
   z-index: -1;
   -webkit-animation-duration: 0.1s;
   animation-duration: 0.1s;
 }
-#binarta-clerk-menu .dropdown-menu.i18n-menu .i18n-menu-editor {
+#binarta-clerk-menu .dropdown-menu .dropdown-menu-inner {
   padding: 10px;
 }
 #binarta-clerk-menu .dropdown-menu form {
   margin-bottom: 15px;
 }
+#binarta-clerk-menu .dropdown-menu form .form-group {
+  margin: 0 0 20px 0;
+}
+#binarta-clerk-menu .dropdown-menu form .form-group label {
+  margin: 0 0 5px 0;
+  font-size: small;
+  font-weight: 600;
+}
 #binarta-clerk-menu .dropdown-menu textarea,
 #binarta-clerk-menu .dropdown-menu input[type="text"] {
   width: 100%;
+  height: auto;
   background: #ffffff;
   border: none;
   outline: none;
@@ -165,7 +171,7 @@
   width: 60px;
 }
 #binarta-clerk-menu .dropdown-menu .icons-list {
-  max-height: 400px;
+  max-height: 350px;
   overflow-y: scroll;
   background: #ffffff;
   border-radius: 3px;
@@ -178,8 +184,11 @@
   font-size: 25px;
   padding: 6px;
 }
-#binarta-clerk-menu .dropdown-menu .icons-list button:hover {
-  color: #00afd0;
+#binarta-clerk-menu .dropdown-menu .icons-list button:hover,
+#binarta-clerk-menu .dropdown-menu .icons-list button.active {
+  background-color: #00afd0;
+  border-radius: 3px;
+  color: #ffffff;
 }
 #binarta-clerk-menu .dropdown-menu .clerk-menu-contact-thank-you-message {
   position: absolute;
@@ -191,9 +200,8 @@
 #binarta-clerk-menu .dropdown-menu .dropdown-menu-buttons {
   text-align: right;
 }
-
-#binarta-clerk-menu .dropdown-menu .clerk-menu-coming-soon {
-  padding: 10px;
+#binarta-clerk-menu .dropdown-menu .dropdown-menu-buttons button {
+  margin-left: 10px;
 }
 @media (max-width: 767px) {
   #binarta-clerk-menu .binarta-clerk-menu-brand img {
@@ -243,6 +251,10 @@
     padding-top: 3px;
     padding-left: 15px;
     padding-right: 15px;
+  }
+  #binarta-clerk-menu .dropdown-menu {
+    max-height: 80%;
+    overflow: auto;
   }
 }
 @media (min-width: 768px) {
@@ -337,14 +349,11 @@
     top: 36px;
   }
   #binarta-clerk-menu .dropdown-menu {
-    position: absolute;
-    left: -4px;
-    width: 380px;
+    left: 50%;
+    margin-left: -375px;
+    width: 750px;
     border-left: 4px solid #c0c0c0;
     border-right: 4px solid #c0c0c0;
-  }
-  #binarta-clerk-menu .dropdown-menu.i18n-menu {
-    width: 500px;
   }
   #binarta-clerk-menu .dropdown-menu.help-menu {
     width: 350px;
@@ -354,13 +363,13 @@
     left: inherit;
     right: -4px;
   }
-  #binarta-clerk-menu .dropdown-menu .clerk-menu-contact-thank-you-message {
-    right: 60px;
-    top: 45px;
-  }
   #binarta-clerk-menu .dropdown-menu.admin-menu {
     left: inherit;
     right: -4px;
+  }
+  #binarta-clerk-menu .dropdown-menu .clerk-menu-contact-thank-you-message {
+    right: 60px;
+    top: 45px;
   }
 }
 @media (min-width: 992px) {

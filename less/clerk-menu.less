@@ -1,22 +1,22 @@
-@background-color: #d6dadb;
-@border-color: #c0c0c0;
-@shadow-color: #c2c3c2;
-@button-color: #00AFD0;
-@black: #222222;
-@white: #ffffff;
+@cm-background-color: #d6dadb;
+@cm-border-color: #c0c0c0;
+@cm-shadow-color: #c2c3c2;
+@cm-button-color: #00AFD0;
+@cm-black: #222222;
+@cm-white: #ffffff;
 
-@border-bottom-height: 4px;
-@total-height: 60px;
+@cm-border-bottom-height: 4px;
+@cm-total-height: 60px;
 
 /** Fix for fullscreen mode of tinyMCE **/
 .mce-fullscreen {
   #binarta-clerk-menu {
-    top: -@total-height;
+    top: -@cm-total-height;
   }
 }
 
 #binarta-clerk-menu-top-fix {
-  height: @total-height;
+  height: @cm-total-height;
 }
 
 #binarta-clerk-menu-wrapper {
@@ -33,21 +33,21 @@
   right: 0;
   font-size: 0;
   min-width: 320px;
-  height: @total-height;
-  background-color: @background-color;
+  height: @cm-total-height;
+  background-color: @cm-background-color;
   background-size: 14px 14px;
-  border-bottom: @border-bottom-height solid @border-color;
+  border-bottom: @cm-border-bottom-height solid @cm-border-color;
   box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   box-sizing: border-box;
 
   .btn-primary {
-    background: @button-color;
-    border-color: darken(@button-color, 5%);
+    background: @cm-button-color;
+    border-color: darken(@cm-button-color, 5%);
   }
 
   .btn-default {
-    background: @background-color;
-    border-color: darken(@background-color, 10%);
+    background: @cm-background-color;
+    border-color: darken(@cm-background-color, 10%);
   }
 
   .binarta-clerk-menu-left {
@@ -76,15 +76,15 @@
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    height: @total-height - @border-bottom-height;
+    height: @cm-total-height - @cm-border-bottom-height;
     padding-left: 8px;
     padding-right: 8px;
     margin: 0;
     font-size: 16px;
     line-height: 1.4;
     text-decoration: none;
-    text-shadow: 0 1px 0 darken(@white, 10%);
-    color: @black;
+    text-shadow: 0 1px 0 darken(@cm-white, 10%);
+    color: @cm-black;
     outline: none;
     background: none;
     border: none;
@@ -106,11 +106,10 @@
     display: inline-block;
   }
 
-  .open .btn-clerk-menu,
   .btn-clerk-menu.active {
-    background-color: @button-color;
-    color: @white;
-    text-shadow: 0 1px 1px @black;
+    background-color: @cm-button-color;
+    color: @cm-white;
+    text-shadow: 0 1px 1px @cm-black;
     & i {
       animation-duration: 1s;
       animation-name: swing;
@@ -119,58 +118,66 @@
   .open {
     .dropdown-menu {
       animation-name: fadeInDown;
-      top: @total-height;
+      top: @cm-total-height;
       display: block;
       li {
         a {
           padding: 15px;
           &:hover {
-            background: @button-color;
-            color: @white;
+            background: @cm-button-color;
+            color: @cm-white;
           }
         }
       }
     }
   }
   .dropdown-menu {
-    background: @background-color;
+    background: @cm-background-color;
+    width: 100%;
     position: fixed;
     display: none;
     font-size: 14px;
     margin: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 0;
     border: none;
-    border-bottom: @border-bottom-height solid @border-color;
-    width: 100%;
+    border-bottom: @cm-border-bottom-height solid @cm-border-color;
     border-radius: 0;
     z-index: -1;
     animation-duration: 0.1s;
 
-    &.i18n-menu {
-      .i18n-menu-editor {
-        padding: 10px;
-      }
+    .dropdown-menu-inner {
+      padding: 10px;
     }
 
     form {
       margin-bottom: 15px;
+
+      .form-group {
+        margin: 0 0 20px 0;
+
+        label {
+          margin: 0 0 5px 0;
+          font-size: small;
+          font-weight: 600;
+        }
+      }
     }
 
     textarea, input[type="text"] {
       width: 100%;
-      background: @white;
+      height: auto;
+      background: @cm-white;
       border: none;
       outline: none;
       padding: 10px;
       resize: none;
       border-radius: 3px;
       box-sizing: border-box;
-      box-shadow: inset 0 0 1px 3px lighten(@border-color, 20%);
+      box-shadow: inset 0 0 1px 3px lighten(@cm-border-color, 20%);
     }
 
     .mce-tinymce {
-      border: 1px solid @border-color;
+      border: 1px solid @cm-border-color;
     }
 
     .input-group .form-control:last-child {
@@ -182,8 +189,8 @@
       padding: 10px;
       border: none;
       outline: none;
-      box-shadow: inset 0 0 1px 3px lighten(@border-color, 20%);
-      background: lighten(@border-color, 20%);
+      box-shadow: inset 0 0 1px 3px lighten(@cm-border-color, 20%);
+      background: lighten(@cm-border-color, 20%);
     }
 
     p {
@@ -196,19 +203,22 @@
     }
 
     .icons-list {
-      max-height: 400px;
+      max-height: 350px;
       overflow-y: scroll;
-      background: @white;
+      background: @cm-white;
       border-radius: 3px;
-      box-shadow: inset 0 0 1px 3px lighten(@border-color, 20%);
+      box-shadow: inset 0 0 1px 3px lighten(@cm-border-color, 20%);
       padding: 10px;
       button {
         background: none;
         border: none;
         font-size: 25px;
         padding: 6px;
-        &:hover {
-          color: @button-color;
+        &:hover,
+        &.active {
+          background-color: @cm-button-color;
+          border-radius: 3px;
+          color: @cm-white;
         }
       }
     }
@@ -218,15 +228,14 @@
       width: 100px;
       right: 50px;
       top: 36px;
-      color: darken(@button-color, 5%);
+      color: darken(@cm-button-color, 5%);
     }
 
     .dropdown-menu-buttons {
       text-align: right;
-    }
-
-    .clerk-menu-coming-soon {
-      padding: 10px;
+      button {
+        margin-left: 10px;
+      }
     }
   }
 }
@@ -243,7 +252,7 @@
     .open {
       .account-menu {
         li {
-          border-bottom: 1px solid @border-color;
+          border-bottom: 1px solid @cm-border-color;
           &:last-child {
             border-bottom: none;
           }
@@ -266,19 +275,19 @@
 
     .btn-clerk-menu-edit,
     .btn-clerk-menu-publish {
-      border: 2px solid @button-color;
+      border: 2px solid @cm-button-color;
       span {
         width: 100%;
-        background-color: @button-color;
-        color: @white;
-        text-shadow: 0 1px 1px @black;
+        background-color: @cm-button-color;
+        color: @cm-white;
+        text-shadow: 0 1px 1px @cm-black;
       }
 
       &.active,
       &:hover {
-        border: 2px solid @button-color;
+        border: 2px solid @cm-button-color;
         span {
-          background-color: @button-color;
+          background-color: @cm-button-color;
         }
       }
     }
@@ -288,25 +297,30 @@
       padding-left: 15px;
       padding-right: 15px;
     }
+
+    .dropdown-menu {
+      max-height: 80%;
+      overflow: auto;
+    }
   }
 }
 
 @media (min-width: 768px) {
-  @total-height: 40px;
+  @cm-total-height: 40px;
 
   /** Fix for fullscreen mode of tinyMCE **/
   .mce-fullscreen {
     #binarta-clerk-menu {
-      top: -@total-height;
+      top: -@cm-total-height;
     }
   }
 
   #binarta-clerk-menu-top-fix {
-    height: @total-height;
+    height: @cm-total-height;
   }
 
   #binarta-clerk-menu {
-    height: @total-height;
+    height: @cm-total-height;
 
     .binarta-clerk-menu-brand {
       img {
@@ -333,7 +347,7 @@
     }
 
     .btn-clerk-menu {
-      height: @total-height - @border-bottom-height;
+      height: @cm-total-height - @cm-border-bottom-height;
 
       padding: 11px 12px 11px (12px + 26px);
       font-size: 14px;
@@ -357,9 +371,9 @@
         padding-left: 3px;
       }
       &:hover:enabled {
-        background-color: @button-color;
-        color: @white;
-        text-shadow: 0 1px 1px @black;
+        background-color: @cm-button-color;
+        color: @cm-white;
+        text-shadow: 0 1px 1px @cm-black;
       }
     }
 
@@ -371,18 +385,18 @@
       position:relative;
       text-decoration:none;
       margin:0 auto;
-      border:solid 1px darken(@background-color, 15%);
-      background: @background-color;
+      border:solid 1px darken(@cm-background-color, 15%);
+      background: @cm-background-color;
       text-align:center;
       top: -@push-height;
       transition: all 0.1s;
-      box-shadow: 0 @push-height 0 darken(@background-color, 15%);
+      box-shadow: 0 @push-height 0 darken(@cm-background-color, 15%);
 
       &:hover {
-        box-shadow: 0 @push-height 0 darken(@button-color, 15%);
+        box-shadow: 0 @push-height 0 darken(@cm-button-color, 15%);
       }
       &.active {
-        box-shadow: inset 0 0 0 darken(@button-color, 10%);
+        box-shadow: inset 0 0 0 darken(@cm-button-color, 10%);
         top: 0;
       }
     }
@@ -395,25 +409,23 @@
         padding: 2px 6px 4px 10px;
       }
       &:active {
-        box-shadow: inset 0 0 0 darken(@button-color, 10%);
+        box-shadow: inset 0 0 0 darken(@cm-button-color, 10%);
         top: 0;
       }
     }
 
     .open {
       .dropdown-menu {
-        top: @total-height - @border-bottom-height;
+        top: @cm-total-height - @cm-border-bottom-height;
       }
     }
     .dropdown-menu {
-      position: absolute;
-      left: -4px;
-      width: 380px;
-      border-left: @border-bottom-height solid @border-color;
-      border-right: @border-bottom-height solid @border-color;
-      &.i18n-menu {
-        width: 500px;
-      }
+      left: 50%;
+      margin-left: -(750px / 2);
+
+      width: 750px;
+      border-left: @cm-border-bottom-height solid @cm-border-color;
+      border-right: @cm-border-bottom-height solid @cm-border-color;
       &.help-menu {
         width: 350px;
       }
@@ -423,9 +435,9 @@
         right: -4px;
       }
       &.admin-menu {
-         left: inherit;
-         right: -4px;
-       }
+        left: inherit;
+        right: -4px;
+      }
 
       .clerk-menu-contact-thank-you-message {
         right: 60px;
