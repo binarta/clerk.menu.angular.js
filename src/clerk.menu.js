@@ -1,21 +1,24 @@
 angular.module('clerk.menu', ['notifications', 'config', 'angularx', 'i18n', 'toggle.edit.mode'])
     .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', '$location', 'account', ClerkMenuDirectiveFactory])
-    .run(['i18nRendererInstaller', 'editModeRenderer', function (i18nRendererInstaller, editModeRenderer) {
+    .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', function (i18nRendererInstaller, editModeRenderer, $rootScope) {
         i18nRendererInstaller({
             open: function (args) {
+                var scope = $rootScope.$new();
+                scope.submit = function (translation) {
+                    args.submit(translation);
+                    editModeRenderer.close();
+                };
+
+                scope.cancel = function () {
+                    editModeRenderer.close();
+                };
+
+                scope.translation = args.translation;
+                scope.editor = args.editor || 'default';
+                
                 editModeRenderer.open({
-                    ctx: {
-                        submit: function (translation) {
-                            args.submit(translation);
-                            editModeRenderer.close();
-                        },
-                        cancel: function () {
-                            editModeRenderer.close();
-                        },
-                        translation: args.translation,
-                        editor: args.editor || 'default'
-                    },
-                    template: args.template
+                    template: args.template,
+                    scope: scope
                 });
             }
         });

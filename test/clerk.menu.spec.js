@@ -49,25 +49,20 @@ describe('clerk menu module', function () {
             });
 
             it('editModeRenderer is called', function () {
-                expect(editModeRendererSpy).toEqual({
-                    ctx: {
-                        submit: jasmine.any(Function),
-                        cancel: jasmine.any(Function),
-                        translation: 'translation',
-                        editor: 'editor'
-                    }, template: 'template'
-                });
+                expect(editModeRendererSpy.template).toEqual('template');
+                expect(editModeRendererSpy.scope.translation).toEqual('translation');
+                expect(editModeRendererSpy.scope.editor).toEqual('editor');
             });
 
             it('and editModeRenderer submit is called', function () {
-                editModeRendererSpy.ctx.submit('test');
+                editModeRendererSpy.scope.submit('test');
 
                 expect(submitSpy).toEqual('test');
                 expect(editModeRendererClosedSpy).toBeTruthy();
             });
 
             it('and editModeRenderer cancel is called', function () {
-                editModeRendererSpy.ctx.cancel();
+                editModeRendererSpy.scope.cancel();
 
                 expect(editModeRendererClosedSpy).toBeTruthy();
             });
