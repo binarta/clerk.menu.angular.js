@@ -57,7 +57,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small@2x.png 2x,' +
         '//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small@3x.png 3x"' +
         'alt="Binarta logo">' +
-        '<span>PUBLICEER</span>' +
+        '<span>UPGRADEN</span>' +
         '</a>' +
         '</div>' +
         '</div>' +
