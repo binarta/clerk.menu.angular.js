@@ -1,5 +1,5 @@
 /** Fix for fullscreen mode of tinyMCE **/
-.mce-fullscreen #binarta-clerk-menu {
+body.mce-fullscreen #binarta-clerk-menu {
   top: -60px;
 }
 #binarta-clerk-menu-top-fix {
@@ -26,12 +26,19 @@
   box-sizing: border-box;
 }
 #binarta-clerk-menu .btn-primary {
+  color: #ffffff;
   background: #00afd0;
   border-color: #009ab7;
 }
 #binarta-clerk-menu .btn-default {
+  color: #222222;
   background: #d6dadb;
   border-color: #bbc1c3;
+}
+#binarta-clerk-menu .btn-success {
+  color: #ffffff;
+  background: #179f97;
+  border-color: #148982;
 }
 #binarta-clerk-menu .binarta-clerk-menu-left {
   float: left;
@@ -101,6 +108,7 @@
 }
 #binarta-clerk-menu .open .dropdown-menu li a {
   padding: 15px;
+  color: #222222;
 }
 #binarta-clerk-menu .open .dropdown-menu li a:hover {
   background: #00afd0;

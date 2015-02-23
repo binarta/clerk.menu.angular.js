@@ -1,7 +1,8 @@
 @cm-background-color: #d6dadb;
 @cm-border-color: #c0c0c0;
 @cm-shadow-color: #c2c3c2;
-@cm-button-color: #00AFD0;
+@cm-button-blue: #00AFD0;
+@cm-button-green: #179f97;
 @cm-black: #222222;
 @cm-white: #ffffff;
 
@@ -9,7 +10,7 @@
 @cm-total-height: 60px;
 
 /** Fix for fullscreen mode of tinyMCE **/
-.mce-fullscreen {
+body.mce-fullscreen {
   #binarta-clerk-menu {
     top: -@cm-total-height;
   }
@@ -41,13 +42,21 @@
   box-sizing: border-box;
 
   .btn-primary {
-    background: @cm-button-color;
-    border-color: darken(@cm-button-color, 5%);
+    color: @cm-white;
+    background: @cm-button-blue;
+    border-color: darken(@cm-button-blue, 5%);
   }
 
   .btn-default {
+    color: @cm-black;
     background: @cm-background-color;
     border-color: darken(@cm-background-color, 10%);
+  }
+
+  .btn-success {
+    color: @cm-white;
+    background: @cm-button-green;
+    border-color: darken(@cm-button-green, 5%);
   }
 
   .binarta-clerk-menu-left {
@@ -107,7 +116,7 @@
   }
 
   .btn-clerk-menu.active {
-    background-color: @cm-button-color;
+    background-color: @cm-button-blue;
     color: @cm-white;
     text-shadow: 0 1px 1px @cm-black;
     & i {
@@ -123,8 +132,9 @@
       li {
         a {
           padding: 15px;
+          color: @cm-black;
           &:hover {
-            background: @cm-button-color;
+            background: @cm-button-blue;
             color: @cm-white;
           }
         }
@@ -216,7 +226,7 @@
         padding: 6px;
         &:hover,
         &.active {
-          background-color: @cm-button-color;
+          background-color: @cm-button-blue;
           border-radius: 3px;
           color: @cm-white;
         }
@@ -228,7 +238,7 @@
       width: 100px;
       right: 50px;
       top: 36px;
-      color: darken(@cm-button-color, 5%);
+      color: darken(@cm-button-blue, 5%);
     }
 
     .dropdown-menu-buttons {
@@ -275,19 +285,19 @@
 
     .btn-clerk-menu-edit,
     .btn-clerk-menu-publish {
-      border: 2px solid @cm-button-color;
+      border: 2px solid @cm-button-blue;
       span {
         width: 100%;
-        background-color: @cm-button-color;
+        background-color: @cm-button-blue;
         color: @cm-white;
         text-shadow: 0 1px 1px @cm-black;
       }
 
       &.active,
       &:hover {
-        border: 2px solid @cm-button-color;
+        border: 2px solid @cm-button-blue;
         span {
-          background-color: @cm-button-color;
+          background-color: @cm-button-blue;
         }
       }
     }
@@ -371,7 +381,7 @@
         padding-left: 3px;
       }
       &:hover:enabled {
-        background-color: @cm-button-color;
+        background-color: @cm-button-blue;
         color: @cm-white;
         text-shadow: 0 1px 1px @cm-black;
       }
@@ -393,10 +403,10 @@
       box-shadow: 0 @push-height 0 darken(@cm-background-color, 15%);
 
       &:hover {
-        box-shadow: 0 @push-height 0 darken(@cm-button-color, 15%);
+        box-shadow: 0 @push-height 0 darken(@cm-button-blue, 15%);
       }
       &.active {
-        box-shadow: inset 0 0 0 darken(@cm-button-color, 10%);
+        box-shadow: inset 0 0 0 darken(@cm-button-blue, 10%);
         top: 0;
       }
     }
@@ -409,7 +419,7 @@
         padding: 2px 6px 4px 10px;
       }
       &:active {
-        box-shadow: inset 0 0 0 darken(@cm-button-color, 10%);
+        box-shadow: inset 0 0 0 darken(@cm-button-blue, 10%);
         top: 0;
       }
     }
