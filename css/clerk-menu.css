@@ -2,6 +2,9 @@
 body.mce-fullscreen #binarta-clerk-menu {
   top: -60px;
 }
+#mce-modal-block {
+  z-index: 1040 !important;
+}
 #binarta-clerk-menu-top-fix {
   height: 60px;
 }
