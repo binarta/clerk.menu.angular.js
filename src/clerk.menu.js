@@ -88,16 +88,11 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '</a>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
-        '<button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button" id="adminMenu" role="button" aria-expanded="false">' +
+        '<a class="btn-clerk-menu" href="#!/{{localePrefix}}admin">' +
         '<i class="fa fa-cog fa-fw"></i>' +
         '<span class="visible-xs">INST</span>' +
         '<span class="hidden-xs">INSTELLINGEN</span>' +
-        '</button>' +
-        '<div class="dropdown-menu admin-menu" role="menu" aria-labelledby="adminMenu">' +
-        '<div class="dropdown-menu-inner">' +
-        'Deze functionaliteit is momenteel nog niet beschikbaar. Binnenkort zal je via deze link je website verder kunnen instellen.' +
-        '</div>' +
-        '</div>' +
+        '</a>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
         '<button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button" id="accountMenu" role="button" aria-expanded="false">' +
