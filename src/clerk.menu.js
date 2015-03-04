@@ -64,7 +64,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '<div class="binarta-clerk-menu-buttons">' +
         '<div class="clerk-menu-item" ng-class="{true:\'open\'}[editModeOpened]">' +
         '<button toggle-edit-mode ng-click="toggleEditMode()" accesskey="e" class="btn-clerk-menu btn-clerk-menu-edit" ng-class="{true:\'active\'}[editing]"' +
-        'checkpoint-permission-for="edit.mode" ng-disabled="!permitted"' +
+        'checkpoint-permission-for="edit.mode" ng-disabled="!permitted || editModeOpened"' +
         'analytics-on="click" analytics-category="clerk-menu" analytics-event="toggle-edit-mode">' +
         '<i class="fa fa-magic fa-fw"></i>' +
         '<span>EDIT</span>' +
