@@ -1,5 +1,5 @@
-angular.module('clerk.menu', ['notifications', 'config', 'angularx', 'i18n', 'toggle.edit.mode'])
-    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', '$location', 'account', ClerkMenuDirectiveFactory])
+angular.module('clerk.menu', ['notifications', 'config', 'angularx', 'i18n', 'toggle.edit.mode', 'browser.info'])
+    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', '$location', 'account', 'browserInfo', ClerkMenuDirectiveFactory])
     .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', function (i18nRendererInstaller, editModeRenderer, $rootScope) {
         i18nRendererInstaller({
             open: function (args) {
@@ -24,7 +24,7 @@ angular.module('clerk.menu', ['notifications', 'config', 'angularx', 'i18n', 'to
         });
     }]);
 
-function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, account) {
+function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, account, browserInfo) {
     return {
         scope: true,
         restrict: 'E',
@@ -76,7 +76,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '</div>' +
         '</div>' +
         '<div class="clerk-menu-item" seo-support>' +
-        '<button class="btn-clerk-menu" data-toggle="dropdown" type="button" role="button" ng-click="open()">' +
+        '<button class="btn-clerk-menu" type="button" role="button" ng-click="open()">' +
         '<i class="fa fa-globe fa-fw"></i>' +
         '<span>SEO</span>' +
         '</button>' +
@@ -125,7 +125,21 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
                 });
             }
 
+            var position = 0;
+
             scope.$on('edit.mode.renderer', function (event, args) {
+                if (browserInfo.mobile) {
+                    var body = $('body');
+                    if (args.open) {
+                        position = body.scrollTop();
+                        body.addClass('binarta-clerk-menu-fullscreen');
+                        body.children().not('clerk-menu').hide();
+                    } else {
+                        body.removeClass('binarta-clerk-menu-fullscreen');
+                        body.children().not('clerk-menu').show();
+                        body.scrollTo(0, position);
+                    }
+                }
                 scope.editModeOpened = args.open;
             });
 

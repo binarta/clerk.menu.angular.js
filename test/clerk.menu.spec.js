@@ -1,5 +1,6 @@
 describe('clerk menu module', function () {
     angular.module('angularx', []);
+    angular.module('browser.info', []);
 
     var editModeRendererSpy, editModeRendererClosedSpy;
     angular.module('toggle.edit.mode', [])
@@ -19,7 +20,6 @@ describe('clerk menu module', function () {
                 i18nRendererInstallerSpy = args;
             };
         });
-
 
     beforeEach(module('clerk.menu'));
     beforeEach(module('notifications'));
@@ -70,7 +70,7 @@ describe('clerk menu module', function () {
     });
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, topics, $location, host, account, user;
+        var scope, directive, registry, config, topics, $location, host, account, user, height;
 
         beforeEach(inject(function ($rootScope, ngRegisterTopicHandler, topicRegistryMock, $q) {
             scope = $rootScope.$new();
@@ -99,7 +99,47 @@ describe('clerk menu module', function () {
                 }
             };
 
-            directive = ClerkMenuDirectiveFactory(topics, config, $location, account);
+            var browserInfo = {
+                mobile: true
+            };
+
+            $ = function (body) {
+                $.element = body;
+
+                return {
+                    scrollTop: function () {
+                        height = 100;
+                        return height;
+                    },
+                    addClass: function (c) {
+                        $.addedClass = c;
+                    },
+                    removeClass: function (c) {
+                        $.removedClass = c;
+                    },
+                    children: function () {
+                        return {
+                            not: function (c) {
+                                $.not = c;
+                                return {
+                                    show: function () {
+                                        $.showCalled = true;
+                                    },
+                                    hide: function () {
+                                        $.hideCalled = true;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scrollTo: function (left, top) {
+                        $.scrollToLeft = left;
+                        $.scrollToTop = top;
+                    }
+                }
+            };
+
+            directive = ClerkMenuDirectiveFactory(topics, config, $location, account, browserInfo);
         }));
 
         it('creates a child scope', function () {
@@ -206,8 +246,49 @@ describe('clerk menu module', function () {
                 scope.$broadcast('edit.mode.renderer', {open: true});
             });
 
-            it('put value on scope', function () {
-                expect(scope.editModeOpened).toBeTruthy();
+            describe('open edit mode menu', function () {
+                it('put value on scope', function () {
+                    expect(scope.editModeOpened).toBeTruthy();
+                });
+
+                describe('and device is mobile', function () {
+                    it('get body element', function () {
+                        expect($.element).toEqual('body');
+                    });
+
+                    it('get current position', function () {
+                        expect(height).toEqual(100);
+                    });
+
+                    it('add class to body', function () {
+                        expect($.addedClass).toEqual('binarta-clerk-menu-fullscreen');
+                    });
+
+                    it('hide all children of body except for the clerk menu', function () {
+                        expect($.hideCalled).toBeTruthy();
+                        expect($.not).toEqual('clerk-menu');
+                    });
+                });
+
+                describe('close edit mode menu', function () {
+                    beforeEach(function () {
+                       scope.$broadcast('edit.mode.renderer', {open: false});
+                    });
+
+                    it('remove class from body', function () {
+                        expect($.removedClass).toEqual('binarta-clerk-menu-fullscreen');
+                    });
+
+                    it('show all children of body', function () {
+                        expect($.showCalled).toBeTruthy();
+                        expect($.not).toEqual('clerk-menu');
+                    });
+
+                    it('go to remembered position', function () {
+                        expect($.scrollToLeft).toEqual(0);
+                        expect($.scrollToTop).toEqual(height);
+                    });
+                });
             });
         });
     });
