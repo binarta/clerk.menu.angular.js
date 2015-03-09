@@ -70,7 +70,7 @@ describe('clerk menu module', function () {
     });
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, topics, $location, host, account, user, height;
+        var scope, directive, registry, config, topics, $location, host, account, user, height, window;
 
         beforeEach(inject(function ($rootScope, ngRegisterTopicHandler, topicRegistryMock, $q) {
             scope = $rootScope.$new();
@@ -131,15 +131,18 @@ describe('clerk menu module', function () {
                                 }
                             }
                         }
-                    },
-                    scrollTo: function (left, top) {
-                        $.scrollToLeft = left;
-                        $.scrollToTop = top;
                     }
                 }
             };
 
-            directive = ClerkMenuDirectiveFactory(topics, config, $location, account, browserInfo);
+            window = {
+                scrollTo: function (left, top) {
+                    window.scrollToLeft = left;
+                    window.scrollToTop = top;
+                }
+            };
+
+            directive = ClerkMenuDirectiveFactory(topics, config, $location, account, browserInfo, window);
         }));
 
         it('creates a child scope', function () {
@@ -285,8 +288,8 @@ describe('clerk menu module', function () {
                     });
 
                     it('go to remembered position', function () {
-                        expect($.scrollToLeft).toEqual(0);
-                        expect($.scrollToTop).toEqual(height);
+                        expect(window.scrollToLeft).toEqual(0);
+                        expect(window.scrollToTop).toEqual(height);
                     });
                 });
             });

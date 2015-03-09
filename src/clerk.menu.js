@@ -1,5 +1,5 @@
 angular.module('clerk.menu', ['notifications', 'config', 'angularx', 'i18n', 'toggle.edit.mode', 'browser.info'])
-    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', '$location', 'account', 'browserInfo', ClerkMenuDirectiveFactory])
+    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', '$location', 'account', 'browserInfo', '$window', ClerkMenuDirectiveFactory])
     .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', function (i18nRendererInstaller, editModeRenderer, $rootScope) {
         i18nRendererInstaller({
             open: function (args) {
@@ -24,7 +24,7 @@ angular.module('clerk.menu', ['notifications', 'config', 'angularx', 'i18n', 'to
         });
     }]);
 
-function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, account, browserInfo) {
+function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, account, browserInfo, $window) {
     return {
         scope: true,
         restrict: 'E',
@@ -137,7 +137,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
                     } else {
                         body.removeClass('binarta-clerk-menu-fullscreen');
                         body.children().not('clerk-menu').show();
-                        body.scrollTo(0, position);
+                        $window.scrollTo(0, position);
                     }
                 }
                 scope.editModeOpened = args.open;
