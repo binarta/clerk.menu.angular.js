@@ -42,11 +42,13 @@ body.binarta-clerk-menu-fullscreen {
 
   #binarta-clerk-menu {
     .dropdown-menu {
+      top: 0;
       left: 0;
       right: 0;
       margin: 0;
+      padding-top: @cm-total-height;
       width: 100%;
-      max-height: inherit;
+      max-height: 100%;
     }
   }
 }
@@ -175,6 +177,7 @@ body.binarta-clerk-menu-fullscreen {
     border-bottom: @cm-border-bottom-height solid @cm-border-color;
     border-radius: 0;
     z-index: -1;
+    overflow: auto;
 
     .dropdown-menu-inner {
       padding: 20px;
@@ -326,7 +329,6 @@ body.binarta-clerk-menu-fullscreen {
 
     .dropdown-menu {
       max-height: 80%;
-      overflow: auto;
     }
   }
 }
@@ -338,6 +340,14 @@ body.binarta-clerk-menu-fullscreen {
   .mce-fullscreen {
     #binarta-clerk-menu {
       top: -@cm-total-height;
+    }
+  }
+
+  body.binarta-clerk-menu-fullscreen {
+    #binarta-clerk-menu {
+      .dropdown-menu {
+        padding-top: @cm-total-height;
+      }
     }
   }
 
