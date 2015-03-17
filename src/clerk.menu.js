@@ -1,4 +1,4 @@
-angular.module('clerk.menu', ['notifications', 'config', 'angularx', 'i18n', 'toggle.edit.mode', 'browser.info'])
+angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', 'toggle.edit.mode', 'browser.info'])
     .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', '$location', 'account', 'browserInfo', '$window', ClerkMenuDirectiveFactory])
     .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', function (i18nRendererInstaller, editModeRenderer, $rootScope) {
         i18nRendererInstaller({

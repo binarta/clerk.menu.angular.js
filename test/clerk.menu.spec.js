@@ -1,6 +1,9 @@
 describe('clerk menu module', function () {
     angular.module('angularx', []);
     angular.module('browser.info', []);
+    angular.module('rest.client', []);
+    angular.module('angular.usecase.adapter', []);
+    angular.module('checkpoint', []);
 
     var editModeRendererSpy, editModeRendererClosedSpy;
     angular.module('toggle.edit.mode', [])
