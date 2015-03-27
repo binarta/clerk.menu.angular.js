@@ -36,26 +36,26 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '<div class="binarta-clerk-menu-left">' +
         '<div class="binarta-clerk-menu-brand" ng-if="published">' +
         '<a href="https://binarta.com">' +
-        '<img src="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo.png"' +
-        'srcset="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo.png 1x,' +
-        '//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo@2x.png 2x,' +
-        '//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo@3x.png 3x"' +
+        '<img src="//cdn.binarta.com/image/clerk-menu/logo.png"' +
+        'srcset="//cdn.binarta.com/image/clerk-menu/logo.png 1x,' +
+        '//cdn.binarta.com/image/clerk-menu/logo@2x.png 2x,' +
+        '//cdn.binarta.com/image/clerk-menu/logo@3x.png 3x"' +
         'alt="Binarta logo"' +
         'class="binarta-clerk-menu-brand-normal">' +
-        '<img src="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small.png"' +
-        'srcset="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small.png 1x,' +
-        '//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small@2x.png 2x,' +
-        '//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small@3x.png 3x"' +
+        '<img src="//cdn.binarta.com/image/clerk-menu/logo-small.png"' +
+        'srcset="//cdn.binarta.com/image/clerk-menu/logo-small.png 1x,' +
+        '//cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x,' +
+        '//cdn.binarta.com/image/clerk-menu/logo-small@3x.png 3x"' +
         'alt="Binarta logo"' +
         'class="binarta-clerk-menu-brand-small">' +
         '</a>' +
         '</div>' +
         '<div ng-if="!published">' +
         '<a class="btn-clerk-menu btn-clerk-menu-publish" href="https://binarta.com/#!/applications">' +
-        '<img src="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small.png"' +
-        'srcset="//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small.png 1x,' +
-        '//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small@2x.png 2x,' +
-        '//s3-eu-west-1.amazonaws.com/binarta/image/clerk-menu/logo-small@3x.png 3x"' +
+        '<img src="//cdn.binarta.com/image/clerk-menu/logo-small.png"' +
+        'srcset="//cdn.binarta.com/image/clerk-menu/logo-small.png 1x,' +
+        '//cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x,' +
+        '//cdn.binarta.com/image/clerk-menu/logo-small@3x.png 3x"' +
         'alt="Binarta logo">' +
         '<span>UPGRADEN</span>' +
         '</a>' +
