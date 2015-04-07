@@ -134,6 +134,7 @@ body.binarta-clerk-menu-fullscreen {
     &[disabled] {
       pointer-events: none;
       cursor: default;
+      color: lighten(@cm-black, 40%);
     }
   }
   .clerk-menu-item {
@@ -178,6 +179,19 @@ body.binarta-clerk-menu-fullscreen {
     border-radius: 0;
     z-index: -1;
     overflow: auto;
+
+    &.account-menu {
+      a {
+        i {
+          color: lighten(@cm-black, 50%);
+        }
+        &:hover {
+          i {
+            color: darken(@cm-white, 15%);
+          }
+        }
+      }
+    }
 
     .dropdown-menu-inner {
       padding: 20px;
@@ -304,7 +318,9 @@ body.binarta-clerk-menu-fullscreen {
 
     .btn-clerk-menu-edit,
     .btn-clerk-menu-publish {
-      border: 2px solid @cm-button-blue;
+      border-left: 2px solid #00afd0;
+      border-right: 2px solid #00afd0;
+      border-top: 2px solid #00afd0;
       span {
         width: 100%;
         background-color: @cm-button-blue;
@@ -455,6 +471,12 @@ body.binarta-clerk-menu-fullscreen {
         top: @cm-total-height - @cm-border-bottom-height;
         animation-name: fadeInDown;
         animation-duration: 0.1s;
+
+        li {
+          a {
+            padding-left: 10px;
+          }
+        }
       }
     }
     .dropdown-menu {

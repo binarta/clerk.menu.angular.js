@@ -15,7 +15,7 @@ angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', '
 
                 scope.translation = args.translation;
                 scope.editor = args.editor || 'default';
-                
+
                 editModeRenderer.open({
                     template: args.template,
                     scope: scope
@@ -35,7 +35,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '<div id="binarta-clerk-menu">' +
         '<div class="binarta-clerk-menu-left">' +
         '<div class="binarta-clerk-menu-brand" ng-if="published">' +
-        '<a href="https://binarta.com">' +
+        '<a ng-href="#!/{{localePrefix}}">' +
         '<img src="//cdn.binarta.com/image/clerk-menu/logo.png"' +
         'srcset="//cdn.binarta.com/image/clerk-menu/logo.png 1x,' +
         '//cdn.binarta.com/image/clerk-menu/logo@2x.png 2x,' +
@@ -75,6 +75,12 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '</div>' +
         '</div>' +
         '</div>' +
+        '<div class="clerk-menu-item">' +
+        '<a class="btn-clerk-menu" ng-disabled="isHomePageActive()" ng-href="#!/{{localePrefix}}">' +
+        '<i class="fa fa-home fa-fw"></i>' +
+        '<span>HOME</span>' +
+        '</a>' +
+        '</div>' +
         '<div class="clerk-menu-item" seo-support>' +
         '<button class="btn-clerk-menu" type="button" role="button" ng-click="open()">' +
         '<i class="fa fa-globe fa-fw"></i>' +
@@ -82,16 +88,9 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '</button>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
-        '<a class="btn-clerk-menu" href="https://binarta.com/#!/contact/Support {{namespace}}?email={{user.email}}">' +
+        '<a class="btn-clerk-menu" ng-href="https://binarta.com/#!/contact/Support {{namespace}}?email={{user.email}}">' +
         '<i class="fa fa-life-ring fa-fw"></i>' +
         '<span>HELP</span>' +
-        '</a>' +
-        '</div>' +
-        '<div class="clerk-menu-item">' +
-        '<a class="btn-clerk-menu" href="#!/{{localePrefix}}admin">' +
-        '<i class="fa fa-cog fa-fw"></i>' +
-        '<span class="visible-xs">INST</span>' +
-        '<span class="hidden-xs">INSTELLINGEN</span>' +
         '</a>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
@@ -100,13 +99,10 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '<span>ACCOUNT</span>' +
         '</button>' +
         '<ul class="dropdown-menu account-menu" role="menu" aria-labelledby="accountMenu">' +
-        '<li><a href="#!/{{localePrefix}}changemypassword">Wachtwoord veranderen</a></li>' +
-        '<li><a href="https://binarta.com/#!/applications">Mijn websites</a></li>' +
-        '<li ng-controller="SignoutController">' +
-        '<a href="" ng-click="submit()">' +
-        '<i class="fa fa-sign-out"></i> Uitloggen' +
-        '</a>' +
-        '</li>' +
+        '<li><a ng-href="#!/{{localePrefix}}admin"><i class="fa fa-cog fa-fw"></i> Site instellingen</a></li>' +
+        '<li><a ng-href="#!/{{localePrefix}}changemypassword"><i class="fa fa-lock fa-fw"></i> Wachtwoord veranderen</a></li>' +
+        '<li><a href="https://binarta.com/#!/applications"><i class="fa fa-external-link fa-fw"></i> Mijn websites</a></li>' +
+        '<li ng-controller="SignoutController"><a href="" ng-click="submit()"><i class="fa fa-sign-out fa-fw"></i> Uitloggen</a></li>' +
         '</ul>' +
         '</div>' +
         '</div>' +
@@ -117,7 +113,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         link: function (scope) {
 
             scope.namespace = config.namespace;
-            if(config.supportedLanguages) putLocalePrefixOnScope();
+            if (config.supportedLanguages) putLocalePrefixOnScope();
 
             function putLocalePrefixOnScope() {
                 ngRegisterTopicHandler(scope, 'i18n.locale', function (locale) {
@@ -143,15 +139,19 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
                 scope.editModeOpened = args.open;
             });
 
-            account.getMetadata().then(function(metadata) {
+            account.getMetadata().then(function (metadata) {
                 scope.user = metadata;
-            }, function() {
+            }, function () {
                 scope.user = {};
             });
 
             var host = $location.host();
             var hostToCheck = 'binarta.com';
             scope.published = host.indexOf(hostToCheck, host.length - hostToCheck.length) == -1;
+
+            scope.isHomePageActive = function () {
+                return (scope.localePrefix ? '/' + scope.localePrefix : '/') == $location.path();
+            };
         }
     };
 }

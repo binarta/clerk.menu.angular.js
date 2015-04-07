@@ -73,7 +73,7 @@ describe('clerk menu module', function () {
     });
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, topics, $location, host, account, user, height, window;
+        var scope, directive, registry, config, topics, $location, host, path, account, user, height, window;
 
         beforeEach(inject(function ($rootScope, ngRegisterTopicHandler, topicRegistryMock, $q) {
             scope = $rootScope.$new();
@@ -87,6 +87,9 @@ describe('clerk menu module', function () {
             $location = {
                 host: function () {
                     return host;
+                },
+                path: function () {
+                    return path;
                 }
             };
 
@@ -293,6 +296,62 @@ describe('clerk menu module', function () {
                     it('go to remembered position', function () {
                         expect(window.scrollToLeft).toEqual(0);
                         expect(window.scrollToTop).toEqual(height);
+                    });
+                });
+            });
+        });
+
+        describe('check for homepage', function () {
+            describe('not on homepage', function () {
+                beforeEach(function () {
+                    path = '/foo';
+
+                    directive.link(scope, null, {});
+                });
+
+                it('value is false', function () {
+                    expect(scope.isHomePageActive()).toBeFalsy();
+                });
+            });
+
+            describe('on homepage', function () {
+                beforeEach(function () {
+                    path = '/';
+
+                    directive.link(scope, null, {});
+                });
+
+                it('value is false', function () {
+                    expect(scope.isHomePageActive()).toBeTruthy();
+                });
+            });
+
+            describe('and locale', function () {
+                beforeEach(function () {
+                    scope.localePrefix = 'locale';
+                });
+
+                describe('not on homepage', function () {
+                    beforeEach(function () {
+                        path = '/locale/foo';
+
+                        directive.link(scope, null, {});
+                    });
+
+                    it('value is false', function () {
+                        expect(scope.isHomePageActive()).toBeFalsy();
+                    });
+                });
+
+                describe('on homepage', function () {
+                    beforeEach(function () {
+                        path = '/locale';
+
+                        directive.link(scope, null, {});
+                    });
+
+                    it('value is false', function () {
+                        expect(scope.isHomePageActive()).toBeTruthy();
                     });
                 });
             });
