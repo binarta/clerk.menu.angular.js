@@ -38,15 +38,16 @@ body.mce-fullscreen {
 
 body.binarta-clerk-menu-fullscreen {
   background: rgba(0,0,0,0.7);
-  transition: background 200ms ease;
 
   #binarta-clerk-menu {
+    top: -@cm-total-height;
+    box-shadow: none;
+
     .dropdown-menu {
       top: 0;
       left: 0;
       right: 0;
       margin: 0;
-      padding-top: @cm-total-height;
       width: 100%;
       max-height: 100%;
     }
@@ -88,11 +89,16 @@ body.binarta-clerk-menu-fullscreen {
     float: left;
   }
 
-  .binarta-clerk-menu-brand-small {
-    display: block;
-  }
-  .binarta-clerk-menu-brand-normal {
-    display: none;
+  .binarta-clerk-menu-brand {
+    a {
+      display: block;
+    }
+    .binarta-clerk-menu-brand-small {
+      display: block;
+    }
+    .binarta-clerk-menu-brand-normal {
+      display: none;
+    }
   }
 
   .visible-xs {
@@ -104,6 +110,13 @@ body.binarta-clerk-menu-fullscreen {
 
   .binarta-clerk-menu-buttons {
     float: right;
+  }
+
+  a[disabled],
+  button[disabled] {
+    pointer-events: none;
+    cursor: default;
+    color: lighten(@cm-black, 40%);
   }
 
   .btn-clerk-menu {
@@ -129,12 +142,6 @@ body.binarta-clerk-menu-fullscreen {
     i {
       font-size: 24px;
       line-height: 24px;
-    }
-
-    &[disabled] {
-      pointer-events: none;
-      cursor: default;
-      color: lighten(@cm-black, 40%);
     }
   }
   .clerk-menu-item {
@@ -330,7 +337,9 @@ body.binarta-clerk-menu-fullscreen {
 
       &.active,
       &:hover {
-        border: 2px solid @cm-button-blue;
+        border-left: 2px solid @cm-button-blue;
+        border-right: 2px solid @cm-button-blue;
+        border-top: 2px solid @cm-button-blue;
         span {
           background-color: @cm-button-blue;
         }
@@ -378,13 +387,12 @@ body.binarta-clerk-menu-fullscreen {
       img {
         padding: 3px 15px;
       }
-    }
-
-    .binarta-clerk-menu-brand-small {
-      display: none;
-    }
-    .binarta-clerk-menu-brand-normal {
-      display: block;
+      .binarta-clerk-menu-brand-small {
+        display: none;
+      }
+      .binarta-clerk-menu-brand-normal {
+        display: block;
+      }
     }
 
     .visible-xs {

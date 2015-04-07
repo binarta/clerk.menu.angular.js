@@ -35,7 +35,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '<div id="binarta-clerk-menu">' +
         '<div class="binarta-clerk-menu-left">' +
         '<div class="binarta-clerk-menu-brand" ng-if="published">' +
-        '<a ng-href="#!/{{localePrefix}}">' +
+        '<a ng-href="#!/{{localePrefix}}" ng-disabled="editModeOpened">' +
         '<img src="//cdn.binarta.com/image/clerk-menu/logo.png"' +
         'srcset="//cdn.binarta.com/image/clerk-menu/logo.png 1x,' +
         '//cdn.binarta.com/image/clerk-menu/logo@2x.png 2x,' +
@@ -51,7 +51,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '</a>' +
         '</div>' +
         '<div ng-if="!published">' +
-        '<a class="btn-clerk-menu btn-clerk-menu-publish" href="https://binarta.com/#!/applications">' +
+        '<a class="btn-clerk-menu btn-clerk-menu-publish" href="https://binarta.com/#!/applications" ng-disabled="editModeOpened">' +
         '<img src="//cdn.binarta.com/image/clerk-menu/logo-small.png"' +
         'srcset="//cdn.binarta.com/image/clerk-menu/logo-small.png 1x,' +
         '//cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x,' +
@@ -76,25 +76,25 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '</div>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
-        '<a class="btn-clerk-menu" ng-disabled="isHomePageActive()" ng-href="#!/{{localePrefix}}">' +
+        '<a class="btn-clerk-menu" ng-disabled="isHomePageActive() || editModeOpened" ng-href="#!/{{localePrefix}}">' +
         '<i class="fa fa-home fa-fw"></i>' +
         '<span>HOME</span>' +
         '</a>' +
         '</div>' +
         '<div class="clerk-menu-item" seo-support>' +
-        '<button class="btn-clerk-menu" type="button" role="button" ng-click="open()">' +
+        '<button class="btn-clerk-menu" type="button" role="button" ng-click="open()" ng-disabled="editModeOpened">' +
         '<i class="fa fa-globe fa-fw"></i>' +
         '<span>SEO</span>' +
         '</button>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
-        '<a class="btn-clerk-menu" ng-href="https://binarta.com/#!/contact/Support {{namespace}}?email={{user.email}}">' +
+        '<a class="btn-clerk-menu" ng-href="https://binarta.com/#!/contact/Support {{namespace}}?email={{user.email}}" ng-disabled="editModeOpened">' +
         '<i class="fa fa-life-ring fa-fw"></i>' +
         '<span>HELP</span>' +
         '</a>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
-        '<button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button" id="accountMenu" role="button" aria-expanded="false">' +
+        '<button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button" id="accountMenu" role="button" aria-expanded="false" ng-disabled="editModeOpened">' +
         '<i class="fa fa-user fa-fw"></i>' +
         '<span>ACCOUNT</span>' +
         '</button>' +
@@ -126,11 +126,12 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
             scope.$on('edit.mode.renderer', function (event, args) {
                 if (browserInfo.mobile) {
                     var body = $('body');
-                    if (args.open) {
+                    if (args.open && !scope.editModeOpened) {
                         position = body.scrollTop();
                         body.addClass('binarta-clerk-menu-fullscreen');
                         body.children().not('clerk-menu').hide();
-                    } else {
+                    }
+                    if (!args.open && scope.editModeOpened) {
                         body.removeClass('binarta-clerk-menu-fullscreen');
                         body.children().not('clerk-menu').show();
                         $window.scrollTo(0, position);
