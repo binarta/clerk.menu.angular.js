@@ -57,7 +57,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '//cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x,' +
         '//cdn.binarta.com/image/clerk-menu/logo-small@3x.png 3x"' +
         'alt="Binarta logo">' +
-        '<span>UPGRADEN</span>' +
+        '<span i18n code="clerk.menu.upgrade.button" default="UPGRADEN" read-only>{{var}}</span>' +
         '</a>' +
         '</div>' +
         '</div>' +
@@ -67,7 +67,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         'checkpoint-permission-for="edit.mode" ng-disabled="!permitted || editModeOpened"' +
         'analytics-on="click" analytics-category="clerk-menu" analytics-event="toggle-edit-mode">' +
         '<i class="fa fa-magic fa-fw"></i>' +
-        '<span>EDIT</span>' +
+        '<span i18n code="clerk.menu.edit.button" default="EDIT" read-only>{{var}}</span>' +
         '</button>' +
         '<div class="dropdown-menu" role="menu" aria-labelledby="editModeMenu">' +
         '<div class="dropdown-menu-inner">' +
@@ -78,31 +78,31 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '<div class="clerk-menu-item">' +
         '<a class="btn-clerk-menu" ng-disabled="isHomePageActive() || editModeOpened" ng-href="#!/{{localePrefix}}">' +
         '<i class="fa fa-home fa-fw"></i>' +
-        '<span>HOME</span>' +
+        '<span i18n code="clerk.menu.home.button" default="HOME" read-only>{{var}}</span>' +
         '</a>' +
         '</div>' +
         '<div class="clerk-menu-item" seo-support>' +
         '<button class="btn-clerk-menu" type="button" role="button" ng-click="open()" ng-disabled="editModeOpened">' +
         '<i class="fa fa-globe fa-fw"></i>' +
-        '<span>SEO</span>' +
+        '<span i18n code="clerk.menu.seo.button" default="SEO" read-only>{{var}}</span>' +
         '</button>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
         '<a class="btn-clerk-menu" ng-href="https://binarta.com/#!/contact/Support {{namespace}}?email={{user.email}}" ng-disabled="editModeOpened">' +
         '<i class="fa fa-life-ring fa-fw"></i>' +
-        '<span>HELP</span>' +
+        '<span i18n code="clerk.menu.help.button" default="HELP" read-only>{{var}}</span>' +
         '</a>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
         '<button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button" id="accountMenu" role="button" aria-expanded="false" ng-disabled="editModeOpened">' +
         '<i class="fa fa-user fa-fw"></i>' +
-        '<span>ACCOUNT</span>' +
+        '<span i18n code="clerk.menu.account.button" default="ACCOUNT" read-only>{{var}}</span>' +
         '</button>' +
         '<ul class="dropdown-menu account-menu" role="menu" aria-labelledby="accountMenu">' +
-        '<li><a ng-href="#!/{{localePrefix}}admin"><i class="fa fa-cog fa-fw"></i> Site instellingen</a></li>' +
-        '<li><a ng-href="#!/{{localePrefix}}changemypassword"><i class="fa fa-lock fa-fw"></i> Wachtwoord veranderen</a></li>' +
-        '<li><a href="https://binarta.com/#!/applications"><i class="fa fa-external-link fa-fw"></i> Mijn websites</a></li>' +
-        '<li ng-controller="SignoutController"><a href="" ng-click="submit()"><i class="fa fa-sign-out fa-fw"></i> Uitloggen</a></li>' +
+        '<li><a ng-href="#!/{{localePrefix}}admin" i18n code="clerk.menu.site.settings.link" default="Site instellingen" read-only><i class="fa fa-cog fa-fw"></i> {{var}}</a></li>' +
+        '<li><a ng-href="#!/{{localePrefix}}changemypassword" i18n code="clerk.menu.change.password.link" default="Wachtwoord veranderen" read-only><i class="fa fa-lock fa-fw"></i> {{var}}</a></li>' +
+        '<li><a href="https://binarta.com/#!/applications" i18n code="clerk.menu.my.applications.link" default="Mijn websites" read-only><i class="fa fa-external-link fa-fw"></i> {{var}}</a></li>' +
+        '<li ng-controller="SignoutController"><a href="" ng-click="submit()" i18n code="clerk.menu.logout.link" default="Uitloggen" read-only><i class="fa fa-sign-out fa-fw"></i> {{var}}</a></li>' +
         '</ul>' +
         '</div>' +
         '</div>' +

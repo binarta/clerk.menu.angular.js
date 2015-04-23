@@ -2,7 +2,8 @@
   "name": "binarta.clerk.menu.angular",
   "main": [
     "./src/clerk.menu.js",
-    "./less/clerk-menu.less"
+    "./less/clerk-menu.less",
+    "./metadata.json"
   ],
   "dependencies": {
     "angular": "1.3.*",
