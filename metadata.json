@@ -1,16 +1,16 @@
 {
   "msgs":{
     "default":{
-      "clerk.menu.upgrade.button": "UPGRADEN",
+      "clerk.menu.upgrade.button": "UPGRADE",
       "clerk.menu.edit.button": "EDIT",
       "clerk.menu.home.button": "HOME",
       "clerk.menu.seo.button": "SEO",
       "clerk.menu.help.button": "HELP",
       "clerk.menu.account.button": "ACCOUNT",
-      "clerk.menu.site.settings.link": "Site instellingen",
-      "clerk.menu.change.password.link": "Wachtwoord veranderen",
-      "clerk.menu.my.applications.link": "Mijn websites",
-      "clerk.menu.logout.link": "Uitloggen"
+      "clerk.menu.site.settings.link": "Site settings",
+      "clerk.menu.change.password.link": "Change password",
+      "clerk.menu.my.applications.link": "My sites",
+      "clerk.menu.logout.link": "Log out"
     },
     "nl":{
       "clerk.menu.upgrade.button": "UPGRADEN",
@@ -35,6 +35,30 @@
       "clerk.menu.change.password.link": "Change password",
       "clerk.menu.my.applications.link": "My sites",
       "clerk.menu.logout.link": "Log out"
+    },
+    "fr":{
+      "clerk.menu.upgrade.button": "MISE À NIVEAU",
+      "clerk.menu.edit.button": "EDITER",
+      "clerk.menu.home.button": "ACCUEIL",
+      "clerk.menu.seo.button": "SEO",
+      "clerk.menu.help.button": "AIDE",
+      "clerk.menu.account.button": "COMPTE",
+      "clerk.menu.site.settings.link": "Paramètres du site",
+      "clerk.menu.change.password.link": "Changer de mot de passe",
+      "clerk.menu.my.applications.link": "Mes sites",
+      "clerk.menu.logout.link": "Déconnecter"
+    },
+    "de":{
+      "clerk.menu.upgrade.button": "AKTUALISIEREN",
+      "clerk.menu.edit.button": "BEARBEITEN",
+      "clerk.menu.home.button": "HOME",
+      "clerk.menu.seo.button": "SMO",
+      "clerk.menu.help.button": "HILFE",
+      "clerk.menu.account.button": "KONTO",
+      "clerk.menu.site.settings.link": "Website-Einstellungen",
+      "clerk.menu.change.password.link": "Passwort ändern",
+      "clerk.menu.my.applications.link": "Meine Websites",
+      "clerk.menu.logout.link": "Abmelden"
     }
   }
 }

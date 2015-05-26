@@ -1,5 +1,5 @@
 angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', 'toggle.edit.mode', 'browser.info'])
-    .directive('clerkMenu', ['ngRegisterTopicHandler', 'config', '$location', 'account', 'browserInfo', '$window', ClerkMenuDirectiveFactory])
+    .directive('clerkMenu', ['config', '$location', 'account', 'browserInfo', '$window', '$rootScope', ClerkMenuDirectiveFactory])
     .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', function (i18nRendererInstaller, editModeRenderer, $rootScope) {
         i18nRendererInstaller({
             open: function (args) {
@@ -24,7 +24,7 @@ angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', '
         });
     }]);
 
-function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, account, browserInfo, $window) {
+function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $window, $rootScope) {
     return {
         scope: true,
         restrict: 'E',
@@ -35,7 +35,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '<div id="binarta-clerk-menu">' +
         '<div class="binarta-clerk-menu-left">' +
         '<div class="binarta-clerk-menu-brand" ng-if="published">' +
-        '<a ng-href="#!/{{localePrefix}}" ng-disabled="editModeOpened">' +
+        '<a ng-href="#!{{localePrefix}}/" ng-disabled="editModeOpened">' +
         '<img src="//cdn.binarta.com/image/clerk-menu/logo.png"' +
         'srcset="//cdn.binarta.com/image/clerk-menu/logo.png 1x,' +
         '//cdn.binarta.com/image/clerk-menu/logo@2x.png 2x,' +
@@ -76,7 +76,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '</div>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
-        '<a class="btn-clerk-menu" ng-disabled="isHomePageActive() || editModeOpened" ng-href="#!/{{localePrefix}}">' +
+        '<a class="btn-clerk-menu" ng-disabled="isHomePageActive() || editModeOpened" ng-href="#!{{localePrefix}}/">' +
         '<i class="fa fa-home fa-fw"></i>' +
         '<span i18n code="clerk.menu.home.button" default="HOME" read-only>{{var}}</span>' +
         '</a>' +
@@ -99,10 +99,10 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         '<span i18n code="clerk.menu.account.button" default="ACCOUNT" read-only>{{var}}</span>' +
         '</button>' +
         '<ul class="dropdown-menu account-menu" role="menu" aria-labelledby="accountMenu">' +
-        '<li><a ng-href="#!/{{localePrefix}}admin" i18n code="clerk.menu.site.settings.link" default="Site instellingen" read-only><i class="fa fa-cog fa-fw"></i> {{var}}</a></li>' +
-        '<li><a ng-href="#!/{{localePrefix}}changemypassword" i18n code="clerk.menu.change.password.link" default="Wachtwoord veranderen" read-only><i class="fa fa-lock fa-fw"></i> {{var}}</a></li>' +
+        '<li><a ng-href="#!{{localePrefix}}/admin" i18n code="clerk.menu.site.settings.link" default="Site instellingen" read-only><i class="fa fa-cog fa-fw"></i> {{var}}</a></li>' +
+        '<li><a ng-href="#!{{localePrefix}}/changemypassword" i18n code="clerk.menu.change.password.link" default="Wachtwoord veranderen" read-only><i class="fa fa-lock fa-fw"></i> {{var}}</a></li>' +
         '<li><a href="https://binarta.com/#!/applications" i18n code="clerk.menu.my.applications.link" default="Mijn websites" read-only><i class="fa fa-external-link fa-fw"></i> {{var}}</a></li>' +
-        '<li ng-controller="SignoutController"><a href="" ng-click="submit()" i18n code="clerk.menu.logout.link" default="Uitloggen" read-only><i class="fa fa-sign-out fa-fw"></i> {{var}}</a></li>' +
+        '<li ng-controller="SignoutController"><a ng-href="#!{{localePrefix}}/" ng-click="submit()" i18n code="clerk.menu.logout.link" default="Uitloggen" read-only><i class="fa fa-sign-out fa-fw"></i> {{var}}</a></li>' +
         '</ul>' +
         '</div>' +
         '</div>' +
@@ -113,13 +113,6 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
         link: function (scope) {
 
             scope.namespace = config.namespace;
-            if (config.supportedLanguages) putLocalePrefixOnScope();
-
-            function putLocalePrefixOnScope() {
-                ngRegisterTopicHandler(scope, 'i18n.locale', function (locale) {
-                    scope.localePrefix = locale + '/';
-                });
-            }
 
             var position = 0;
 
@@ -151,7 +144,7 @@ function ClerkMenuDirectiveFactory(ngRegisterTopicHandler, config, $location, ac
             scope.published = host.indexOf(hostToCheck, host.length - hostToCheck.length) == -1;
 
             scope.isHomePageActive = function () {
-                return (scope.localePrefix ? '/' + scope.localePrefix : '/') == $location.path();
+                return ($rootScope.localePrefix ? $rootScope.localePrefix + '/' : '/') == $location.path();
             };
         }
     };

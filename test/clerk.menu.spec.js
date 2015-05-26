@@ -73,15 +73,15 @@ describe('clerk menu module', function () {
     });
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, topics, $location, host, path, account, user, height, window;
+        var scope, directive, registry, config, $location, host, path, account, user, height, window, $rootScope;
 
-        beforeEach(inject(function ($rootScope, ngRegisterTopicHandler, topicRegistryMock, $q) {
+        beforeEach(inject(function (_$rootScope_, topicRegistryMock, $q) {
+            $rootScope = _$rootScope_;
             scope = $rootScope.$new();
             registry = topicRegistryMock;
             config = {
                 namespace: 'namespace'
             };
-            topics = ngRegisterTopicHandler;
 
             host = 'test.binarta.com';
             $location = {
@@ -148,7 +148,7 @@ describe('clerk menu module', function () {
                 }
             };
 
-            directive = ClerkMenuDirectiveFactory(topics, config, $location, account, browserInfo, window);
+            directive = ClerkMenuDirectiveFactory(config, $location, account, browserInfo, window, $rootScope);
         }));
 
         it('creates a child scope', function () {
@@ -176,23 +176,6 @@ describe('clerk menu module', function () {
 
             it('if localization is not supported then there is no locale prefix', function () {
                 expect(scope.localePrefix).toBeUndefined();
-            });
-
-            describe('if localization is supported', function () {
-                beforeEach(function () {
-                    config.supportedLanguages = 'locale';
-                    directive.link(scope, null, {});
-                });
-
-                describe('when i18n locale notification received', function () {
-                    beforeEach(function () {
-                        registry['i18n.locale']('locale');
-                    });
-
-                    it('put locale prefix on scope', function () {
-                        expect(scope.localePrefix).toEqual('locale/');
-                    });
-                });
             });
         });
 
@@ -328,7 +311,7 @@ describe('clerk menu module', function () {
 
             describe('and locale', function () {
                 beforeEach(function () {
-                    scope.localePrefix = 'locale';
+                    $rootScope.localePrefix = '/locale';
                 });
 
                 describe('not on homepage', function () {
@@ -345,7 +328,7 @@ describe('clerk menu module', function () {
 
                 describe('on homepage', function () {
                     beforeEach(function () {
-                        path = '/locale';
+                        path = '/locale/';
 
                         directive.link(scope, null, {});
                     });
