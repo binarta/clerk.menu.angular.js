@@ -3,7 +3,8 @@
   "main": [
     "./src/clerk.menu.js",
     "./less/clerk-menu.less",
-    "./metadata.json"
+    "./metadata.json",
+    "./metadata-system.json"
   ],
   "dependencies": {
     "angular": "1.3.*",
