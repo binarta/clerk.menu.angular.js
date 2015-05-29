@@ -3,6 +3,7 @@
 @cm-shadow-color: #c2c3c2;
 @cm-button-blue: #00AFD0;
 @cm-button-green: #179f97;
+@cm-button-red: #d9534f;
 @cm-black: #222222;
 @cm-white: #ffffff;
 
@@ -88,6 +89,12 @@ body.binarta-clerk-menu-fullscreen {
     color: @cm-white;
     background: @cm-button-green;
     border-color: darken(@cm-button-green, 5%);
+  }
+
+  .btn-danger {
+    color: @cm-white;
+    background: @cm-button-red;
+    border-color: darken(@cm-button-red, 5%);
   }
 
   .binarta-clerk-menu-left {
@@ -270,6 +277,15 @@ body.binarta-clerk-menu-fullscreen {
           background-color: @cm-button-blue;
           border-radius: 3px;
           color: @cm-white;
+        }
+      }
+    }
+
+    .table {
+      tr {
+        th, td {
+          vertical-align: middle;
+          border-top: none;
         }
       }
     }
