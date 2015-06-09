@@ -57,17 +57,23 @@ describe('clerk menu module', function () {
                 expect(editModeRendererSpy.scope.editor).toEqual('editor');
             });
 
-            it('and editModeRenderer submit is called', function () {
+            it('on submit', function () {
                 editModeRendererSpy.scope.submit('test');
 
                 expect(submitSpy).toEqual('test');
                 expect(editModeRendererClosedSpy).toBeTruthy();
             });
 
-            it('and editModeRenderer cancel is called', function () {
+            it('on cancel', function () {
                 editModeRendererSpy.scope.cancel();
 
                 expect(editModeRendererClosedSpy).toBeTruthy();
+            });
+
+            it('on erase', function () {
+                editModeRendererSpy.scope.erase();
+
+                expect(editModeRendererSpy.scope.translation).toEqual('');
             });
         });
     });

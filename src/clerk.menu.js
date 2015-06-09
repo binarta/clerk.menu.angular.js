@@ -13,6 +13,10 @@ angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', '
                     editModeRenderer.close();
                 };
 
+                scope.erase = function () {
+                    scope.translation = '';
+                };
+
                 scope.translation = args.translation;
                 scope.editor = args.editor || 'default';
 
