@@ -3,26 +3,24 @@ angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', '
     .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', function (i18nRendererInstaller, editModeRenderer, $rootScope) {
         i18nRendererInstaller({
             open: function (args) {
-                var scope = $rootScope.$new();
-                scope.submit = function (translation) {
-                    args.submit(translation);
-                    editModeRenderer.close();
-                };
-
-                scope.cancel = function () {
-                    editModeRenderer.close();
-                };
-
-                scope.erase = function () {
-                    scope.translation = '';
-                };
-
-                scope.translation = args.translation;
-                scope.editor = args.editor || 'default';
+                var rendererScope = angular.extend($rootScope.$new(), {
+                    submit: function (translation) {
+                        args.submit(translation);
+                        editModeRenderer.close();
+                    },
+                    cancel: function () {
+                        editModeRenderer.close();
+                    },
+                    erase: function () {
+                        rendererScope.translation = '';
+                    },
+                    translation: args.translation,
+                    editor: args.editor || 'default'
+                });
 
                 editModeRenderer.open({
                     template: args.template,
-                    scope: scope
+                    scope: rendererScope
                 });
             }
         });
