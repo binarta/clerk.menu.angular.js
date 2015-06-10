@@ -10,7 +10,9 @@
       "clerk.menu.site.settings.link": "Site instellingen",
       "clerk.menu.change.password.link": "Wachtwoord veranderen",
       "clerk.menu.my.applications.link": "Mijn websites",
-      "clerk.menu.logout.link": "Uitloggen"
+      "clerk.menu.logout.link": "Uitloggen",
+      "clerk.menu.save.button": "Opslaan",
+      "clerk.menu.cancel.button": "Annuleren"
     },
     "en":{
       "clerk.menu.upgrade.button": "UPGRADE",
@@ -22,7 +24,9 @@
       "clerk.menu.site.settings.link": "Site settings",
       "clerk.menu.change.password.link": "Change password",
       "clerk.menu.my.applications.link": "My sites",
-      "clerk.menu.logout.link": "Log out"
+      "clerk.menu.logout.link": "Log out",
+      "clerk.menu.save.button": "Save",
+      "clerk.menu.cancel.button": "Cancel"
     },
     "fr":{
       "clerk.menu.upgrade.button": "MISE À NIVEAU",
@@ -34,7 +38,9 @@
       "clerk.menu.site.settings.link": "Paramètres du site",
       "clerk.menu.change.password.link": "Changer de mot de passe",
       "clerk.menu.my.applications.link": "Mes sites",
-      "clerk.menu.logout.link": "Déconnecter"
+      "clerk.menu.logout.link": "Déconnecter",
+      "clerk.menu.save.button": "Enregistrer",
+      "clerk.menu.cancel.button": "Annuler"
     },
     "de":{
       "clerk.menu.upgrade.button": "AKTUALISIEREN",
@@ -46,7 +52,9 @@
       "clerk.menu.site.settings.link": "Website-Einstellungen",
       "clerk.menu.change.password.link": "Passwort ändern",
       "clerk.menu.my.applications.link": "Meine Websites",
-      "clerk.menu.logout.link": "Abmelden"
+      "clerk.menu.logout.link": "Abmelden",
+      "clerk.menu.save.button": "Speichern",
+      "clerk.menu.cancel.button": "Abbrechen"
     }
   }
 }
