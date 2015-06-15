@@ -72,7 +72,7 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
         '<span i18n code="clerk.menu.edit.button" default="EDIT" read-only>{{var}}</span>' +
         '</button>' +
         '<div class="dropdown-menu" role="menu" aria-labelledby="editModeMenu">' +
-        '<div class="dropdown-menu-inner">' +
+        '<div class="dropdown-menu-inner clerk-menu-edit-mode-menu">' +
         '<div edit-mode-renderer></div>' +
         '</div>' +
         '</div>' +

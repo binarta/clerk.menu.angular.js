@@ -1,0 +1,31 @@
+@import "variables";
+
+#binarta-clerk-menu {
+  .dropdown-menu {
+    &.account-menu {
+      a {
+        i {
+          color: lighten(@cm-black, 50%);
+        }
+        &:hover {
+          i {
+            color: darken(@cm-white, 15%);
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .open {
+      .account-menu {
+        li {
+          border-bottom: 1px solid @cm-border-color;
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+}

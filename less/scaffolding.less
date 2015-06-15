@@ -1,0 +1,55 @@
+@import "variables";
+
+#binarta-clerk-menu-top-fix {
+  height: @cm-total-height;
+}
+
+#binarta-clerk-menu-wrapper {
+  display: block !important;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1035;
+}
+
+#binarta-clerk-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-size: 0;
+  min-width: 320px;
+  height: @cm-total-height;
+  background-color: @cm-background-color;
+  background-size: 14px 14px;
+  border-bottom: @cm-border-bottom-height solid @cm-border-color;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  box-sizing: border-box;
+
+  .binarta-clerk-menu-left {
+    float: left;
+  }
+
+  .binarta-clerk-menu-buttons {
+    float: right;
+  }
+
+  .clerk-menu-item {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 768px) {
+  @cm-total-height: 40px;
+
+  #binarta-clerk-menu-top-fix {
+    height: @cm-total-height;
+  }
+
+  #binarta-clerk-menu {
+    height: @cm-total-height;
+
+    .clerk-menu-item {
+      position: relative;
+    }
+  }
+}

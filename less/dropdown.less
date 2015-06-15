@@ -1,0 +1,93 @@
+@import "variables";
+
+#binarta-clerk-menu {
+  .open {
+    .dropdown-menu {
+      top: @cm-total-height;
+      display: block;
+      li {
+        a {
+          padding: 15px;
+          color: @cm-black;
+          &:hover {
+            background: @cm-button-blue;
+            color: @cm-white;
+          }
+        }
+      }
+    }
+  }
+  .dropdown-menu {
+    background: @cm-background-color;
+    width: 100%;
+    position: fixed;
+    display: none;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-bottom: @cm-border-bottom-height solid @cm-border-color;
+    border-radius: 0;
+    z-index: -1;
+    overflow: auto;
+
+    .dropdown-menu-inner {
+      padding: 20px;
+    }
+
+    .dropdown-menu-buttons {
+      text-align: right;
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .dropdown-backdrop {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .dropdown-menu {
+      max-height: 80%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    @cm-total-height: 40px;
+
+    .open {
+      .dropdown-menu {
+        top: @cm-total-height - @cm-border-bottom-height;
+        animation-name: fadeInDown;
+        animation-duration: 0.1s;
+
+        li {
+          a {
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+    .dropdown-menu {
+      left: 50%;
+      margin-left: -(750px / 2);
+
+      width: 750px;
+      border-left: @cm-border-bottom-height solid @cm-border-color;
+      border-right: @cm-border-bottom-height solid @cm-border-color;
+      &.help-menu {
+        width: 350px;
+      }
+      &.account-menu {
+        width: 210px;
+        left: inherit;
+        right: -4px;
+      }
+      &.admin-menu {
+        left: inherit;
+        right: -4px;
+      }
+    }
+  }
+}

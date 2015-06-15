@@ -1,0 +1,24 @@
+@import "variables";
+
+#binarta-clerk-menu {
+  .icons-list {
+    max-height: 350px;
+    overflow-y: scroll;
+    background: @cm-white;
+    border-radius: 3px;
+    box-shadow: inset 0 0 1px 3px lighten(@cm-border-color, 20%);
+    padding: 10px;
+    button {
+      background: none;
+      border: none;
+      font-size: 25px;
+      padding: 6px;
+      &:hover,
+      &.active {
+        background-color: @cm-button-blue;
+        border-radius: 3px;
+        color: @cm-white;
+      }
+    }
+  }
+}
