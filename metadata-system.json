@@ -12,7 +12,8 @@
       "clerk.menu.my.applications.link": "Mijn websites",
       "clerk.menu.logout.link": "Uitloggen",
       "clerk.menu.save.button": "Opslaan",
-      "clerk.menu.cancel.button": "Annuleren"
+      "clerk.menu.cancel.button": "Annuleren",
+      "clerk.menu.remove.button": "Verwijderen"
     },
     "en":{
       "clerk.menu.upgrade.button": "UPGRADE",
@@ -26,7 +27,8 @@
       "clerk.menu.my.applications.link": "My sites",
       "clerk.menu.logout.link": "Log out",
       "clerk.menu.save.button": "Save",
-      "clerk.menu.cancel.button": "Cancel"
+      "clerk.menu.cancel.button": "Cancel",
+      "clerk.menu.remove.button": "Remove"
     },
     "fr":{
       "clerk.menu.upgrade.button": "MISE À NIVEAU",
@@ -40,7 +42,8 @@
       "clerk.menu.my.applications.link": "Mes sites",
       "clerk.menu.logout.link": "Déconnecter",
       "clerk.menu.save.button": "Enregistrer",
-      "clerk.menu.cancel.button": "Annuler"
+      "clerk.menu.cancel.button": "Annuler",
+      "clerk.menu.remove.button": "Supprimer"
     },
     "de":{
       "clerk.menu.upgrade.button": "AKTUALISIEREN",
@@ -54,7 +57,8 @@
       "clerk.menu.my.applications.link": "Meine Websites",
       "clerk.menu.logout.link": "Abmelden",
       "clerk.menu.save.button": "Speichern",
-      "clerk.menu.cancel.button": "Abbrechen"
+      "clerk.menu.cancel.button": "Abbrechen",
+      "clerk.menu.remove.button": "Löschen"
     }
   }
 }
