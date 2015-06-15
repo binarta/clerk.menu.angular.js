@@ -1,9 +1,25 @@
+@import "variables";
+
 #binarta-clerk-menu {
+  .text-danger {
+    color: @cm-red;
+  }
+
   .visible-xs {
     display: block;
   }
   .hidden-xs {
     display: none;
+  }
+
+  .row {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+
+  .col-sm-6 {
+    padding-right: 15px;
+    padding-left: 15px;
   }
 
   @media (min-width: 768px) {
@@ -12,6 +28,11 @@
     }
     .hidden-xs {
       display: block;
+    }
+
+    .col-sm-6 {
+      float: left;
+      width: 50%;
     }
   }
 }

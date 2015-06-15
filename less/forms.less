@@ -2,18 +2,19 @@
 
 #binarta-clerk-menu {
   textarea,
-  input[type="text"],
-  input[type="email"] {
+  input {
     width: 100%;
     height: auto;
     background: @cm-white;
     border: none;
     outline: none;
     padding: 10px;
-    resize: none;
-    border-radius: 3px;
     box-sizing: border-box;
     box-shadow: inset 0 0 1px 3px lighten(@cm-border-color, 20%);
+  }
+
+  textarea {
+    resize: none;
   }
 
   .mce-tinymce {
@@ -33,6 +34,41 @@
     background: lighten(@cm-border-color, 20%);
   }
 
+  .input-group {
+    display: table;
+    border-collapse: separate;
+
+    .form-control {
+      &:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    .input-group-btn {
+      display: table-cell;
+      vertical-align: middle;
+      width: 1%;
+
+      &:last-child > .btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        margin-left: -1px;
+      }
+    }
+
+    input,
+    button {
+      display: table-cell;
+      height: 40px;
+      margin: 0;
+    }
+  }
+
+  .help-block {
+    margin-top: 10px;
+  }
+
   form {
     margin-bottom: 15px;
 
@@ -44,6 +80,67 @@
         font-size: small;
         font-weight: 600;
       }
+    }
+  }
+
+  .checkbox-switch {
+    @switch-width: 60px;
+    @switch-height: @switch-width / 2;
+    @switch-padding: 2px;
+    @switch-background-color: #dddddd;
+
+    input[type="checkbox"] {
+      display: none;
+
+      & + label {
+        position: relative;
+        float: left;
+        padding: @switch-padding;
+        margin: 0;
+        width: @switch-width;
+        height: @switch-height;
+        background-color: @switch-background-color;
+        border-radius: @switch-height;
+        cursor: pointer;
+
+        &:before,
+        &:after {
+          display: block;
+          position: absolute;
+          top: @switch-padding / 2;
+          left: @switch-padding / 2;
+          bottom: @switch-padding / 2;
+          content: "";
+        }
+
+        &:before {
+          right: @switch-padding / 2;
+          background-color: lighten(@switch-background-color, 8%);
+          border-radius: @switch-height;
+        }
+
+        &:after {
+          width: (@switch-width / 2) - @switch-padding;
+          background-color: #fff;
+          border-radius: 100%;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+      }
+
+      &:checked + label {
+        &:before {
+          background-color: @cm-green;
+        }
+        &:after {
+          margin-left: (@switch-width / 2);
+        }
+      }
+    }
+
+    & > span {
+      display: block;
+      margin-left: @switch-width + 10px;
+      line-height: 30px;
     }
   }
 }

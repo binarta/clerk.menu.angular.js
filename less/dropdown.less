@@ -10,7 +10,7 @@
           padding: 15px;
           color: @cm-black;
           &:hover {
-            background: @cm-button-blue;
+            background: @cm-blue;
             color: @cm-white;
           }
         }
@@ -37,8 +37,13 @@
 
     .dropdown-menu-buttons {
       text-align: right;
+      margin-bottom: -15px;
       button {
         margin-left: 10px;
+        margin-bottom: 15px;
+        &.pull-left {
+          margin-left: 0;
+        }
       }
     }
   }
