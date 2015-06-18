@@ -79,7 +79,7 @@ describe('clerk menu module', function () {
     });
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, $location, host, path, account, user, height, window, $rootScope;
+        var scope, directive, registry, config, $location, host, path, account, user, height, window, $rootScope, browserInfo;
 
         beforeEach(inject(function (_$rootScope_, topicRegistryMock, $q) {
             $rootScope = _$rootScope_;
@@ -111,7 +111,7 @@ describe('clerk menu module', function () {
                 }
             };
 
-            var browserInfo = {
+            browserInfo = {
                 mobile: true
             };
 
@@ -182,6 +182,30 @@ describe('clerk menu module', function () {
 
             it('if localization is not supported then there is no locale prefix', function () {
                 expect(scope.localePrefix).toBeUndefined();
+            });
+        });
+
+        describe('when on mobile device', function () {
+            beforeEach(function () {
+                browserInfo.mobile = true;
+
+                directive.link(scope, null, {});
+            });
+
+            it('set mobile on scope', function () {
+                expect(scope.mobile).toBeTruthy();
+            });
+        });
+
+        describe('when not on mobile device', function () {
+            beforeEach(function () {
+                browserInfo.mobile = false;
+
+                directive.link(scope, null, {});
+            });
+
+            it('set mobile on scope', function () {
+                expect(scope.mobile).toBeFalsy();
             });
         });
 

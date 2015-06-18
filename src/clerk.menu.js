@@ -34,7 +34,7 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
         '<div ng-if="permitted">' +
         '<div id="binarta-clerk-menu-top-fix"></div>' +
         '<div id="binarta-clerk-menu-wrapper">' +
-        '<div id="binarta-clerk-menu">' +
+        '<div id="binarta-clerk-menu" ng-class="{mobile: mobile}">' +
         '<div class="binarta-clerk-menu-left">' +
         '<div class="binarta-clerk-menu-brand" ng-if="published">' +
         '<a ng-href="#!{{localePrefix}}/" ng-disabled="editModeOpened">' +
@@ -115,11 +115,12 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
         link: function (scope) {
 
             scope.namespace = config.namespace;
+            scope.mobile = browserInfo.mobile;
 
             var position = 0;
 
             scope.$on('edit.mode.renderer', function (event, args) {
-                if (browserInfo.mobile) {
+                if (scope.mobile) {
                     var body = $('body');
                     if (args.open && !scope.editModeOpened) {
                         position = body.scrollTop();
