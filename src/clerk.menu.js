@@ -1,6 +1,6 @@
 angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', 'toggle.edit.mode', 'browser.info'])
     .directive('clerkMenu', ['config', '$location', 'account', 'browserInfo', '$window', '$rootScope', ClerkMenuDirectiveFactory])
-    .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', function (i18nRendererInstaller, editModeRenderer, $rootScope) {
+    .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', '$location', function (i18nRendererInstaller, editModeRenderer, $rootScope, $location) {
         i18nRendererInstaller({
             open: function (args) {
                 var rendererScope = angular.extend($rootScope.$new(), {
@@ -18,12 +18,23 @@ angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', '
                     editor: args.editor || 'default'
                 });
 
+                if (args.href) {
+                    rendererScope.followLink = function () {
+                        $location.path(removeHashbang(args.href));
+                        editModeRenderer.close();
+                    };
+                }
+
                 editModeRenderer.open({
                     template: args.template,
                     scope: rendererScope
                 });
             }
         });
+
+        function removeHashbang(href) {
+            return href.replace('#!', '');
+        }
     }]);
 
 function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $window, $rootScope) {

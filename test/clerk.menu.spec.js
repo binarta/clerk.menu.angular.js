@@ -29,8 +29,13 @@ describe('clerk menu module', function () {
 
 
     describe('on run', function () {
-        beforeEach(inject(function ($rootScope) {
+        var $location;
+
+        beforeEach(inject(function ($rootScope, _$location_) {
+            $location = _$location_;
             $rootScope.$digest();
+            editModeRendererSpy = undefined;
+            editModeRendererClosedSpy = undefined;
         }));
 
         it('install i18nRenderer', function () {
@@ -74,6 +79,36 @@ describe('clerk menu module', function () {
                 editModeRendererSpy.scope.erase();
 
                 expect(editModeRendererSpy.scope.translation).toEqual('');
+            });
+
+            it('no followLink defined', function () {
+                expect(editModeRendererSpy.scope.followLink).toBeUndefined();
+            });
+        });
+
+        describe('when element is an anchor', function () {
+            var args;
+
+            beforeEach(function () {
+                args = {
+                    translation: 'translation',
+                    editor: 'editor',
+                    template: 'template',
+                    href: '#!/link/to/page'
+                };
+            });
+
+            describe('and i18nRenderer is opened', function () {
+                beforeEach(function () {
+                    i18nRendererInstallerSpy.open(args);
+                });
+
+                it('on followLink', function () {
+                    editModeRendererSpy.scope.followLink();
+
+                    expect($location.path()).toEqual('/link/to/page');
+                    expect(editModeRendererClosedSpy).toBeTruthy();
+                });
             });
         });
     });
