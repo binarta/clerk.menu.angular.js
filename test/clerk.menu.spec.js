@@ -75,11 +75,56 @@ describe('clerk menu module', function () {
                 expect(editModeRendererClosedSpy).toBeTruthy();
             });
 
-            it('on erase', function () {
-                editModeRendererSpy.scope.erase();
+            describe('on erase', function () {
+                it('no i18nForm', function () {
+                    editModeRendererSpy.scope.erase();
 
-                expect(editModeRendererSpy.scope.translation).toEqual('');
+                    expect(editModeRendererSpy.scope.translation).toEqual('');
+                });
+
+                describe('with i18nForm', function () {
+                    var setViewValueSpy, isRendered, jQuerySelectorSpy, isFocused;
+
+                    beforeEach(function () {
+                        editModeRendererSpy.scope.i18nForm = {
+                            translation: {
+                                $setViewValue: function (value) {
+                                    setViewValueSpy = value;
+                                },
+                                $render: function () {
+                                    isRendered = true;
+                                }
+                            }
+                        };
+
+                        $ = function (selector) {
+                            jQuerySelectorSpy = selector;
+                            return {
+                                focus: function () {
+                                    isFocused = true;
+                                }
+                            }
+                        };
+
+                        editModeRendererSpy.scope.erase();
+                    });
+
+                    it('viewValue is cleared', function () {
+                        expect(setViewValueSpy).toEqual('');
+                    });
+
+                    it('translation field is rendered', function () {
+                        expect(isRendered).toBeTruthy();
+                    });
+
+                    it('focus element', function () {
+                        expect(jQuerySelectorSpy).toEqual('[name="translation"]');
+                        expect(isFocused).toBeTruthy();
+                    });
+                });
             });
+
+
 
             it('no followLink defined', function () {
                 expect(editModeRendererSpy.scope.followLink).toBeUndefined();

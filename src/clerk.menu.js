@@ -13,6 +13,11 @@ angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', '
                     },
                     erase: function () {
                         rendererScope.translation = '';
+                        if (rendererScope.i18nForm) {
+                            rendererScope.i18nForm.translation.$setViewValue('');
+                            rendererScope.i18nForm.translation.$render();
+                            $('[name="translation"]').focus();
+                        }
                     },
                     translation: args.translation,
                     editor: args.editor || 'default'
