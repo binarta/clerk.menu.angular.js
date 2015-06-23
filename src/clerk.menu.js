@@ -1,10 +1,11 @@
 angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', 'toggle.edit.mode', 'browser.info'])
     .directive('clerkMenu', ['config', '$location', 'account', 'browserInfo', '$window', '$rootScope', ClerkMenuDirectiveFactory])
-    .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', '$location', function (i18nRendererInstaller, editModeRenderer, $rootScope, $location) {
+    .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', '$location', '$window', function (i18nRendererInstaller, editModeRenderer, $rootScope, $location, $window) {
         i18nRendererInstaller({
             open: function (args) {
                 var rendererScope = angular.extend($rootScope.$new(), {
                     submit: function (translation) {
+                        if ($window.tinyMCE && $window.tinyMCE.activeEditor) translation = $window.tinyMCE.activeEditor.getContent();
                         args.submit(translation);
                         editModeRenderer.close();
                     },

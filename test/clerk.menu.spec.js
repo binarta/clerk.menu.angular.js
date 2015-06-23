@@ -29,10 +29,11 @@ describe('clerk menu module', function () {
 
 
     describe('on run', function () {
-        var $location;
+        var $location, $window;
 
-        beforeEach(inject(function ($rootScope, _$location_) {
+        beforeEach(inject(function ($rootScope, _$location_, _$window_) {
             $location = _$location_;
+            $window = _$window_;
             $rootScope.$digest();
             editModeRendererSpy = undefined;
             editModeRendererClosedSpy = undefined;
@@ -62,12 +63,36 @@ describe('clerk menu module', function () {
                 expect(editModeRendererSpy.scope.editor).toEqual('editor');
             });
 
-            it('on submit', function () {
-                editModeRendererSpy.scope.submit('test');
+            describe('on submit', function () {
+                it('no tinyMCE', function () {
+                    editModeRendererSpy.scope.submit('test');
 
-                expect(submitSpy).toEqual('test');
-                expect(editModeRendererClosedSpy).toBeTruthy();
+                    expect(submitSpy).toEqual('test');
+                    expect(editModeRendererClosedSpy).toBeTruthy();
+                });
+
+                describe('when tinyMCE is known', function () {
+                    beforeEach(function () {
+                        $window.tinyMCE = {
+                            activeEditor: {
+                                getContent: function () {
+                                    return 'tinymce';
+                                }
+                            }
+                        };
+                    });
+
+                    it('submit', function () {
+                        editModeRendererSpy.scope.submit('test');
+
+                        expect(submitSpy).toEqual('tinymce');
+                        expect(editModeRendererClosedSpy).toBeTruthy();
+                    });
+                });
+
             });
+
+
 
             it('on cancel', function () {
                 editModeRendererSpy.scope.cancel();
