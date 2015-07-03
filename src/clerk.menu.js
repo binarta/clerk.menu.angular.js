@@ -4,8 +4,8 @@ angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', '
         i18nRendererInstaller({
             open: function (args) {
                 var rendererScope = angular.extend($rootScope.$new(), {
-                    submit: function (translation) {
-                        args.submit(translation);
+                    submit: function () {
+                        args.submit(rendererScope.translation);
                         editModeRenderer.close();
                     },
                     cancel: function () {

@@ -63,7 +63,9 @@ describe('clerk menu module', function () {
             });
 
             it('on submit', function () {
-                editModeRendererSpy.scope.submit('test');
+                editModeRendererSpy.scope.translation = 'test';
+
+                editModeRendererSpy.scope.submit();
 
                 expect(submitSpy).toEqual('test');
                 expect(editModeRendererClosedSpy).toBeTruthy();
