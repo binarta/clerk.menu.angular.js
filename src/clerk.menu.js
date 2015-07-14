@@ -89,7 +89,8 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
         '</button>' +
         '<div class="dropdown-menu" role="menu" aria-labelledby="editModeMenu">' +
         '<div class="dropdown-menu-inner clerk-menu-edit-mode-menu">' +
-        '<div edit-mode-renderer></div>' +
+        '<div edit-mode-renderer="popup"></div>' +
+        '<div edit-mode-renderer="main"></div>' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -139,18 +140,19 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
             scope.$on('edit.mode.renderer', function (event, args) {
                 if (scope.mobile) {
                     var body = $('body');
-                    if (args.open && !scope.editModeOpened) {
+                    if (args.open && args.id == 'main' && !scope.editModeOpened) {
                         position = body.scrollTop();
                         body.addClass('binarta-clerk-menu-fullscreen');
                         body.children().not('clerk-menu').hide();
                     }
-                    if (!args.open && scope.editModeOpened) {
+                    if (!args.open && args.id == 'main' && scope.editModeOpened) {
                         body.removeClass('binarta-clerk-menu-fullscreen');
                         body.children().not('clerk-menu').show();
                         $window.scrollTo(0, position);
                     }
                 }
-                scope.editModeOpened = args.open;
+                if(args.id == 'main')
+                    scope.editModeOpened = args.open;
             });
 
             account.getMetadata().then(function (metadata) {

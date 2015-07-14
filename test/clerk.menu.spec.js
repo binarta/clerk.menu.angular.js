@@ -127,7 +127,6 @@ describe('clerk menu module', function () {
             });
 
 
-
             it('no followLink defined', function () {
                 expect(editModeRendererSpy.scope.followLink).toBeUndefined();
             });
@@ -347,7 +346,10 @@ describe('clerk menu module', function () {
             beforeEach(function () {
                 directive.link(scope);
 
-                scope.$broadcast('edit.mode.renderer', {open: true});
+                scope.$broadcast('edit.mode.renderer', {
+                    id: 'main',
+                    open: true
+                });
             });
 
             describe('open edit mode menu', function () {
@@ -376,7 +378,10 @@ describe('clerk menu module', function () {
 
                 describe('close edit mode menu', function () {
                     beforeEach(function () {
-                       scope.$broadcast('edit.mode.renderer', {open: false});
+                        scope.$broadcast('edit.mode.renderer', {
+                            id: 'main',
+                            open: false
+                        });
                     });
 
                     it('remove class from body', function () {
