@@ -160,7 +160,7 @@ describe('clerk menu module', function () {
     });
 
     describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, $location, host, path, account, user, height, window, $rootScope, browserInfo;
+        var scope, directive, registry, config, $location, host, path, account, user, height, window, $rootScope, browserInfo, jQuerySpy;
 
         beforeEach(inject(function (_$rootScope_, topicRegistryMock, $q) {
             $rootScope = _$rootScope_;
@@ -196,36 +196,45 @@ describe('clerk menu module', function () {
                 mobile: true
             };
 
-            $ = function (body) {
-                $.element = body;
+            jQuerySpy = [];
 
-                return {
+            $ = function (selector) {
+                jQuerySpy[selector] = {
                     scrollTop: function () {
                         height = 100;
                         return height;
                     },
                     addClass: function (c) {
-                        $.addedClass = c;
+                        this.addedClass = c;
                     },
                     removeClass: function (c) {
-                        $.removedClass = c;
+                        this.removedClass = c;
                     },
                     children: function () {
+                        var self = this;
+
                         return {
                             not: function (c) {
-                                $.not = c;
+                                self.not = c;
                                 return {
                                     show: function () {
-                                        $.showCalled = true;
+                                        self.showCalled = true;
                                     },
                                     hide: function () {
-                                        $.hideCalled = true;
+                                        self.hideCalled = true;
                                     }
                                 }
                             }
                         }
+                    },
+                    hide: function () {
+                        this.visible = false;
+                    },
+                    show: function () {
+                        this.visible = true;
                     }
-                }
+                };
+                return jQuerySpy[selector];
             };
 
             window = {
@@ -343,60 +352,82 @@ describe('clerk menu module', function () {
         });
 
         describe('when edit.mode.renderer is broadcasted', function () {
-            beforeEach(function () {
-                directive.link(scope);
+            describe('with main id', function () {
+                beforeEach(function () {
+                    directive.link(scope);
 
-                scope.$broadcast('edit.mode.renderer', {
-                    id: 'main',
-                    open: true
-                });
-            });
-
-            describe('open edit mode menu', function () {
-                it('put value on scope', function () {
-                    expect(scope.editModeOpened).toBeTruthy();
-                });
-
-                describe('and device is mobile', function () {
-                    it('get body element', function () {
-                        expect($.element).toEqual('body');
-                    });
-
-                    it('get current position', function () {
-                        expect(height).toEqual(100);
-                    });
-
-                    it('add class to body', function () {
-                        expect($.addedClass).toEqual('binarta-clerk-menu-fullscreen');
-                    });
-
-                    it('hide all children of body except for the clerk menu', function () {
-                        expect($.hideCalled).toBeTruthy();
-                        expect($.not).toEqual('clerk-menu');
+                    scope.$broadcast('edit.mode.renderer', {
+                        id: 'main',
+                        open: true
                     });
                 });
 
-                describe('close edit mode menu', function () {
-                    beforeEach(function () {
-                        scope.$broadcast('edit.mode.renderer', {
-                            id: 'main',
-                            open: false
+                describe('open edit mode menu', function () {
+                    it('put value on scope', function () {
+                        expect(scope.editModeOpened).toBeTruthy();
+                    });
+
+                    describe('and device is mobile', function () {
+                        it('get current position', function () {
+                            expect(height).toEqual(100);
+                        });
+
+                        it('add class to body', function () {
+                            expect(jQuerySpy['body'].addedClass).toEqual('binarta-clerk-menu-fullscreen');
+                        });
+
+                        it('hide all children of body except for the clerk menu', function () {
+                            expect(jQuerySpy['body'].hideCalled).toBeTruthy();
+                            expect(jQuerySpy['body'].not).toEqual('clerk-menu');
                         });
                     });
 
-                    it('remove class from body', function () {
-                        expect($.removedClass).toEqual('binarta-clerk-menu-fullscreen');
+                    describe('close edit mode menu', function () {
+                        beforeEach(function () {
+                            scope.$broadcast('edit.mode.renderer', {
+                                id: 'main',
+                                open: false
+                            });
+                        });
+
+                        it('remove class from body', function () {
+                            expect(jQuerySpy['body'].removedClass).toEqual('binarta-clerk-menu-fullscreen');
+                        });
+
+                        it('show all children of body', function () {
+                            expect(jQuerySpy['body'].showCalled).toBeTruthy();
+                            expect(jQuerySpy['body'].not).toEqual('clerk-menu');
+                        });
+
+                        it('go to remembered position', function () {
+                            expect(window.scrollToLeft).toEqual(0);
+                            expect(window.scrollToTop).toEqual(height);
+                        });
+                    });
+                });
+            });
+
+            describe('with popup id', function () {
+                beforeEach(function () {
+                    directive.link(scope);
+                });
+
+                it('on open, main edit mode renderer is hidden', function () {
+                    scope.$broadcast('edit.mode.renderer', {
+                        id: 'popup',
+                        open: true
                     });
 
-                    it('show all children of body', function () {
-                        expect($.showCalled).toBeTruthy();
-                        expect($.not).toEqual('clerk-menu');
+                    expect(jQuerySpy['[edit-mode-renderer="main"]'].visible).toBeFalsy();
+                });
+
+                it('on close, main edit mode renderer is visible', function () {
+                    scope.$broadcast('edit.mode.renderer', {
+                        id: 'popup',
+                        open: false
                     });
 
-                    it('go to remembered position', function () {
-                        expect(window.scrollToLeft).toEqual(0);
-                        expect(window.scrollToTop).toEqual(height);
-                    });
+                    expect(jQuerySpy['[edit-mode-renderer="main"]'].visible).toBeTruthy();
                 });
             });
         });

@@ -138,6 +138,12 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
             var position = 0;
 
             scope.$on('edit.mode.renderer', function (event, args) {
+                if (args.id == 'popup' && args.open) {
+                    $('[edit-mode-renderer="main"]').hide();
+                } else {
+                    $('[edit-mode-renderer="main"]').show();
+                }
+
                 if (scope.mobile) {
                     var body = $('body');
                     if (args.open && args.id == 'main' && !scope.editModeOpened) {
@@ -151,7 +157,7 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
                         $window.scrollTo(0, position);
                     }
                 }
-                if(args.id == 'main')
+                if (args.id == 'main')
                     scope.editModeOpened = args.open;
             });
 

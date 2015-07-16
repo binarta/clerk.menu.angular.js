@@ -13,7 +13,8 @@
       "clerk.menu.logout.link": "Uitloggen",
       "clerk.menu.save.button": "Opslaan",
       "clerk.menu.cancel.button": "Annuleren",
-      "clerk.menu.remove.button": "Verwijderen"
+      "clerk.menu.remove.button": "Verwijderen",
+      "clerk.menu.ok.button": "Ok"
     },
     "en":{
       "clerk.menu.upgrade.button": "UPGRADE",
@@ -28,7 +29,8 @@
       "clerk.menu.logout.link": "Log out",
       "clerk.menu.save.button": "Save",
       "clerk.menu.cancel.button": "Cancel",
-      "clerk.menu.remove.button": "Remove"
+      "clerk.menu.remove.button": "Remove",
+      "clerk.menu.ok.button": "Ok"
     },
     "fr":{
       "clerk.menu.upgrade.button": "MISE À NIVEAU",
@@ -43,7 +45,8 @@
       "clerk.menu.logout.link": "Déconnecter",
       "clerk.menu.save.button": "Enregistrer",
       "clerk.menu.cancel.button": "Annuler",
-      "clerk.menu.remove.button": "Supprimer"
+      "clerk.menu.remove.button": "Supprimer",
+      "clerk.menu.ok.button": "Ok"
     },
     "de":{
       "clerk.menu.upgrade.button": "AKTUALISIEREN",
@@ -58,7 +61,8 @@
       "clerk.menu.logout.link": "Abmelden",
       "clerk.menu.save.button": "Speichern",
       "clerk.menu.cancel.button": "Abbrechen",
-      "clerk.menu.remove.button": "Löschen"
+      "clerk.menu.remove.button": "Löschen",
+      "clerk.menu.ok.button": "Ok"
     }
   }
 }
