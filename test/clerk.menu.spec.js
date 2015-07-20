@@ -419,6 +419,7 @@ describe('clerk menu module', function () {
                     });
 
                     expect(jQuerySpy['[edit-mode-renderer="main"]'].visible).toBeFalsy();
+                    expect(jQuerySpy['[edit-mode-renderer="popup"]'].visible).toBeTruthy();
                 });
 
                 it('on close, main edit mode renderer is visible', function () {
@@ -428,6 +429,7 @@ describe('clerk menu module', function () {
                     });
 
                     expect(jQuerySpy['[edit-mode-renderer="main"]'].visible).toBeTruthy();
+                    expect(jQuerySpy['[edit-mode-renderer="popup"]'].visible).toBeFalsy();
                 });
             });
         });

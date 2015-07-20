@@ -140,7 +140,9 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
             scope.$on('edit.mode.renderer', function (event, args) {
                 if (args.id == 'popup' && args.open) {
                     $('[edit-mode-renderer="main"]').hide();
+                    $('[edit-mode-renderer="popup"]').show();
                 } else {
+                    $('[edit-mode-renderer="popup"]').hide();
                     $('[edit-mode-renderer="main"]').show();
                 }
 
