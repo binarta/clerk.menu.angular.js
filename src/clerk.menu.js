@@ -121,7 +121,7 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
         '<li><a ng-href="#!{{localePrefix}}/admin" i18n code="clerk.menu.site.settings.link" default="Site instellingen" read-only><i class="fa fa-cog fa-fw"></i> {{var}}</a></li>' +
         '<li><a ng-href="#!{{localePrefix}}/changemypassword" i18n code="clerk.menu.change.password.link" default="Wachtwoord veranderen" read-only><i class="fa fa-lock fa-fw"></i> {{var}}</a></li>' +
         '<li><a href="https://binarta.com/#!/applications" i18n code="clerk.menu.my.applications.link" default="Mijn websites" read-only><i class="fa fa-external-link fa-fw"></i> {{var}}</a></li>' +
-        '<li checkpoint-permission-for="purchase.order.find.all" ng-if="permitted""><a ng-href="#!{{localePrefix}}/admin/orders" i18n code="clerk.menu.admin.order.history" default="List Orders"><i class="fa fa-barcode"></i> {{var}}</a></li>' +
+        '<li checkpoint-permission-for="purchase.order.find.all" ng-show="permitted""><a ng-href="#!{{localePrefix}}/admin/orders" i18n code="clerk.menu.admin.order.history" default="List Orders"><i class="fa fa-barcode"></i> {{var}}</a></li>' +
         '<li ng-controller="SignoutController"><a ng-href="#!{{localePrefix}}/" ng-click="submit()" i18n code="clerk.menu.logout.link" default="Uitloggen" read-only><i class="fa fa-sign-out fa-fw"></i> {{var}}</a></li>' +
         '</ul>' +
         '</div>' +
