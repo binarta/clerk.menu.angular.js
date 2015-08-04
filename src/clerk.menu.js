@@ -82,8 +82,7 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
         '<div class="binarta-clerk-menu-buttons">' +
         '<div class="clerk-menu-item" ng-class="{true:\'open\'}[editModeOpened]">' +
         '<button toggle-edit-mode ng-click="toggleEditMode()" accesskey="e" class="btn-clerk-menu btn-clerk-menu-edit" ng-class="{true:\'active\'}[editing]"' +
-        'checkpoint-permission-for="edit.mode" ng-disabled="!permitted || editModeOpened"' +
-        'analytics-on="click" analytics-category="clerk-menu" analytics-event="toggle-edit-mode">' +
+        'checkpoint-permission-for="edit.mode" ng-disabled="!permitted || editModeOpened">' +
         '<i class="fa fa-magic fa-fw"></i>' +
         '<span i18n code="clerk.menu.edit.button" default="EDIT" read-only>{{var}}</span>' +
         '</button>' +
@@ -105,12 +104,6 @@ function ClerkMenuDirectiveFactory(config, $location, account, browserInfo, $win
         '<i class="fa fa-globe fa-fw"></i>' +
         '<span i18n code="clerk.menu.seo.button" default="SEO" read-only>{{var}}</span>' +
         '</button>' +
-        '</div>' +
-        '<div class="clerk-menu-item">' +
-        '<a class="btn-clerk-menu" ng-href="https://binarta.com/#!/contact/Support {{namespace}}?email={{user.email}}" ng-disabled="editModeOpened">' +
-        '<i class="fa fa-life-ring fa-fw"></i>' +
-        '<span i18n code="clerk.menu.help.button" default="HELP" read-only>{{var}}</span>' +
-        '</a>' +
         '</div>' +
         '<div class="clerk-menu-item">' +
         '<button class="btn-clerk-menu dropdown-toggle" data-toggle="dropdown" type="button" id="accountMenu" role="button" aria-expanded="false" ng-disabled="editModeOpened">' +
