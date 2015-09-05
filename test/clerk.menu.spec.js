@@ -43,116 +43,92 @@ describe('clerk menu module', function () {
         });
 
         describe('when i18nRenderer is opened', function () {
-            describe('and body and actions are defined instead of template', function () {
-                var submitSpy;
+            var submitSpy;
 
-                beforeEach(function () {
-                    i18nRendererInstallerSpy.open({
-                        submit: function (translation) {
-                            submitSpy = translation;
-                        },
-                        translation: 'translation',
-                        editor: 'editor',
-                        body: 'body',
-                        actions: 'actions'
-                    });
-                });
-
-                it('editModeRenderer is called', function () {
-                    expect(editModeRendererSpy.body).toEqual('body');
-                    expect(editModeRendererSpy.actions).toEqual('actions');
-                    expect(editModeRendererSpy.scope.translation).toEqual('translation');
-                    expect(editModeRendererSpy.scope.editor).toEqual('editor');
-                });
-
-                it('on submit', function () {
-                    editModeRendererSpy.scope.translation = 'test';
-
-                    editModeRendererSpy.scope.submit();
-
-                    expect(submitSpy).toEqual('test');
-                    expect(editModeRendererClosedSpy).toBeTruthy();
-                });
-
-                it('on cancel', function () {
-                    editModeRendererSpy.scope.cancel();
-
-                    expect(editModeRendererClosedSpy).toBeTruthy();
-                });
-
-                describe('on erase', function () {
-                    it('no i18nForm', function () {
-                        editModeRendererSpy.scope.erase();
-
-                        expect(editModeRendererSpy.scope.translation).toEqual('');
-                    });
-
-                    describe('with i18nForm', function () {
-                        var setViewValueSpy, isRendered, jQuerySelectorSpy, isFocused;
-
-                        beforeEach(function () {
-                            editModeRendererSpy.scope.i18nForm = {
-                                translation: {
-                                    $setViewValue: function (value) {
-                                        setViewValueSpy = value;
-                                    },
-                                    $render: function () {
-                                        isRendered = true;
-                                    }
-                                }
-                            };
-
-                            $ = function (selector) {
-                                jQuerySelectorSpy = selector;
-                                return {
-                                    focus: function () {
-                                        isFocused = true;
-                                    }
-                                }
-                            };
-
-                            editModeRendererSpy.scope.erase();
-                        });
-
-                        it('viewValue is cleared', function () {
-                            expect(setViewValueSpy).toEqual('');
-                        });
-
-                        it('translation field is rendered', function () {
-                            expect(isRendered).toBeTruthy();
-                        });
-
-                        it('focus element', function () {
-                            expect(jQuerySelectorSpy).toEqual('[name="translation"]');
-                            expect(isFocused).toBeTruthy();
-                        });
-                    });
-                });
-
-                it('no followLink defined', function () {
-                    expect(editModeRendererSpy.scope.followLink).toBeUndefined();
+            beforeEach(function () {
+                i18nRendererInstallerSpy.open({
+                    submit: function (translation) {
+                        submitSpy = translation;
+                    },
+                    translation: 'translation',
+                    editor: 'editor',
+                    template: 'template'
                 });
             });
 
-            describe('and template is defined', function () {
-                var submitSpy;
+            it('editModeRenderer is called', function () {
+                expect(editModeRendererSpy.template).toEqual('template');
+                expect(editModeRendererSpy.scope.translation).toEqual('translation');
+                expect(editModeRendererSpy.scope.editor).toEqual('editor');
+            });
 
-                beforeEach(function () {
-                    i18nRendererInstallerSpy.open({
-                        submit: function (translation) {
-                            submitSpy = translation;
-                        },
-                        translation: 'translation',
-                        editor: 'editor',
-                        template: 'template'
+            it('on submit', function () {
+                editModeRendererSpy.scope.translation = 'test';
+
+                editModeRendererSpy.scope.submit();
+
+                expect(submitSpy).toEqual('test');
+                expect(editModeRendererClosedSpy).toBeTruthy();
+            });
+
+            it('on cancel', function () {
+                editModeRendererSpy.scope.cancel();
+
+                expect(editModeRendererClosedSpy).toBeTruthy();
+            });
+
+            describe('on erase', function () {
+                it('no i18nForm', function () {
+                    editModeRendererSpy.scope.erase();
+
+                    expect(editModeRendererSpy.scope.translation).toEqual('');
+                });
+
+                describe('with i18nForm', function () {
+                    var setViewValueSpy, isRendered, jQuerySelectorSpy, isFocused;
+
+                    beforeEach(function () {
+                        editModeRendererSpy.scope.i18nForm = {
+                            translation: {
+                                $setViewValue: function (value) {
+                                    setViewValueSpy = value;
+                                },
+                                $render: function () {
+                                    isRendered = true;
+                                }
+                            }
+                        };
+
+                        $ = function (selector) {
+                            jQuerySelectorSpy = selector;
+                            return {
+                                focus: function () {
+                                    isFocused = true;
+                                }
+                            }
+                        };
+
+                        editModeRendererSpy.scope.erase();
+                    });
+
+                    it('viewValue is cleared', function () {
+                        expect(setViewValueSpy).toEqual('');
+                    });
+
+                    it('translation field is rendered', function () {
+                        expect(isRendered).toBeTruthy();
+                    });
+
+                    it('focus element', function () {
+                        expect(jQuerySelectorSpy).toEqual('[name="translation"]');
+                        expect(isFocused).toBeTruthy();
                     });
                 });
+            });
 
-                it('editModeRenderer is called', function () {
-                    expect(editModeRendererSpy.template).toEqual('template');
-                    expect(editModeRendererSpy.scope.translation).toEqual('translation');
-                    expect(editModeRendererSpy.scope.editor).toEqual('editor');
-                });
+
+            it('no followLink defined', function () {
+                expect(editModeRendererSpy.scope.followLink).toBeUndefined();
             });
         });
 

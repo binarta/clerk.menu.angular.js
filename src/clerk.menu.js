@@ -30,16 +30,10 @@ angular.module('clerk.menu', ['notifications', 'config', 'checkpoint', 'i18n', '
                     };
                 }
 
-                var ctx = {
+                editModeRenderer.open({
+                    template: args.template,
                     scope: rendererScope
-                };
-                if (args.body) {
-                    ctx.body = args.body;
-                    ctx.actions = args.actions
-                } else {
-                    ctx.template = args.template
-                }
-                editModeRenderer.open(ctx);
+                });
             }
         });
 
