@@ -1,59 +1,72 @@
 @import "variables";
 
-#binarta-clerk-menu-top-fix {
-  height: @cm-total-height;
+body.bin-menu {
+  margin-top: @cm-total-height;
+
+  &.mobile {
+    &.bin-menu-opened {
+      #bin-menu {
+        top: -@cm-total-height;
+        box-shadow: none;
+      }
+    }
+  }
+
+  &.mobile, &.tablet {
+    &.bin-menu-opened {
+      > *:not(#bin-menu) {
+        display: none;
+      }
+    }
+  }
+
+  &:not(.mobile) {
+    @media (min-width: 768px) {
+      @cm-total-height: 40px;
+
+      margin-top: @cm-total-height;
+
+      #bin-menu {
+        height: @cm-total-height;
+      }
+    }
+  }
 }
 
-#binarta-clerk-menu-wrapper {
-  display: block !important;
+#bin-menu {
   position: fixed;
   top: 0;
-  width: 100%;
-  z-index: 1035;
-}
-
-#binarta-clerk-menu {
-  position: absolute;
-  left: 0;
-  right: 0;
-  font-size: 0;
-  min-width: 320px;
-  height: @cm-total-height;
-  background-color: @cm-background-color;
-  background-size: 14px 14px;
   border-bottom: @cm-border-bottom-height solid @cm-border-color;
   box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  width: 100%;
+  min-width: 320px;
+  height: @cm-total-height;
+  font-size: 0;
+  background-color: @cm-background-color;
+  background-size: 14px 14px;
   box-sizing: border-box;
+  z-index: 1035;
 
   & * {
     box-sizing: border-box;
   }
 
-  .binarta-clerk-menu-left {
+  .bin-menu-left {
     float: left;
   }
 
-  .binarta-clerk-menu-buttons {
+  .bin-menu-actions {
     float: right;
   }
 
-  .clerk-menu-item {
+  .bin-menu-item {
     display: inline-block;
   }
-}
 
-@media (min-width: 768px) {
-  @cm-total-height: 40px;
-
-  #binarta-clerk-menu-top-fix {
-    height: @cm-total-height;
-  }
-
-  #binarta-clerk-menu {
-    height: @cm-total-height;
-
-    .clerk-menu-item {
-      position: relative;
+  &:not(.bin-menu-clerk) {
+    .bin-menu-actions {
+      width: 100%;
+      text-align: right;
     }
   }
 }

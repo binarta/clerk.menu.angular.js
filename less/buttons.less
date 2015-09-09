@@ -1,6 +1,44 @@
 @import "variables";
 
-#binarta-clerk-menu {
+.body {
+  &:not(.mobile):not(.tablet) {
+    #bin-menu {
+      @media (max-width: 767px) {
+        .btn-bin-menu-edit,
+        .btn-bin-menu-publish {
+          &:hover {
+            border-left: 2px solid @cm-blue;
+            border-right: 2px solid @cm-blue;
+            border-top: 2px solid @cm-blue;
+            span {
+              background-color: @cm-blue;
+            }
+          }
+        }
+      }
+
+      @media (min-width: 768px) {
+        .btn-bin-menu {
+          &:hover:enabled {
+            background-color: @cm-blue;
+            color: @cm-white;
+            text-shadow: 0 1px 1px @cm-black;
+          }
+        }
+
+        .btn-bin-menu-edit,
+        .btn-bin-menu-publish {
+          @push-height: 3px;
+          &:hover {
+            box-shadow: 0 @push-height 0 darken(@cm-blue, 15%);
+          }
+        }
+      }
+    }
+  }
+}
+
+#bin-menu {
   .btn-primary {
     color: @cm-white;
     background: @cm-blue;
@@ -31,7 +69,7 @@
     cursor: default;
   }
 
-  .btn-clerk-menu {
+  .btn-bin-menu {
     display: inline-block;
     vertical-align: middle;
     position: relative;
@@ -69,9 +107,28 @@
     }
   }
 
+  .bin-menu-item {
+    &.open {
+      .btn-bin-menu {
+        background-color: @cm-blue;
+        color: @cm-white;
+        text-shadow: 0 1px 1px @cm-black;
+        &[disabled] {
+          color: darken(@cm-white, 10%);
+        }
+      }
+    }
+  }
+
   @media (max-width: 767px) {
-    .btn-clerk-menu {
-      padding: 10px 10px 22px 10px;
+    &:not(.bin-menu-clerk) {
+      .btn-bin-menu {
+        padding: 10px 25px 22px;
+      }
+    }
+
+    .btn-bin-menu {
+      padding: 10px 10px 22px;
 
       span {
         position: absolute;
@@ -83,8 +140,8 @@
       }
     }
 
-    .btn-clerk-menu-edit,
-    .btn-clerk-menu-publish {
+    .btn-bin-menu-edit,
+    .btn-bin-menu-publish {
       border-left: 2px solid #00afd0;
       border-right: 2px solid #00afd0;
       border-top: 2px solid #00afd0;
@@ -95,8 +152,7 @@
         text-shadow: 0 1px 1px @cm-black;
       }
 
-      &.active,
-      &:hover {
+      &.active {
         border-left: 2px solid @cm-blue;
         border-right: 2px solid @cm-blue;
         border-top: 2px solid @cm-blue;
@@ -106,7 +162,7 @@
       }
     }
 
-    .btn-clerk-menu-publish {
+    .btn-bin-menu-publish {
       padding-top: 3px;
       padding-left: 15px;
       padding-right: 15px;
@@ -116,7 +172,7 @@
   @media (min-width: 768px) {
     @cm-total-height: 40px;
 
-    .btn-clerk-menu {
+    .btn-bin-menu {
       height: @cm-total-height - @cm-border-bottom-height;
       padding: 11px 12px 11px (12px + 26px);
       font-size: 14px;
@@ -141,8 +197,8 @@
       }
     }
 
-    .btn-clerk-menu-edit,
-    .btn-clerk-menu-publish {
+    .btn-bin-menu-edit,
+    .btn-bin-menu-publish {
       @push-height: 3px;
 
       font-weight: bold;
@@ -162,7 +218,7 @@
       }
     }
 
-    .btn-clerk-menu-publish {
+    .btn-bin-menu-publish {
       img {
         position: absolute;
         left: 0;
@@ -170,28 +226,10 @@
         padding: 2px 6px 4px 10px;
       }
     }
-
-    &:not(.mobile) {
-      .btn-clerk-menu {
-        &:hover:enabled {
-          background-color: @cm-blue;
-          color: @cm-white;
-          text-shadow: 0 1px 1px @cm-black;
-        }
-      }
-
-      .btn-clerk-menu-edit,
-      .btn-clerk-menu-publish {
-        @push-height: 3px;
-        &:hover {
-          box-shadow: 0 @push-height 0 darken(@cm-blue, 15%);
-        }
-      }
-    }
   }
 
   @media (min-width: 992px) {
-    .btn-clerk-menu {
+    .btn-bin-menu {
       padding: 11px 16px 11px (16px + 26px);
     }
   }

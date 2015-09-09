@@ -1,10 +1,4 @@
 describe('clerk menu module', function () {
-    angular.module('angularx', []);
-    angular.module('browser.info', []);
-    angular.module('rest.client', []);
-    angular.module('angular.usecase.adapter', []);
-    angular.module('checkpoint', []);
-
     var editModeRendererSpy, editModeRendererClosedSpy;
     angular.module('toggle.edit.mode', [])
         .service('editModeRenderer', function () {
@@ -25,17 +19,21 @@ describe('clerk menu module', function () {
         });
 
     beforeEach(module('clerk.menu'));
-    beforeEach(module('notifications'));
-
 
     describe('on run', function () {
-        var $location;
+        var $rootScope, $location, account, fetchAccountMetadata, $document, $q, $routeParams;
 
-        beforeEach(inject(function ($rootScope, _$location_) {
+        beforeEach(inject(function (_$rootScope_, _$location_, _account_, _fetchAccountMetadata_, _$document_, _$q_, _$routeParams_) {
             $location = _$location_;
+            fetchAccountMetadata = _fetchAccountMetadata_;
+            $rootScope = _$rootScope_;
             $rootScope.$digest();
             editModeRendererSpy = undefined;
             editModeRendererClosedSpy = undefined;
+            account = _account_;
+            $document = _$document_;
+            $q = _$q_;
+            $routeParams = _$routeParams_;
         }));
 
         it('install i18nRenderer', function () {
@@ -157,335 +155,124 @@ describe('clerk menu module', function () {
                 });
             });
         });
-    });
 
-    describe('clerk-menu directive', function () {
-        var scope, directive, registry, config, $location, host, path, account, user, height, window, $rootScope, browserInfo, jQuerySpy;
-
-        beforeEach(inject(function (_$rootScope_, topicRegistryMock, $q) {
-            $rootScope = _$rootScope_;
-            scope = $rootScope.$new();
-            registry = topicRegistryMock;
-            config = {
-                namespace: 'namespace'
-            };
-
-            host = 'test.binarta.com';
-            $location = {
-                host: function () {
-                    return host;
-                },
-                path: function () {
-                    return path;
-                }
-            };
-
-            user = {
-                name: 'foo'
-            };
-
-            account = {
-                getMetadata: function () {
-                    var deferred = $q.defer();
-                    deferred.resolve(user);
-                    return deferred.promise;
-                }
-            };
-
-            browserInfo = {
-                mobile: true
-            };
-
-            jQuerySpy = [];
-
-            $ = function (selector) {
-                jQuerySpy[selector] = {
-                    scrollTop: function () {
-                        height = 100;
-                        return height;
-                    },
-                    addClass: function (c) {
-                        this.addedClass = c;
-                    },
-                    removeClass: function (c) {
-                        this.removedClass = c;
-                    },
-                    children: function () {
-                        var self = this;
-
-                        return {
-                            not: function (c) {
-                                self.not = c;
-                                return {
-                                    show: function () {
-                                        self.showCalled = true;
-                                    },
-                                    hide: function () {
-                                        self.hideCalled = true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    hide: function () {
-                        this.visible = false;
-                    },
-                    show: function () {
-                        this.visible = true;
-                    }
-                };
-                return jQuerySpy[selector];
-            };
-
-            window = {
-                scrollTo: function (left, top) {
-                    window.scrollToLeft = left;
-                    window.scrollToTop = top;
-                }
-            };
-
-            directive = ClerkMenuDirectiveFactory(config, $location, account, browserInfo, window, $rootScope);
-        }));
-
-        it('creates a child scope', function () {
-            expect(directive.scope).toBeTruthy();
-        });
-
-        it('restricted to element', function () {
-            expect(directive.restrict).toEqual('E');
-        });
-
-        it('template', function () {
-            expect(directive.template).toEqual(jasmine.any(String));
-        });
-
-        describe('on link', function () {
-            var cssResource = '/binarta.clerk.menu.angular/css/clerk-menu.css';
+        describe('binarta-menu', function () {
+            var body;
 
             beforeEach(function () {
-                directive.link(scope, null, {});
+                body = $document.find('body');
             });
 
-            it('namespace is available on scope', function () {
-                expect(scope.namespace).toEqual('namespace');
-            });
-
-            it('if localization is not supported then there is no locale prefix', function () {
-                expect(scope.localePrefix).toBeUndefined();
-            });
-        });
-
-        describe('when on mobile device', function () {
-            beforeEach(function () {
-                browserInfo.mobile = true;
-
-                directive.link(scope, null, {});
-            });
-
-            it('set mobile on scope', function () {
-                expect(scope.mobile).toBeTruthy();
-            });
-        });
-
-        describe('when not on mobile device', function () {
-            beforeEach(function () {
-                browserInfo.mobile = false;
-
-                directive.link(scope, null, {});
-            });
-
-            it('set mobile on scope', function () {
-                expect(scope.mobile).toBeFalsy();
-            });
-        });
-
-        describe('set published flag on scope', function () {
-            describe('when on Binarta.com domain', function () {
-                describe('on demo', function () {
+            describe('when user is signed in', function () {
+                describe('and user has no edit.mode permission', function () {
                     beforeEach(function () {
-                        host = 'test.app.demo.binarta.com';
+                        var deferred = $q.defer();
+                        deferred.resolve([]);
+                        spyOn(account, 'getPermissions').andReturn(deferred.promise);
 
-                        directive.link(scope, null, {});
+                        fetchAccountMetadata.calls[0].args[0].ok();
+                        $rootScope.$digest();
                     });
 
-                    it('published schould be false', function () {
-                        expect(scope.published).toEqual(false);
-                    });
-                });
-
-                describe('on prod', function () {
-                    beforeEach(function () {
-                        host = 'test.app.binarta.com';
-
-                        directive.link(scope, null, {});
+                    it('bin-menu class is added to body', function () {
+                        expect(body.hasClass('bin-menu')).toBeTruthy();
                     });
 
-                    it('published schould be false', function () {
-                        expect(scope.published).toEqual(false);
-                    });
-                });
-            });
-
-            describe('when not on Binarta.com domain', function () {
-                beforeEach(function () {
-                    host = 'example.com';
-
-                    directive.link(scope, null, {});
-                });
-
-                it('published schould be true', function () {
-                    expect(scope.published).toEqual(true);
-                });
-            });
-        });
-
-        describe('set user data on scope', function () {
-            beforeEach(function () {
-                directive.link(scope, null, {});
-            });
-
-            it('user should be available', function () {
-                scope.$digest();
-
-                expect(scope.user).toEqual(user);
-            });
-        });
-
-        describe('when edit.mode.renderer is broadcasted', function () {
-            describe('with main id', function () {
-                beforeEach(function () {
-                    directive.link(scope);
-
-                    scope.$broadcast('edit.mode.renderer', {
-                        id: 'main',
-                        open: true
-                    });
-                });
-
-                describe('open edit mode menu', function () {
-                    it('put value on scope', function () {
-                        expect(scope.editModeOpened).toBeTruthy();
+                    it('menu is added to dom', function () {
+                        expect(body.html()).toContain('id="bin-menu"');
                     });
 
-                    describe('and device is mobile', function () {
-                        it('get current position', function () {
-                            expect(height).toEqual(100);
-                        });
+                    describe('with scope', function () {
+                        var scope;
 
-                        it('add class to body', function () {
-                            expect(jQuerySpy['body'].addedClass).toEqual('binarta-clerk-menu-fullscreen');
-                        });
-
-                        it('hide all children of body except for the clerk menu', function () {
-                            expect(jQuerySpy['body'].hideCalled).toBeTruthy();
-                            expect(jQuerySpy['body'].not).toEqual('clerk-menu');
-                        });
-                    });
-
-                    describe('close edit mode menu', function () {
                         beforeEach(function () {
-                            scope.$broadcast('edit.mode.renderer', {
-                                id: 'main',
-                                open: false
+                            scope = fetchAccountMetadata.calls[0].args[0].scope;
+                        });
+
+                        it('scope is a child from rootScope', function () {
+                            expect(scope.$parent).toEqual($rootScope);
+                        });
+
+                        describe('check if current page is homepage', function () {
+                            it('with no locale and not on home', function () {
+                                $location.path('/test/');
+
+                                expect(scope.isPage()).toBeFalsy();
+                            });
+
+                            it('with no locale and on home', function () {
+                                $location.path('/');
+
+                                expect(scope.isPage()).toBeTruthy();
+                            });
+
+                            it('with locale and not on home', function () {
+                                $routeParams.locale = 'locale';
+                                $location.path('/locale/test/');
+
+                                expect(scope.isPage()).toBeFalsy();
+                            });
+
+                            it('with locale and on home', function () {
+                                $routeParams.locale = 'locale';
+                                $location.path('/locale/');
+
+                                expect(scope.isPage()).toBeTruthy();
                             });
                         });
 
-                        it('remove class from body', function () {
-                            expect(jQuerySpy['body'].removedClass).toEqual('binarta-clerk-menu-fullscreen');
+                        describe('check if current page is other page', function () {
+                            it('with no locale and not on home', function () {
+                                $location.path('/test/');
+
+                                expect(scope.isPage('page')).toBeFalsy();
+                            });
+
+                            it('with no locale and on home', function () {
+                                $location.path('/page');
+
+                                expect(scope.isPage('page')).toBeTruthy();
+                            });
+
+                            it('with locale and not on home', function () {
+                                $routeParams.locale = 'locale';
+                                $location.path('/locale/test/');
+
+                                expect(scope.isPage('page')).toBeFalsy();
+                            });
+
+                            it('with locale and on home', function () {
+                                $routeParams.locale = 'locale';
+                                $location.path('/locale/page');
+
+                                expect(scope.isPage('page')).toBeTruthy();
+                            });
                         });
 
-                        it('show all children of body', function () {
-                            expect(jQuerySpy['body'].showCalled).toBeTruthy();
-                            expect(jQuerySpy['body'].not).toEqual('clerk-menu');
-                        });
 
-                        it('go to remembered position', function () {
-                            expect(window.scrollToLeft).toEqual(0);
-                            expect(window.scrollToTop).toEqual(height);
-                        });
                     });
                 });
-            });
 
-            describe('with popup id', function () {
-                beforeEach(function () {
-                    directive.link(scope);
-                });
-
-                it('on open, main edit mode renderer is hidden', function () {
-                    scope.$broadcast('edit.mode.renderer', {
-                        id: 'popup',
-                        open: true
-                    });
-
-                    expect(jQuerySpy['[edit-mode-renderer="main"]'].visible).toBeFalsy();
-                    expect(jQuerySpy['[edit-mode-renderer="popup"]'].visible).toBeTruthy();
-                });
-
-                it('on close, main edit mode renderer is visible', function () {
-                    scope.$broadcast('edit.mode.renderer', {
-                        id: 'popup',
-                        open: false
-                    });
-
-                    expect(jQuerySpy['[edit-mode-renderer="main"]'].visible).toBeTruthy();
-                    expect(jQuerySpy['[edit-mode-renderer="popup"]'].visible).toBeFalsy();
-                });
-            });
-        });
-
-        describe('check for homepage', function () {
-            describe('not on homepage', function () {
-                beforeEach(function () {
-                    path = '/foo';
-
-                    directive.link(scope, null, {});
-                });
-
-                it('value is false', function () {
-                    expect(scope.isHomePageActive()).toBeFalsy();
-                });
-            });
-
-            describe('on homepage', function () {
-                beforeEach(function () {
-                    path = '/';
-
-                    directive.link(scope, null, {});
-                });
-
-                it('value is false', function () {
-                    expect(scope.isHomePageActive()).toBeTruthy();
-                });
-            });
-
-            describe('and locale', function () {
-                beforeEach(function () {
-                    $rootScope.localePrefix = '/locale';
-                });
-
-                describe('not on homepage', function () {
+                describe('and user is clerk with edit.mode permission', function () {
                     beforeEach(function () {
-                        path = '/locale/foo';
+                        var deferred = $q.defer();
+                        deferred.resolve(['edit.mode']);
+                        spyOn(account, 'getPermissions').andReturn(deferred.promise);
 
-                        directive.link(scope, null, {});
-                    });
-
-                    it('value is false', function () {
-                        expect(scope.isHomePageActive()).toBeFalsy();
+                        fetchAccountMetadata.calls[0].args[0].ok();
+                        $rootScope.$digest();
                     });
                 });
+            });
 
-                describe('on homepage', function () {
-                    beforeEach(function () {
-                        path = '/locale/';
+            describe('when user is signed out', function () {
+                beforeEach(function () {
+                    body.addClass('bin-menu');
+                    fetchAccountMetadata.calls[0].args[0].unauthorized();
+                });
 
-                        directive.link(scope, null, {});
-                    });
-
-                    it('value is false', function () {
-                        expect(scope.isHomePageActive()).toBeTruthy();
-                    });
+                it('remove class from body', function () {
+                    expect(body.hasClass('bin-menu')).toBeFalsy();
                 });
             });
         });

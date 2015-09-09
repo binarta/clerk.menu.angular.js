@@ -1,21 +1,32 @@
 @import "variables";
 
-#binarta-clerk-menu {
-  .dropdown-menu {
-    &.account-menu {
-      a {
-        i {
-          color: lighten(@cm-black, 50%);
-        }
-        &:hover {
-          i {
-            color: darken(@cm-white, 15%);
+.body {
+  &:not(.mobile):not(.tablet) {
+    #bin-menu {
+      .account-menu {
+        a {
+          &:hover {
+            i {
+              color: darken(@cm-white, 15%);
+            }
           }
         }
       }
     }
   }
 
+  #bin-menu {
+    .account-menu {
+      a {
+        i {
+          color: lighten(@cm-black, 50%);
+        }
+      }
+    }
+  }
+}
+
+#bin-menu {
   @media (max-width: 767px) {
     .open {
       .account-menu {
@@ -24,6 +35,19 @@
           &:last-child {
             border-bottom: none;
           }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .bin-menu-item {
+      &.open {
+        .account-menu {
+          width: 210px;
+          left: inherit;
+          border-left: @cm-border-bottom-height solid @cm-border-color;
+          border-right: @cm-border-bottom-height solid @cm-border-color;
         }
       }
     }
