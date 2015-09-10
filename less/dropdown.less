@@ -4,13 +4,11 @@ body {
   &.mobile, &.tablet {
     #bin-menu {
       .bin-menu-item {
-        &.open {
-          .dropdown-menu {
-            & > li {
-              & > a {
-                &:hover {
-                  background-color: inherit;
-                }
+        .dropdown-menu {
+          & > li {
+            & > a {
+              &:hover {
+                background-color: inherit;
               }
             }
           }
@@ -22,14 +20,12 @@ body {
   &:not(.mobile):not(.tablet) {
     #bin-menu {
       .bin-menu-item {
-        &.open {
-          .dropdown-menu {
-            li {
-              a {
-                &:hover {
-                  background: @cm-blue;
-                  color: @cm-white;
-                }
+        .dropdown-menu {
+          li {
+            a {
+              &:hover {
+                background: @cm-blue;
+                color: @cm-white;
               }
             }
           }
@@ -40,13 +36,11 @@ body {
         @cm-total-height: 40px;
 
         .bin-menu-item {
-          &.open {
-            .dropdown-menu {
-              top: @cm-total-height;
-              right: 0;
-              border-left: @cm-border-bottom-height solid @cm-border-color;
-              border-right: @cm-border-bottom-height solid @cm-border-color;
-            }
+          .dropdown-menu {
+            top: @cm-total-height;
+            right: 0;
+            border-left: @cm-border-bottom-height solid @cm-border-color;
+            border-right: @cm-border-bottom-height solid @cm-border-color;
           }
         }
       }
@@ -56,27 +50,23 @@ body {
 
 #bin-menu {
   .bin-menu-item {
-    &.open {
-      .dropdown-menu {
-        background: @cm-background-color;
-        width: 100%;
-        position: fixed;
-        top: @cm-total-height;
-        font-size: 14px;
-        margin: 0;
-        padding: 0;
-        border-bottom: @cm-border-bottom-height solid @cm-border-color;
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        border-radius: 0;
-        overflow: auto;
+    .dropdown-menu {
+      border: none;
+      border-bottom: @cm-border-bottom-height solid @cm-border-color;
+      background: @cm-background-color;
+      width: 100%;
+      position: fixed;
+      top: @cm-total-height;
+      font-size: 14px;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      overflow: auto;
 
-        li {
-          a {
-            padding: 15px;
-            color: @cm-black;
-          }
+      li {
+        a {
+          padding: 15px;
+          color: @cm-black;
         }
       }
     }
@@ -86,10 +76,8 @@ body {
     @cm-total-height: 40px;
 
     .bin-menu-item {
-      &.open {
-        .dropdown-menu {
-          top: @cm-total-height;
-        }
+      .dropdown-menu {
+        top: @cm-total-height;
       }
     }
   }

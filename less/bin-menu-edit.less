@@ -4,40 +4,48 @@ body {
   &.mobile, &.tablet {
     #bin-menu {
       .bin-menu-item {
+        .bin-menu-edit {
+          top: 0;
+          height: 0;
+          opacity: 0;
+          display: block;
+          border: none;
+
+          .bin-menu-edit-body {
+            position: fixed;
+            top: @cm-total-height;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            overflow-y: auto;
+            background: lighten(@cm-background-color, 8%);
+          }
+
+          .bin-menu-edit-actions {
+            border-bottom: @cm-border-bottom-height solid @cm-border-color;
+            background-color: @cm-background-color;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            .btn {
+              margin: 0;
+              height: @cm-total-height - @cm-border-bottom-height;
+              min-width: 80px;
+              border-radius: 0;
+              border-top: none;
+              border-bottom: none;
+            }
+          }
+        }
+
         &.open {
           .bin-menu-edit {
-            top: 0;
             height: 100%;
-            border: none;
-
-            .bin-menu-edit-body {
-              position: fixed;
-              top: @cm-total-height;
-              bottom: 0;
-              left: 0;
-              right: 0;
-              padding: 20px;
-              overflow-y: auto;
-              background: lighten(@cm-background-color, 8%);
-            }
-
-            .bin-menu-edit-actions {
-              border-bottom: @cm-border-bottom-height solid @cm-border-color;
-              background-color: @cm-background-color;
-              position: fixed;
-              top: 0;
-              left: 0;
-              right: 0;
-              margin: 0;
-              .btn {
-                margin: 0;
-                height: @cm-total-height - @cm-border-bottom-height;
-                min-width: 80px;
-                border-radius: 0;
-                border-top: none;
-                border-bottom: none;
-              }
-            }
+            opacity: 1;
+            transition: opacity 500ms ease;
           }
         }
       }
@@ -50,23 +58,21 @@ body {
         @cm-total-height: 40px;
 
         .bin-menu-item {
-          &.open {
-            .bin-menu-edit {
-              left: 50%;
-              margin-left: -(750px / 2);
-              width: 750px;
-              max-height: 80%;
+          .bin-menu-edit {
+            left: 50%;
+            margin-left: -(750px / 2);
+            width: 750px;
+            max-height: 80%;
 
-              li {
-                a {
-                  padding-left: 10px;
-                }
+            li {
+              a {
+                padding-left: 10px;
               }
+            }
 
-              .bin-menu-edit-actions {
-                border-top: 1px solid lightgray;
-                padding-top: 15px;
-              }
+            .bin-menu-edit-actions {
+              border-top: 1px solid lightgray;
+              padding-top: 15px;
             }
           }
         }
@@ -77,32 +83,30 @@ body {
 
 #bin-menu {
   .bin-menu-item {
-    &.open {
-      .bin-menu-edit {
-        ::-webkit-scrollbar {
-          width: 15px;
-        }
-        ::-webkit-scrollbar-track {
-          background-color: lightgray;
-        }
-        ::-webkit-scrollbar-thumb {
-          background-color: darkgray;
-        }
+    .bin-menu-edit {
+      ::-webkit-scrollbar {
+        width: 15px;
+      }
+      ::-webkit-scrollbar-track {
+        background-color: lightgray;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: darkgray;
+      }
 
-        .dropdown-menu-inner {
-          padding: 20px;
-        }
+      .dropdown-menu-inner {
+        padding: 20px;
+      }
 
-        .bin-menu-edit-actions {
-          text-align: right;
-          margin-top: 15px;
-          margin-bottom: -15px;
-          .btn {
-            margin-left: 10px;
-            margin-bottom: 15px;
-            &.pull-left {
-              margin-left: 0;
-            }
+      .bin-menu-edit-actions {
+        text-align: right;
+        margin-top: 15px;
+        margin-bottom: -15px;
+        .btn {
+          margin-left: 10px;
+          margin-bottom: 15px;
+          &.pull-left {
+            margin-left: 0;
           }
         }
       }
