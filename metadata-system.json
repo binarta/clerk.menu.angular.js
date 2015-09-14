@@ -17,7 +17,9 @@
       "clerk.menu.save.button": "Opslaan",
       "clerk.menu.cancel.button": "Annuleren",
       "clerk.menu.remove.button": "Verwijderen",
-      "clerk.menu.ok.button": "Ok"
+      "clerk.menu.ok.button": "Ok",
+      "clerk.menu.close.button": "Sluiten",
+      "clerk.menu.updating.message": "Updating..."
     },
     "en":{
       "clerk.menu.upgrade.button": "UPGRADE",
@@ -36,7 +38,9 @@
       "clerk.menu.save.button": "Save",
       "clerk.menu.cancel.button": "Cancel",
       "clerk.menu.remove.button": "Remove",
-      "clerk.menu.ok.button": "Ok"
+      "clerk.menu.ok.button": "Ok",
+      "clerk.menu.close.button": "Close",
+      "clerk.menu.updating.message": "Updating..."
     },
     "fr":{
       "clerk.menu.upgrade.button": "MISE À NIVEAU",
@@ -55,7 +59,9 @@
       "clerk.menu.save.button": "Enregistrer",
       "clerk.menu.cancel.button": "Annuler",
       "clerk.menu.remove.button": "Supprimer",
-      "clerk.menu.ok.button": "Ok"
+      "clerk.menu.ok.button": "Ok",
+      "clerk.menu.close.button": "Close",
+      "clerk.menu.updating.message": "Updating..."
     },
     "de":{
       "clerk.menu.upgrade.button": "AKTUALISIEREN",
@@ -74,7 +80,9 @@
       "clerk.menu.save.button": "Speichern",
       "clerk.menu.cancel.button": "Abbrechen",
       "clerk.menu.remove.button": "Löschen",
-      "clerk.menu.ok.button": "Ok"
+      "clerk.menu.ok.button": "Ok",
+      "clerk.menu.close.button": "Close",
+      "clerk.menu.updating.message": "Updating..."
     }
   }
 }
