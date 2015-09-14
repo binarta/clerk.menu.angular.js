@@ -1,0 +1,28 @@
+@import "variables";
+
+#bin-menu {
+  ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      counter-increment: step-counter;
+
+      &::before {
+        content: counter(step-counter);
+        margin-right: 15px;
+        padding: 3px 8px;
+        border: 1px solid grey;
+        border-radius: 50%;
+      }
+
+      &.active {
+        &::before {
+          color: @cm-white;
+          background-color: @cm-green;
+          border-color: darken(@cm-green, 5%);
+        }
+      }
+    }
+  }
+}
