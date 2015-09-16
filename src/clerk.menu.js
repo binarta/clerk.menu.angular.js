@@ -1,4 +1,4 @@
-angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode'])
+angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode', 'config'])
     .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', '$location', function (i18nRendererInstaller, editModeRenderer, $rootScope, $location) {
         i18nRendererInstaller({
             open: function (args) {
@@ -40,7 +40,7 @@ angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode
             return href.replace('#!', '');
         }
     }])
-    .run(['$rootScope', '$document', '$window', '$compile', '$location', '$routeParams', 'fetchAccountMetadata', 'account', function ($rootScope, $document, $window, $compile, $location, $routeParams, fetchAccountMetadata, account) {
+    .run(['$rootScope', '$document', '$window', '$compile', '$location', '$routeParams', 'fetchAccountMetadata', 'account', 'config', function ($rootScope, $document, $window, $compile, $location, $routeParams, fetchAccountMetadata, account, config) {
         var body = $document.find('body');
         var scope = $rootScope.$new();
         var element;
@@ -116,6 +116,10 @@ angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode
             function localePrefix() {
                 return '/' + ($routeParams.locale ? $routeParams.locale + '/' : '');
             }
+        }
+
+        function isBinartaNamespace() {
+            return config.namespace == 'binarta';
         }
 
         function getClerkTemplate(isOnBinartaDomain) {
@@ -229,7 +233,11 @@ angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode
                 '</button>' +
                 '<ul class="dropdown-menu account-menu" role="menu" aria-labelledby="accountMenu">' +
                 '<li><a ng-href="#!{{localePrefix}}/account" i18n code="clerk.menu.my.account.link" read-only><i class="fa fa-user fa-fw"></i> {{var}}</a></li>' +
-                '<li><a ng-href="#!{{localePrefix}}/order-history" i18n code="clerk.menu.order.history.link" read-only><i class="fa fa-archive fa-fw"></i> {{var}}</a></li>' +
+                (
+                    isBinartaNamespace
+                    ? '<li><a ng-href="#!{{localePrefix}}/applications" i18n code="clerk.menu.my.applications.link" read-only><i class="fa fa-th-large fa-fw"></i> {{var}}</a></li>'
+                    : '<li><a ng-href="#!{{localePrefix}}/order-history" i18n code="clerk.menu.order.history.link" read-only><i class="fa fa-archive fa-fw"></i> {{var}}</a></li>'
+                ) +
                 '<li ng-controller="SignoutController"><a ng-href="#!{{localePrefix}}/" ng-click="submit()" i18n code="clerk.menu.logout.link" read-only><i class="fa fa-sign-out fa-fw"></i> {{var}}</a></li>' +
                 '</ul>' +
                 '</div>' +
