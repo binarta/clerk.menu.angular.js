@@ -234,7 +234,7 @@ angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode
                 '<ul class="dropdown-menu account-menu" role="menu" aria-labelledby="accountMenu">' +
                 '<li><a ng-href="#!{{localePrefix}}/account" i18n code="clerk.menu.my.account.link" read-only><i class="fa fa-user fa-fw"></i> {{var}}</a></li>' +
                 (
-                    isBinartaNamespace
+                    isBinartaNamespace()
                     ? '<li><a ng-href="#!{{localePrefix}}/applications" i18n code="clerk.menu.my.applications.link" read-only><i class="fa fa-th-large fa-fw"></i> {{var}}</a></li>'
                     : '<li><a ng-href="#!{{localePrefix}}/order-history" i18n code="clerk.menu.order.history.link" read-only><i class="fa fa-archive fa-fw"></i> {{var}}</a></li>'
                 ) +
