@@ -18,13 +18,18 @@ describe('clerk menu module', function () {
             };
         });
 
+    angular.module('basket', [])
+        .controller('ViewBasketController', function () {
+        });
+
     beforeEach(module('clerk.menu'));
 
     describe('on run', function () {
-        var $rootScope, $location, account, fetchAccountMetadata, $document, $q, $routeParams;
+        var $rootScope, $location, binartaMenu, account, fetchAccountMetadata, $document, $q, $routeParams, application;
 
-        beforeEach(inject(function (_$rootScope_, _$location_, _account_, _fetchAccountMetadata_, _$document_, _$q_, _$routeParams_) {
+        beforeEach(inject(function (_$rootScope_, _$location_, binartaMenuRunner, _account_, _fetchAccountMetadata_, _$document_, _$q_, _$routeParams_, applicationDataService) {
             $location = _$location_;
+            binartaMenu = binartaMenuRunner;
             fetchAccountMetadata = _fetchAccountMetadata_;
             $rootScope = _$rootScope_;
             $rootScope.$digest();
@@ -34,6 +39,7 @@ describe('clerk menu module', function () {
             $document = _$document_;
             $q = _$q_;
             $routeParams = _$routeParams_;
+            application = applicationDataService;
         }));
 
         it('install i18nRenderer', function () {
@@ -274,6 +280,28 @@ describe('clerk menu module', function () {
                 it('remove class from body', function () {
                     expect(body.hasClass('bin-menu')).toBeFalsy();
                 });
+            });
+        });
+
+        describe('app is expired', function () {
+            var body;
+
+            beforeEach(function () {
+                spyOn(application, 'isExpired').andReturn({
+                    then: function (fn) {
+                        fn(true);
+                    }
+                });
+                fetchAccountMetadata.reset();
+                body = $document.find('body');
+                body.removeClass('bin-menu');
+
+                binartaMenu.run();
+            });
+
+            it('do not load the menu', function () {
+                expect(fetchAccountMetadata).not.toHaveBeenCalled();
+                expect(body.hasClass('bin-menu')).toBeFalsy();
             });
         });
     });
