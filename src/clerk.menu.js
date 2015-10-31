@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode', 'config', 'basket', 'application'])
+    angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode', 'config', 'application'])
         .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', '$location', function (i18nRendererInstaller, editModeRenderer, $rootScope, $location) {
             i18nRendererInstaller({
                 open: function (args) {

@@ -12,7 +12,6 @@
     "binarta.i18n.angular": "1.*.*",
     "binarta.toggle.edit.mode.angular": "1.*.*",
     "binarta.config.angular": "0.*.*",
-    "binarta.basket.angular": "0.*.*",
     "binarta.application.angular": "0.*.*"
   },
   "devDependencies": {

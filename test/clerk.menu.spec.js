@@ -22,6 +22,7 @@ describe('clerk menu module', function () {
         .controller('ViewBasketController', function () {
         });
 
+    beforeEach(module('basket'));
     beforeEach(module('clerk.menu'));
 
     describe('on run', function () {
