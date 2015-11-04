@@ -85,19 +85,23 @@
                         template = getClerkTemplate(isOnBinartaDomain);
                         var rememberedPosition = 0;
 
-                        scope.$on('edit.mode.renderer', function (event, args) {
-                            if (args.id == 'popup' && args.open) {
-                                $('[edit-mode-renderer="main"]').hide();
-                                $('[edit-mode-renderer="popup"]').show();
-                            } else {
-                                $('[edit-mode-renderer="popup"]').hide();
-                                $('[edit-mode-renderer="main"]').show();
-                            }
+                        var isMainRendererOpened = false;
 
-                            if (args.id == 'main') {
-                                scope.editModeOpened = args.open;
-                                if (args.open) openMenu();
-                                else closeMenu();
+                        scope.$on('edit.mode.renderer', function (event, args) {
+                            if (args.open) {
+                                if (args.id == 'main') isMainRendererOpened = true;
+                                if (args.id == 'popup') {
+                                    $('[edit-mode-renderer="main"]').hide();
+                                    $('[edit-mode-renderer="popup"]').show();
+                                }
+                                openMenu();
+                            } else {
+                                if (args.id == 'main') isMainRendererOpened = false;
+                                if (args.id == 'popup') {
+                                    $('[edit-mode-renderer="popup"]').hide();
+                                    $('[edit-mode-renderer="main"]').show();
+                                }
+                                if(!isMainRendererOpened) closeMenu();
                             }
                         });
                     } else {
@@ -118,6 +122,7 @@
                     }
 
                     function openMenu() {
+                        scope.editModeOpened = true;
                         if ((body.hasClass('mobile') || body.hasClass('tablet')) && !body.hasClass('bin-menu-opened')) {
                             rememberedPosition = body.scrollTop();
                             body.addClass('bin-menu-opened');
@@ -125,6 +130,7 @@
                     }
 
                     function closeMenu() {
+                        scope.editModeOpened = false;
                         if ((body.hasClass('mobile') || body.hasClass('tablet')) && body.hasClass('bin-menu-opened')) {
                             body.removeClass('bin-menu-opened');
                             $window.scrollTo(0, rememberedPosition);
