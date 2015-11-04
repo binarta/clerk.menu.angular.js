@@ -219,7 +219,11 @@
                         '<li><a ng-href="#!{{localePrefix}}/site-settings" i18n code="clerk.menu.site.settings.link" read-only><i class="fa fa-cog fa-fw"></i> {{var}}</a></li>' +
                         '<li><a ng-href="#!{{localePrefix}}/changemypassword" i18n code="clerk.menu.change.password.link" read-only><i class="fa fa-lock fa-fw"></i> {{var}}</a></li>' +
                         '<li checkpoint-permission-for="purchase.order.find.all" ng-show="permitted""><a ng-href="#!{{localePrefix}}/order-history" i18n code="clerk.menu.order.history.link" read-only><i class="fa fa-archive fa-fw"></i> {{var}}</a></li>' +
-                        '<li><a ng-href="{{binartaBaseUri}}#!/applications" target="_blank" i18n code="clerk.menu.my.applications.link" read-only><i class="fa fa-external-link fa-fw"></i> {{var}}</a></li>' +
+                        (
+                            config.binartaBaseUri
+                                ? '<li><a ng-href="{{binartaBaseUri}}#!/applications" target="_blank" i18n code="clerk.menu.my.applications.link" read-only><i class="fa fa-external-link fa-fw"></i> {{var}}</a></li>'
+                                : ''
+                        ) +
                         '<li ng-controller="SignoutController"><a ng-href="#!{{localePrefix}}/" ng-click="submit()" i18n code="clerk.menu.logout.link" read-only><i class="fa fa-sign-out fa-fw"></i> {{var}}</a></li>' +
                         '</ul>' +
                         '</div>' +
