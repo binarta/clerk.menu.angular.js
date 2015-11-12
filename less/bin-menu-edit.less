@@ -100,21 +100,15 @@ body {
         padding: 20px;
       }
 
-      .bin-menu-edit-body,
-      .bin-menu-edit-actions {
-        opacity: 1;
-        transition: opacity 250ms ease;
-      }
-
       .bin-menu-edit-hidden {
-        .bin-menu-edit-body,
-        .bin-menu-edit-actions {
+        * {
           opacity: 0;
           z-index: -1;
           overflow: hidden;
           height: 0 !important;
           margin: 0 !important;
           padding: 0 !important;
+          border: none !important;
         }
       }
 
