@@ -91,15 +91,13 @@
                             if (args.open) {
                                 if (args.id == 'main') isMainRendererOpened = true;
                                 if (args.id == 'popup') {
-                                    $('[edit-mode-renderer="main"]').hide();
-                                    $('[edit-mode-renderer="popup"]').show();
+                                    $('[edit-mode-renderer="main"]').addClass('bin-menu-edit-hidden');
                                 }
                                 openMenu();
                             } else {
                                 if (args.id == 'main') isMainRendererOpened = false;
                                 if (args.id == 'popup') {
-                                    $('[edit-mode-renderer="popup"]').hide();
-                                    $('[edit-mode-renderer="main"]').show();
+                                    $('[edit-mode-renderer="main"]').removeClass('bin-menu-edit-hidden');
                                 }
                                 if(!isMainRendererOpened) closeMenu();
                             }
