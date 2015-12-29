@@ -1,0 +1,46 @@
+@import "variables";
+
+#bin-menu {
+  @radio-size: 20px;
+  @radio-padding: 6px;
+
+  input[type="radio"] {
+    display: none;
+
+    & + label {
+      position: relative;
+      float: left;
+      padding: 0;
+      margin: 0;
+      width: @radio-size;
+      min-width: @radio-size;
+      height: @radio-size;
+      min-height: @radio-size;
+      background-color: @cm-input-background-gray;
+      border: 1px solid @cm-input-border-gray;
+      border-radius: 50%;
+      cursor: pointer;
+
+      & > span {
+        margin-left: @radio-size + 10px;
+      }
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: @radio-padding / 2;
+        left: @radio-padding / 2;
+        right: @radio-padding / 2;
+        bottom: @radio-padding / 2;
+        border-radius: 50%;
+      }
+    }
+
+    &:checked + label {
+      &:before {
+        background-color: @cm-green;
+      }
+    }
+  }
+}

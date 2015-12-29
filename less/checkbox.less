@@ -5,7 +5,6 @@
     @switch-width: 60px;
     @switch-height: @switch-width / 2;
     @switch-padding: 2px;
-    @switch-background-color: #dddddd;
 
     input[type="checkbox"] {
       display: none;
@@ -17,7 +16,7 @@
         margin: 0;
         width: @switch-width;
         height: @switch-height;
-        background-color: @switch-background-color;
+        background-color: @cm-input-background-gray-dark;
         border-radius: @switch-height;
         cursor: pointer;
 
@@ -33,7 +32,7 @@
 
         &:before {
           right: @switch-padding / 2;
-          background-color: lighten(@switch-background-color, 8%);
+          background-color: #ffffff;
           border-radius: @switch-height;
         }
 
