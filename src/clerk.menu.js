@@ -194,12 +194,12 @@
                         '</a>' +
                         '</div>' +
 
-                            //'<div class="bin-menu-item">' +
-                            //'<button class="btn-bin-menu" ng-disabled="editModeOpened">' +
-                            //'<i class="fa fa-paint-brush fa-fw"></i>' +
-                            //'<span i18n code="clerk.menu.theme.button" read-only>{{var}}</span>' +
-                            //'</button>' +
-                            //'</div>' +
+                        '<div class="bin-menu-item" ng-controller="colorPickerController as colorPicker">' +
+                        '<button class="btn-bin-menu" type="button" role="button" ng-click="colorPicker.open()" ng-disabled="editModeOpened">' +
+                        '<i class="fa fa-paint-brush fa-fw"></i>' +
+                        '<span i18n code="clerk.menu.theme.button" read-only>{{var}}</span>' +
+                        '</button>' +
+                        '</div>' +
 
                         '<div class="bin-menu-item" seo-support>' +
                         '<button class="btn-bin-menu" type="button" role="button" ng-click="open()" ng-disabled="editModeOpened">' +
