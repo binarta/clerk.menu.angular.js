@@ -1,12 +1,12 @@
 @import "variables";
 
 body.bin-menu {
-  margin-top: @cm-total-height;
+  margin-top: @cm-total-height-xs;
 
   &.mobile {
     &.bin-menu-opened {
       #bin-menu {
-        top: -@cm-total-height;
+        top: -@cm-total-height-xs;
         box-shadow: none;
       }
     }
@@ -22,12 +22,10 @@ body.bin-menu {
 
   &:not(.mobile), &.tablet {
     @media (min-width: 768px) {
-      @cm-total-height: 40px;
-
-      margin-top: @cm-total-height;
+      margin-top: @cm-total-height-sm;
 
       #bin-menu {
-        height: @cm-total-height;
+        height: @cm-total-height-sm;
       }
     }
   }
@@ -40,7 +38,7 @@ body.bin-menu {
   box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   width: 100%;
   min-width: 320px;
-  height: @cm-total-height;
+  height: @cm-total-height-xs;
   font-size: 0;
   background-color: @cm-background-color;
   background-size: 14px 14px;
