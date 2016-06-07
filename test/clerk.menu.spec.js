@@ -175,9 +175,9 @@ describe('clerk menu module', function () {
                     beforeEach(function () {
                         var deferred = $q.defer();
                         deferred.resolve([]);
-                        spyOn(account, 'getPermissions').andReturn(deferred.promise);
+                        spyOn(account, 'getPermissions').and.returnValue(deferred.promise);
 
-                        fetchAccountMetadata.calls[0].args[0].ok();
+                        fetchAccountMetadata.calls.first().args[0].ok();
                         $rootScope.$digest();
                     });
 
@@ -193,7 +193,7 @@ describe('clerk menu module', function () {
                         var scope;
 
                         beforeEach(function () {
-                            scope = fetchAccountMetadata.calls[0].args[0].scope;
+                            scope = fetchAccountMetadata.calls.first().args[0].scope;
                         });
 
                         it('scope is a child from rootScope', function () {
@@ -264,9 +264,9 @@ describe('clerk menu module', function () {
                     beforeEach(function () {
                         var deferred = $q.defer();
                         deferred.resolve(['edit.mode']);
-                        spyOn(account, 'getPermissions').andReturn(deferred.promise);
+                        spyOn(account, 'getPermissions').and.returnValue(deferred.promise);
 
-                        fetchAccountMetadata.calls[0].args[0].ok();
+                        fetchAccountMetadata.calls.first().args[0].ok();
                         $rootScope.$digest();
                     });
                 });
@@ -275,7 +275,7 @@ describe('clerk menu module', function () {
             describe('when user is signed out', function () {
                 beforeEach(function () {
                     body.addClass('bin-menu');
-                    fetchAccountMetadata.calls[0].args[0].unauthorized();
+                    fetchAccountMetadata.calls.first().args[0].unauthorized();
                 });
 
                 it('remove class from body', function () {
@@ -288,12 +288,12 @@ describe('clerk menu module', function () {
             var body;
 
             beforeEach(function () {
-                spyOn(application, 'isExpired').andReturn({
+                spyOn(application, 'isExpired').and.returnValue({
                     then: function (fn) {
                         fn(true);
                     }
                 });
-                fetchAccountMetadata.reset();
+                fetchAccountMetadata.calls.reset();
                 body = $document.find('body');
                 body.removeClass('bin-menu');
 
