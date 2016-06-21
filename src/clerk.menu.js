@@ -245,7 +245,7 @@
                             '<div class="bin-menu-item" ng-controller="ViewBasketController" ng-show="quantity > 0">' +
                             '<a class="btn-bin-menu" ng-href="#!{{localePrefix}}/basket" ng-disabled="isPage(\'basket\')">' +
                             '<i class="fa fa-shopping-cart fa-fw"></i>' +
-                            '<span i18n code="clerk.menu.basket.button" read-only>({{quantity}}) {{(subTotal || 0) / 100 | currency}}</span>' +
+                            '<span i18n code="clerk.menu.basket.button" read-only>({{quantity}}) {{presentablePrice}}</span>' +
                             '</a>' +
                             '</div>'
                         ) +
