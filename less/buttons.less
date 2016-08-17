@@ -107,6 +107,37 @@
     }
   }
 
+  // these rules below allow using something other than an anchor tag to be tagged with btn-bin-menu while the actual anchor is contained within
+  .btn-bin-menu {
+    a {
+      color: @cm-black;
+      &:hover,
+      &:focus,
+      &:visited {
+        color: @cm-black;
+        text-decoration: none;
+      }
+
+    }
+    &.active {
+      a {
+        background-color: @cm-blue;
+        color: @cm-white;
+        text-shadow: 0 1px 1px @cm-black;
+      }
+      &[disabled] {
+        a {
+          color: darken(@cm-white, 10%);
+        }
+      }
+    }
+    &[disabled] {
+      a {
+        color: lighten(@cm-black, 40%);
+      }
+    }
+  }
+
   .bin-menu-item {
     &.open {
       .btn-bin-menu {

@@ -233,22 +233,13 @@
                 function getUserTemplate() {
                     return '<div id="bin-menu">' +
                         '<div class="bin-menu-actions">' +
-
+                        (isBinartaNamespace() ? '' : '<div class="bin-menu-item"><bin-basket class="btn-bin-menu" mode="link" ng-disabled="isPage(\'basket\')"></bin-basket></div>') +
                         '<div class="bin-menu-item">' +
                         '<a class="btn-bin-menu" ng-disabled="isPage()" ng-href="#!{{localePrefix}}/">' +
                         '<i class="fa fa-home fa-fw"></i>' +
                         '<span i18n code="clerk.menu.home.button" read-only>{{var}}</span>' +
                         '</a>' +
                         '</div>' +
-                        (
-                            isBinartaNamespace() ? '' :
-                            '<div class="bin-menu-item" ng-controller="ViewBasketController" ng-show="quantity > 0">' +
-                            '<a class="btn-bin-menu" ng-href="#!{{localePrefix}}/basket" ng-disabled="isPage(\'basket\')">' +
-                            '<i class="fa fa-shopping-cart fa-fw"></i>' +
-                            '<span i18n code="clerk.menu.basket.button" read-only>({{quantity}}) {{presentablePrice}}</span>' +
-                            '</a>' +
-                            '</div>'
-                        ) +
                         '<div class="bin-menu-item">' +
                         '<button class="btn-bin-menu dropdown-toggle" data-toggle="dropdown" type="button" id="accountMenu" role="button" aria-expanded="false" ng-disabled="editModeOpened">' +
                         '<i class="fa fa-user fa-fw"></i>' +
