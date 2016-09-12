@@ -22,13 +22,15 @@ describe('clerk menu module', function () {
         .controller('ViewBasketController', function () {
         });
 
+    beforeEach(module('binartajs-angular1-spec'));
     beforeEach(module('basket'));
     beforeEach(module('clerk.menu'));
 
     describe('on run', function () {
-        var $rootScope, $location, binartaMenu, account, fetchAccountMetadata, $document, $q, $routeParams, application;
+        var binarta, $rootScope, $location, binartaMenu, account, fetchAccountMetadata, $document, $q, $routeParams, application;
 
-        beforeEach(inject(function (_$rootScope_, _$location_, binartaMenuRunner, _account_, _fetchAccountMetadata_, _$document_, _$q_, _$routeParams_, applicationDataService) {
+        beforeEach(inject(function (_binarta_, _$rootScope_, _$location_, binartaMenuRunner, _account_, _fetchAccountMetadata_, _$document_, _$q_, _$routeParams_, applicationDataService) {
+            binarta = _binarta_;
             $location = _$location_;
             binartaMenu = binartaMenuRunner;
             fetchAccountMetadata = _fetchAccountMetadata_;
@@ -171,14 +173,19 @@ describe('clerk menu module', function () {
             });
 
             describe('when user is signed in', function () {
+                beforeEach(function() {
+                    binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                });
+
                 describe('and user has no edit.mode permission', function () {
                     beforeEach(function () {
-                        var deferred = $q.defer();
-                        deferred.resolve([]);
-                        spyOn(account, 'getPermissions').and.returnValue(deferred.promise);
+                        // var deferred = $q.defer();
+                        // deferred.resolve([]);
+                        // spyOn(account, 'getPermissions').and.returnValue(deferred.promise);
 
-                        fetchAccountMetadata.calls.first().args[0].ok();
-                        $rootScope.$digest();
+                        // fetchAccountMetadata.calls.first().args[0].ok();
+                        // $rootScope.$digest();
+                        // binarta.checkpoint.profile.refresh();
                     });
 
                     it('bin-menu class is added to body', function () {
@@ -192,13 +199,9 @@ describe('clerk menu module', function () {
                     describe('with scope', function () {
                         var scope;
 
-                        beforeEach(function () {
-                            scope = fetchAccountMetadata.calls.first().args[0].scope;
-                        });
-
-                        it('scope is a child from rootScope', function () {
-                            expect(scope.$parent).toEqual($rootScope);
-                        });
+                        beforeEach(inject(function (binartaMenuRunner) {
+                            scope = binartaMenuRunner.angularScope();
+                        }));
 
                         describe('check if current page is homepage', function () {
                             it('with no locale and not on home', function () {
@@ -275,7 +278,7 @@ describe('clerk menu module', function () {
             describe('when user is signed out', function () {
                 beforeEach(function () {
                     body.addClass('bin-menu');
-                    fetchAccountMetadata.calls.first().args[0].unauthorized();
+                    binarta.checkpoint.profile.signout();
                 });
 
                 it('remove class from body', function () {

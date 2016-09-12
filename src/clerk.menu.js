@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode', 'config', 'application'])
+    angular.module('clerk.menu', ['ngRoute', 'checkpoint', 'i18n', 'toggle.edit.mode', 'config', 'application', 'binarta-checkpointjs-angular1'])
         .run(['i18nRendererInstaller', 'editModeRenderer', '$rootScope', '$location', function (i18nRendererInstaller, editModeRenderer, $rootScope, $location) {
             i18nRendererInstaller({
                 open: function (args) {
@@ -45,11 +45,15 @@
         .run(['binartaMenuRunner', function (binartaMenu) {
             binartaMenu.run();
         }])
-        .service('binartaMenuRunner', ['$rootScope', '$document', '$window', '$compile', '$location', '$routeParams', 'fetchAccountMetadata', 'account', 'config', 'applicationDataService',
-            function ($rootScope, $document, $window, $compile, $location, $routeParams, fetchAccountMetadata, account, config, application) {
+        .service('binartaMenuRunner', ['$rootScope', '$document', '$window', '$compile', '$location', '$routeParams', 'fetchAccountMetadata', 'account', 'config', 'applicationDataService', 'binarta',
+            function ($rootScope, $document, $window, $compile, $location, $routeParams, fetchAccountMetadata, account, config, application, binarta) {
                 var body = $document.find('body');
                 var scope = $rootScope.$new();
                 var element;
+
+                this.angularScope = function() {
+                    return scope;
+                };
 
                 this.run = function () {
                     application.isExpired().then(function (expired) {
@@ -58,20 +62,19 @@
                 };
 
                 function loadBinarta() {
-                    fetchAccountMetadata({
-                        ok: function () {
-                            account.getPermissions().then(function (permissions) {
-                                var isClerk = permissions.reduce(function (p, c) {
-                                    return p || c.name == 'edit.mode';
-                                }, undefined);
-                                renderBinartaMenu(isClerk);
-                            });
+                    binarta.checkpoint.profile.eventRegistry.add({
+                        signedin: function () {
+                            if(!element) {
+                                renderBinartaMenu(binarta.checkpoint.profile.hasPermission('edit.mode'));
+                            }
                         },
-                        unauthorized: function () {
-                            if (element) element.remove();
+                        signedout: function () {
+                            if (element) {
+                                element.remove();
+                                element = undefined;
+                            }
                             body.removeClass('bin-menu');
-                        },
-                        scope: scope
+                        }
                     });
                 }
 
@@ -99,7 +102,7 @@
                                 if (args.id == 'popup') {
                                     $('[edit-mode-renderer="main"]').removeClass('bin-menu-edit-hidden');
                                 }
-                                if(!isMainRendererOpened) closeMenu();
+                                if (!isMainRendererOpened) closeMenu();
                             }
                         });
                     } else {
@@ -259,5 +262,5 @@
                         '</div>' +
                         '</div>';
                 }
-        }]);
+            }]);
 })();
