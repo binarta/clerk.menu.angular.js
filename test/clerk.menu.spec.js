@@ -258,8 +258,6 @@ describe('clerk menu module', function () {
                                 expect(scope.isPage('page')).toBeTruthy();
                             });
                         });
-
-
                     });
                 });
 
@@ -273,16 +271,16 @@ describe('clerk menu module', function () {
                         $rootScope.$digest();
                     });
                 });
-            });
 
-            describe('when user is signed out', function () {
-                beforeEach(function () {
-                    body.addClass('bin-menu');
-                    binarta.checkpoint.profile.signout();
-                });
+                describe('when user is signed out', function () {
+                    beforeEach(function () {
+                        body.addClass('bin-menu');
+                        binarta.checkpoint.profile.signout();
+                    });
 
-                it('remove class from body', function () {
-                    expect(body.hasClass('bin-menu')).toBeFalsy();
+                    it('remove class from body', function () {
+                        expect(body.hasClass('bin-menu')).toBeFalsy();
+                    });
                 });
             });
         });
