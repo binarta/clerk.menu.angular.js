@@ -1,0 +1,116 @@
+<div id="bin-menu">
+    <div class="bin-menu-left">
+        <a class="btn-bin-menu btn-bin-menu-publish" ng-href="{{binartaUpgradeUri}}"
+           ng-disabled="editModeOpened" ng-if="::showUpgradeButton">
+            <img src="//cdn.binarta.com/image/clerk-menu/logo-small.png"
+                 srcset="//cdn.binarta.com/image/clerk-menu/logo-small.png 1x,
+                 //cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x,
+                 //cdn.binarta.com/image/clerk-menu/logo-small@3x.png 3x"
+                 alt="Binarta logo">
+            <span i18n code="clerk.menu.upgrade.button" read-only ng-bind="var"></span>
+        </a>
+
+        <div class="bin-menu-brand" ng-if="::!showUpgradeButton">
+            <a bin-href="/" ng-disabled="editModeOpened">
+                <img src="//cdn.binarta.com/image/clerk-menu/logo.png"
+                     srcset="//cdn.binarta.com/image/clerk-menu/logo.png 1x,
+                     //cdn.binarta.com/image/clerk-menu/logo@2x.png 2x,
+                     //cdn.binarta.com/image/clerk-menu/logo@3x.png 3x"
+                     alt="Binarta logo" class="bin-menu-brand-normal">
+                <img src="//cdn.binarta.com/image/clerk-menu/logo-small.png"
+                     srcset="//cdn.binarta.com/image/clerk-menu/logo-small.png 1x,
+                     //cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x,
+                     //cdn.binarta.com/image/clerk-menu/logo-small@3x.png 3x"
+                     alt="Binarta logo" class="bin-menu-brand-small">
+            </a>
+        </div>
+    </div>
+    <div class="bin-menu-actions">
+        <div class="bin-menu-item" ng-if="::showBasket">
+            <bin-basket class="btn-bin-menu" mode="link" ng-disabled="isPage('/basket')"></bin-basket>
+        </div>
+
+        <div class="bin-menu-item" ng-class="{true:'open'}[editModeOpened]" ng-if="::showEdit">
+            <button toggle-edit-mode ng-click="toggleEditMode()" accesskey="e" class="btn-bin-menu btn-bin-menu-edit"
+                    ng-class="{true:'active'}[editing]"
+                    checkpoint-permission-for="edit.mode" ng-disabled="!permitted || editModeOpened">
+                <i class="fa fa-magic fa-fw"></i>
+                <span i18n code="clerk.menu.edit.button" read-only ng-bind="var"></span>
+            </button>
+            <div class="dropdown-menu bin-menu-edit" role="menu" aria-labelledby="editModeMenu">
+                <div class="dropdown-menu-inner">
+                    <div edit-mode-renderer="popup" ng-class="{'bin-menu-edit-hidden': !showPopup}"></div>
+                    <div edit-mode-renderer="main" ng-class="{'bin-menu-edit-hidden': showPopup}"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bin-menu-item">
+            <a class="btn-bin-menu" ng-disabled="isPage('/') || editModeOpened" bin-href="/">
+                <i class="fa fa-home fa-fw"></i>
+                <span i18n code="clerk.menu.home.button" read-only ng-bind="var"></span>
+            </a>
+        </div>
+
+        <div class="bin-menu-item" ng-controller="colorPickerController as colorPicker" ng-if="::showTheme">
+            <button class="btn-bin-menu" type="button" role="button" ng-click="colorPicker.open()"
+                    ng-disabled="editModeOpened">
+                <i class="fa fa-paint-brush fa-fw"></i>
+                <span i18n code="clerk.menu.theme.button" read-only ng-bind="var"></span>
+            </button>
+        </div>
+
+        <div class="bin-menu-item" seo-support ng-if="::showSeo">
+            <button class="btn-bin-menu" type="button" role="button" ng-click="open()" ng-disabled="editModeOpened">
+                <i class="fa fa-globe fa-fw"></i>
+                <span i18n code="clerk.menu.seo.button" read-only ng-bind="var"></span>
+            </button>
+        </div>
+
+        <div class="bin-menu-item">
+            <button class="btn-bin-menu dropdown-toggle" data-toggle="dropdown" type="button" id="accountMenu"
+                    role="button" aria-expanded="false" ng-disabled="editModeOpened">
+                <i class="fa fa-user fa-fw"></i>
+                <span i18n code="clerk.menu.account.button" read-only ng-bind="var"></span>
+            </button>
+            <ul class="dropdown-menu account-menu" role="menu" aria-labelledby="accountMenu">
+                <li ng-if="::showSiteSettings">
+                    <a bin-href="/site-settings" i18n code="clerk.menu.site.settings.link" read-only>
+                        <i class="fa fa-cog fa-fw"></i> <span ng-bind="var"></span>
+                    </a>
+                </li>
+                <li ng-if="::showAccount">
+                    <a bin-href="/account" i18n code="clerk.menu.my.account.link" read-only>
+                        <i class="fa fa-user fa-fw"></i> <span ng-bind="var"></span>
+                    </a>
+                </li>
+                <li ng-if="::showChangePassword">
+                    <a bin-href="/changemypassword" i18n code="clerk.menu.change.password.link" read-only>
+                        <i class="fa fa-lock fa-fw"></i> <span ng-bind="var"></span>
+                    </a>
+                </li>
+                <li ng-if="::showOrderHistory">
+                    <a bin-href="/order-history" i18n code="clerk.menu.order.history.link" read-only>
+                        <i class="fa fa-archive fa-fw"></i> <span ng-bind="var"></span>
+                    </a>
+                </li>
+                <li ng-if="::showExternalApplications">
+                    <a ng-href="{{binartaBaseUri}}#!/applications" target="_blank" i18n
+                       code="clerk.menu.my.applications.link" read-only>
+                        <i class="fa fa-external-link fa-fw"></i> <span ng-bind="var"></span>
+                    </a>
+                </li>
+                <li ng-if="::showInternalApplications">
+                    <a bin-href="/applications" i18n code="clerk.menu.my.applications.link" read-only>
+                        <i class="fa fa-th-large fa-fw"></i> <span ng-bind="var"></span>
+                    </a>
+                </li>
+                <li>
+                    <a bin-href="/" ng-click="signout()" i18n code="clerk.menu.logout.link" read-only>
+                        <i class="fa fa-sign-out fa-fw"></i> <span ng-bind="var"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

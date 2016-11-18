@@ -1,309 +1,551 @@
 describe('clerk menu module', function () {
-    var editModeRendererSpy, editModeRendererClosedSpy;
-    angular.module('toggle.edit.mode', [])
-        .service('editModeRenderer', function () {
-            this.open = function (args) {
-                editModeRendererSpy = args;
-            };
-            this.close = function () {
-                editModeRendererClosedSpy = true
-            };
-        });
-
-    var i18nRendererInstallerSpy;
-    angular.module('i18n', [])
-        .factory('i18nRendererInstaller', function () {
-            return function (args) {
-                i18nRendererInstallerSpy = args;
-            };
-        });
-
-    angular.module('basket', [])
-        .controller('ViewBasketController', function () {
-        });
-
     beforeEach(module('binartajs-angular1-spec'));
-    beforeEach(module('basket'));
     beforeEach(module('clerk.menu'));
 
     describe('on run', function () {
-        var binarta, $rootScope, $location, binartaMenu, account, fetchAccountMetadata, $document, $q, $routeParams, application;
+        var binarta, $rootScope, $location, binartaMenu, $document, $window, $q, $routeParams, editModeRenderer,
+            i18nRendererInstaller, config, checkpointGateway, applicationGateway, browserInfo, topics;
 
-        beforeEach(inject(function (_binarta_, _$rootScope_, _$location_, binartaMenuRunner, _account_, _fetchAccountMetadata_, _$document_, _$q_, _$routeParams_, applicationDataService) {
+        beforeEach(inject(function (_binarta_, _$rootScope_, _$location_, binartaMenuRunner, _$document_, _$window_,
+                                    _$q_, _$routeParams_, _editModeRenderer_, _i18nRendererInstaller_, _config_,
+                                    binartaCheckpointGateway, binartaApplicationGateway, _browserInfo_,
+                                    topicMessageDispatcher) {
             binarta = _binarta_;
             $location = _$location_;
             binartaMenu = binartaMenuRunner;
-            fetchAccountMetadata = _fetchAccountMetadata_;
             $rootScope = _$rootScope_;
-            $rootScope.$digest();
-            editModeRendererSpy = undefined;
-            editModeRendererClosedSpy = undefined;
-            account = _account_;
             $document = _$document_;
+            $window = _$window_;
             $q = _$q_;
             $routeParams = _$routeParams_;
-            application = applicationDataService;
+            editModeRenderer = _editModeRenderer_;
+            i18nRendererInstaller = _i18nRendererInstaller_;
+            config = _config_;
+            checkpointGateway = binartaCheckpointGateway;
+            applicationGateway = binartaApplicationGateway;
+            browserInfo = _browserInfo_;
+            topics = topicMessageDispatcher;
         }));
 
-        it('install i18nRenderer', function () {
-            expect(i18nRendererInstallerSpy).toEqual({open: jasmine.any(Function)});
-        });
+        describe('installI18nRenderer', function () {
+            var submitSpy, editModeSpy;
 
-        describe('when i18nRenderer is opened', function () {
-            var submitSpy;
-
-            beforeEach(function () {
-                i18nRendererInstallerSpy.open({
-                    submit: function (translation) {
-                        submitSpy = translation;
-                    },
-                    translation: 'translation',
-                    editor: 'editor',
-                    template: 'template'
-                });
+            it('i18nRendererInstaller is called', function () {
+                expect(i18nRendererInstaller).toHaveBeenCalled();
             });
 
-            it('editModeRenderer is called', function () {
-                expect(editModeRendererSpy.template).toEqual('template');
-                expect(editModeRendererSpy.scope.translation).toEqual('translation');
-                expect(editModeRendererSpy.scope.editor).toEqual('editor');
-            });
-
-            it('on submit', function () {
-                editModeRendererSpy.scope.translation = 'test';
-
-                editModeRendererSpy.scope.submit();
-
-                expect(submitSpy).toEqual('test');
-                expect(editModeRendererClosedSpy).toBeTruthy();
-            });
-
-            it('on cancel', function () {
-                editModeRendererSpy.scope.cancel();
-
-                expect(editModeRendererClosedSpy).toBeTruthy();
-            });
-
-            describe('on erase', function () {
-                it('no i18nForm', function () {
-                    editModeRendererSpy.scope.erase();
-
-                    expect(editModeRendererSpy.scope.translation).toEqual('');
-                });
-
-                describe('with i18nForm', function () {
-                    var setViewValueSpy, isRendered, jQuerySelectorSpy, isFocused;
-
-                    beforeEach(function () {
-                        editModeRendererSpy.scope.i18nForm = {
-                            translation: {
-                                $setViewValue: function (value) {
-                                    setViewValueSpy = value;
-                                },
-                                $render: function () {
-                                    isRendered = true;
-                                }
-                            }
-                        };
-
-                        $ = function (selector) {
-                            jQuerySelectorSpy = selector;
-                            return {
-                                focus: function () {
-                                    isFocused = true;
-                                }
-                            }
-                        };
-
-                        editModeRendererSpy.scope.erase();
-                    });
-
-                    it('viewValue is cleared', function () {
-                        expect(setViewValueSpy).toEqual('');
-                    });
-
-                    it('translation field is rendered', function () {
-                        expect(isRendered).toBeTruthy();
-                    });
-
-                    it('focus element', function () {
-                        expect(jQuerySelectorSpy).toEqual('[name="translation"]');
-                        expect(isFocused).toBeTruthy();
-                    });
-                });
-            });
-
-
-            it('no followLink defined', function () {
-                expect(editModeRendererSpy.scope.followLink).toBeUndefined();
-            });
-        });
-
-        describe('when element is an anchor', function () {
-            var args;
-
-            beforeEach(function () {
-                args = {
-                    translation: 'translation',
-                    editor: 'editor',
-                    template: 'template',
-                    href: '#!/link/to/page'
-                };
-            });
-
-            describe('and i18nRenderer is opened', function () {
+            describe('on open', function () {
                 beforeEach(function () {
-                    i18nRendererInstallerSpy.open(args);
+                    i18nRendererInstaller.calls.mostRecent().args[0].open({
+                        submit: function (translation) {
+                            submitSpy = translation;
+                        },
+                        translation: 'translation',
+                        editor: 'editor',
+                        template: 'template'
+                    });
+                    editModeSpy = editModeRenderer.open.calls.mostRecent().args[0];
                 });
 
-                it('on followLink', function () {
-                    editModeRendererSpy.scope.followLink();
+                it('editModeRenderer is called', function () {
+                    expect(editModeSpy.template).toEqual('template');
+                    expect(editModeSpy.scope.translation).toEqual('translation');
+                    expect(editModeSpy.scope.editor).toEqual('editor');
+                });
 
-                    expect($location.path()).toEqual('/link/to/page');
-                    expect(editModeRendererClosedSpy).toBeTruthy();
+                it('on submit', function () {
+                    editModeSpy.scope.translation = 'test';
+
+                    editModeSpy.scope.submit();
+
+                    expect(submitSpy).toEqual('test');
+                    expect(editModeRenderer.close).toHaveBeenCalled();
+                });
+
+                it('on cancel', function () {
+                    editModeSpy.scope.cancel();
+
+                    expect(editModeRenderer.close).toHaveBeenCalled();
+                });
+
+                describe('on erase', function () {
+                    it('no i18nForm', function () {
+                        editModeSpy.scope.erase();
+
+                        expect(editModeSpy.scope.translation).toEqual('');
+                    });
+
+                    describe('with i18nForm', function () {
+                        var setViewValueSpy, isRendered, jQuerySelectorSpy, isFocused;
+
+                        beforeEach(function () {
+                            editModeSpy.scope.i18nForm = {
+                                translation: {
+                                    $setViewValue: function (value) {
+                                        setViewValueSpy = value;
+                                    },
+                                    $render: function () {
+                                        isRendered = true;
+                                    }
+                                }
+                            };
+
+                            $ = function (selector) {
+                                jQuerySelectorSpy = selector;
+                                return {
+                                    focus: function () {
+                                        isFocused = true;
+                                    }
+                                }
+                            };
+
+                            editModeSpy.scope.erase();
+                        });
+
+                        it('viewValue is cleared', function () {
+                            expect(setViewValueSpy).toEqual('');
+                        });
+
+                        it('translation field is rendered', function () {
+                            expect(isRendered).toBeTruthy();
+                        });
+
+                        it('focus element', function () {
+                            expect(jQuerySelectorSpy).toEqual('[name="translation"]');
+                            expect(isFocused).toBeTruthy();
+                        });
+                    });
+                });
+
+                it('no followLink defined', function () {
+                    expect(editModeSpy.scope.followLink).toBeUndefined();
+                });
+            });
+
+            describe('when element is an anchor', function () {
+                var args;
+
+                beforeEach(function () {
+                    args = {
+                        translation: 'translation',
+                        editor: 'editor',
+                        template: 'template',
+                        href: '#!/link/to/page'
+                    };
+                });
+
+                describe('and i18nRenderer is opened', function () {
+                    beforeEach(function () {
+                        i18nRendererInstaller.calls.mostRecent().args[0].open(args);
+                        editModeSpy = editModeRenderer.open.calls.mostRecent().args[0];
+                    });
+
+                    it('on followLink', function () {
+                        editModeSpy.scope.followLink();
+
+                        expect($location.path()).toEqual('/link/to/page');
+                        expect(editModeRenderer.close).toHaveBeenCalled();
+                    });
                 });
             });
         });
 
         describe('binarta-menu', function () {
-            var body;
+            var body, menuRunner, scope;
 
-            beforeEach(function () {
+            beforeEach(inject(function (binartaMenuRunner) {
+                menuRunner = binartaMenuRunner;
+                scope = menuRunner.angularScope();
                 body = $document.find('body');
-            });
+                checkpointGateway.permissions = [];
+            }));
 
-            describe('when user is signed in', function () {
-                beforeEach(function() {
-                    binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+            function assertScope() {
+                it('body class is added', function () {
+                    expect(body.hasClass('bin-menu')).toBeTruthy();
                 });
 
-                describe('and user has no edit.mode permission', function () {
+                it('template is appended to body', function () {
+                    expect(body.html()).toContain('id="bin-menu"');
+                });
+
+                describe('on isPage', function () {
                     beforeEach(function () {
-                        // var deferred = $q.defer();
-                        // deferred.resolve([]);
-                        // spyOn(account, 'getPermissions').and.returnValue(deferred.promise);
-
-                        // fetchAccountMetadata.calls.first().args[0].ok();
-                        // $rootScope.$digest();
-                        // binarta.checkpoint.profile.refresh();
+                        binarta.application.setLocaleForPresentation('en');
+                        $location.path('/en/foo');
                     });
 
-                    it('bin-menu class is added to body', function () {
-                        expect(body.hasClass('bin-menu')).toBeTruthy();
+                    it('true case', function() {
+                        expect(scope.isPage('/foo')).toBeTruthy();
                     });
 
-                    it('menu is added to dom', function () {
-                        expect(body.html()).toContain('id="bin-menu"');
+                    it('false case', function() {
+                        expect(scope.isPage('/')).toBeFalsy();
+                    });
+                });
+
+                describe('on signout', function () {
+                    beforeEach(function () {
+                        scope.signout();
                     });
 
-                    describe('with scope', function () {
-                        var scope;
+                    it('checkpoint.signout notification is fired', function () {
+                        expect(topics.fire).toHaveBeenCalledWith('checkpoint.signout', 'ok');
+                    });
+                });
+            }
 
-                        beforeEach(inject(function (binartaMenuRunner) {
-                            scope = binartaMenuRunner.angularScope();
-                        }));
+            function assertClerk() {
+                it('show branding', function () {
+                    expect(scope.showBranding).toBeTruthy();
+                });
 
-                        describe('check if current page is homepage', function () {
-                            it('with no locale and not on home', function () {
-                                $location.path('/test/');
+                it('show edit button', function () {
+                    expect(scope.showEdit).toBeTruthy();
+                });
 
-                                expect(scope.isPage()).toBeFalsy();
-                            });
+                it('show theme button', function () {
+                    expect(scope.showTheme).toBeTruthy();
+                });
 
-                            it('with no locale and on home', function () {
-                                $location.path('/');
+                it('show seo button', function () {
+                    expect(scope.showSeo).toBeTruthy();
+                });
 
-                                expect(scope.isPage()).toBeTruthy();
-                            });
+                it('show site settings link', function () {
+                    expect(scope.showSiteSettings).toBeTruthy();
+                });
 
-                            it('with locale and not on home', function () {
-                                $routeParams.locale = 'locale';
-                                $location.path('/locale/test/');
+                it('show change password link', function () {
+                    expect(scope.showChangePassword).toBeTruthy();
+                });
 
-                                expect(scope.isPage()).toBeFalsy();
-                            });
-
-                            it('with locale and on home', function () {
-                                $routeParams.locale = 'locale';
-                                $location.path('/locale/');
-
-                                expect(scope.isPage()).toBeTruthy();
-                            });
+                describe('registered on edit mode event', function () {
+                    describe('open main edit menu', function () {
+                        beforeEach(function () {
+                            $rootScope.$broadcast('edit.mode.renderer', {open: true, id: 'main'});
                         });
 
-                        describe('check if current page is other page', function () {
-                            it('with no locale and not on home', function () {
-                                $location.path('/test/');
+                        it('set editModeOpened variable to be used in template', function () {
+                            expect(scope.editModeOpened).toBeTruthy();
+                        });
 
-                                expect(scope.isPage('page')).toBeFalsy();
+                        it('body class is added', function () {
+                            expect(body.hasClass('bin-menu-opened')).toBeTruthy();
+                        });
+
+                        describe('open popup edit menu', function () {
+                            beforeEach(function () {
+                                $rootScope.$broadcast('edit.mode.renderer', {open: true, id: 'popup'});
                             });
 
-                            it('with no locale and on home', function () {
-                                $location.path('/page');
-
-                                expect(scope.isPage('page')).toBeTruthy();
+                            it('hide main menu', function () {
+                                expect(scope.showPopup).toBeTruthy();
                             });
 
-                            it('with locale and not on home', function () {
-                                $routeParams.locale = 'locale';
-                                $location.path('/locale/test/');
-
-                                expect(scope.isPage('page')).toBeFalsy();
+                            it('editModeOpened is available', function () {
+                                expect(scope.editModeOpened).toBeTruthy();
                             });
 
-                            it('with locale and on home', function () {
-                                $routeParams.locale = 'locale';
-                                $location.path('/locale/page');
+                            it('body class is added', function () {
+                                expect(body.hasClass('bin-menu-opened')).toBeTruthy();
+                            });
 
-                                expect(scope.isPage('page')).toBeTruthy();
+                            describe('close popup edit menu', function () {
+                                beforeEach(function () {
+                                    $rootScope.$broadcast('edit.mode.renderer', {open: false, id: 'popup'});
+                                });
+
+                                it('show main menu', function () {
+                                    expect(scope.showPopup).toBeFalsy();
+                                });
+
+                                it('editModeOpened is available', function () {
+                                    expect(scope.editModeOpened).toBeTruthy();
+                                });
+
+                                it('body class is added', function () {
+                                    expect(body.hasClass('bin-menu-opened')).toBeTruthy();
+                                });
+
+                                describe('close main edit menu', function () {
+                                    beforeEach(function () {
+                                        $rootScope.$broadcast('edit.mode.renderer', {open: false, id: 'main'});
+                                    });
+
+                                    it('editModeOpened is closed', function () {
+                                        expect(scope.editModeOpened).toBeFalsy();
+                                    });
+
+                                    it('body class is removed', function () {
+                                        expect(body.hasClass('bin-menu-opened')).toBeFalsy();
+                                    });
+                                });
+                            });
+
+                            describe('open main edit menu', function () {
+                                beforeEach(function () {
+                                    $rootScope.$broadcast('edit.mode.renderer', {open: true, id: 'main'});
+                                });
+
+                                it('show main menu', function () {
+                                    expect(scope.showPopup).toBeFalsy();
+                                });
                             });
                         });
                     });
+
+                    ['mobile', 'tablet'].forEach(function (device) {
+                        describe('when ' + device, function () {
+                            beforeEach(function () {
+                                spyOn(jQuery.fn, 'scrollTop').and.returnValue(100);
+                                $window.scrollTo = jasmine.createSpy('spy');
+                                browserInfo.setDevice(device);
+                            });
+
+                            describe('open main edit menu', function () {
+                                beforeEach(function () {
+                                    $rootScope.$broadcast('edit.mode.renderer', {open: true, id: 'main'});
+                                });
+
+                                describe('close main edit menu', function () {
+                                    beforeEach(function () {
+                                        $rootScope.$broadcast('edit.mode.renderer', {open: false, id: 'main'});
+                                    });
+
+                                    it('scroll to remembered position', function () {
+                                        expect($window.scrollTo).toHaveBeenCalledWith(0, 100);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            }
+
+            describe('is not on binarta namespace', function () {
+                beforeEach(function () {
+                    config.namespace = '-';
+                    binarta.application.adhesiveReading.read('-');
+                });
+
+                describe('when user is signed in', function () {
+                    beforeEach(function () {
+                        binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                    });
+
+                    it('do not show branding', function () {
+                        expect(scope.showBranding).toBeFalsy();
+                    });
+
+                    it('do not show upgrade button', function () {
+                        expect(scope.showUpgradeButton).toBeFalsy();
+                    });
+
+                    it('show basket', function () {
+                        expect(scope.showBasket).toBeTruthy();
+                    });
+
+                    it('do not show edit button', function () {
+                        expect(scope.showEdit).toBeFalsy();
+                    });
+
+                    it('do not show theme button', function () {
+                        expect(scope.showTheme).toBeFalsy();
+                    });
+
+                    it('do not show seo button', function () {
+                        expect(scope.showSeo).toBeFalsy();
+                    });
+
+                    it('do not show site settings link', function () {
+                        expect(scope.showSiteSettings).toBeFalsy();
+                    });
+
+                    it('show account link', function () {
+                        expect(scope.showAccount).toBeTruthy();
+                    });
+
+                    it('do not show change password link', function () {
+                        expect(scope.showChangePassword).toBeFalsy();
+                    });
+
+                    it('show order history link', function () {
+                        expect(scope.showOrderHistory).toBeTruthy();
+                    });
+
+                    it('do not show (external) applications link', function () {
+                        expect(scope.showExternalApplications).toBeFalsy();
+                    });
+
+                    it('do not show (internal) applications link', function () {
+                        expect(scope.showInternalApplications).toBeFalsy();
+                    });
+
+                    assertScope();
                 });
 
                 describe('and user is clerk with edit.mode permission', function () {
                     beforeEach(function () {
-                        var deferred = $q.defer();
-                        deferred.resolve(['edit.mode']);
-                        spyOn(account, 'getPermissions').and.returnValue(deferred.promise);
+                        checkpointGateway.addPermission('edit.mode');
+                    });
 
-                        fetchAccountMetadata.calls.first().args[0].ok();
-                        $rootScope.$digest();
+                    describe('and app is not in trial', function () {
+                        beforeEach(function () {
+                            binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                        });
+
+                        it('do not show upgrade button', function () {
+                            expect(scope.showUpgradeButton).toBeFalsy();
+                        });
+
+                        it('do not show basket', function () {
+                            expect(scope.showBasket).toBeFalsy();
+                        });
+
+                        it('do not show account link', function () {
+                            expect(scope.showAccount).toBeFalsy();
+                        });
+
+                        it('do not show order history link', function () {
+                            expect(scope.showOrderHistory).toBeFalsy();
+                        });
+
+                        it('show (external) applications link', function () {
+                            expect(scope.showExternalApplications).toBeTruthy();
+                        });
+
+                        it('do not show (internal) applications link', function () {
+                            expect(scope.showInternalApplications).toBeFalsy();
+                        });
+
+                        assertClerk();
+                        assertScope();
+                    });
+
+                    describe('and app is in trial', function () {
+                        beforeEach(function () {
+                            applicationGateway.updateApplicationProfile({trial: '-'});
+                            binarta.application.refresh();
+                            binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                        });
+
+                        it('show upgrade button', function () {
+                            expect(scope.showUpgradeButton).toBeTruthy();
+                        });
+
+                        assertScope();
                     });
                 });
+            });
 
-                describe('when user is signed out', function () {
+            describe('is on binarta namespace', function () {
+                beforeEach(function () {
+                    config.namespace = 'binarta';
+                    binarta.application.adhesiveReading.read('-');
+                });
+
+                describe('when user is signed in', function () {
                     beforeEach(function () {
-                        body.addClass('bin-menu');
-                        binarta.checkpoint.profile.signout();
+                        binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
                     });
 
-                    it('remove class from body', function () {
-                        expect(body.hasClass('bin-menu')).toBeFalsy();
+                    it('do not show branding', function () {
+                        expect(scope.showBranding).toBeFalsy();
                     });
+
+                    it('do not show upgrade button', function () {
+                        expect(scope.showUpgradeButton).toBeFalsy();
+                    });
+
+                    it('do not show basket', function () {
+                        expect(scope.showBasket).toBeFalsy();
+                    });
+
+                    it('do not show edit button', function () {
+                        expect(scope.showEdit).toBeFalsy();
+                    });
+
+                    it('do not show theme button', function () {
+                        expect(scope.showTheme).toBeFalsy();
+                    });
+
+                    it('do not show seo button', function () {
+                        expect(scope.showSeo).toBeFalsy();
+                    });
+
+                    it('do not show site settings link', function () {
+                        expect(scope.showSiteSettings).toBeFalsy();
+                    });
+
+                    it('show account link', function () {
+                        expect(scope.showAccount).toBeTruthy();
+                    });
+
+                    it('do not show change password link', function () {
+                        expect(scope.showChangePassword).toBeFalsy();
+                    });
+
+                    it('do not show order history link', function () {
+                        expect(scope.showOrderHistory).toBeFalsy();
+                    });
+
+                    it('do not show (external) applications link', function () {
+                        expect(scope.showExternalApplications).toBeFalsy();
+                    });
+
+                    it('show (internal) applications link', function () {
+                        expect(scope.showInternalApplications).toBeTruthy();
+                    });
+
+                    assertScope();
+                });
+
+                describe('and user is clerk with edit.mode permission', function () {
+                    beforeEach(function () {
+                        checkpointGateway.addPermission('edit.mode');
+                        binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                    });
+
+                    it('do not show upgrade button', function () {
+                        expect(scope.showUpgradeButton).toBeFalsy();
+                    });
+
+                    it('do not show basket', function () {
+                        expect(scope.showBasket).toBeFalsy();
+                    });
+
+                    it('do not show account link', function () {
+                        expect(scope.showAccount).toBeFalsy();
+                    });
+
+                    it('do not show order history link', function () {
+                        expect(scope.showOrderHistory).toBeFalsy();
+                    });
+
+                    it('do not show (external) applications link', function () {
+                        expect(scope.showExternalApplications).toBeFalsy();
+                    });
+
+                    it('show (internal) applications link', function () {
+                        expect(scope.showInternalApplications).toBeTruthy();
+                    });
+
+                    assertClerk();
+                    assertScope();
                 });
             });
-        });
 
-        describe('app is expired', function () {
-            var body;
-
-            beforeEach(function () {
-                spyOn(application, 'isExpired').and.returnValue({
-                    then: function (fn) {
-                        fn(true);
-                    }
+            describe('when app is expired', function () {
+                beforeEach(function () {
+                    applicationGateway.updateApplicationProfile({trial: {expired: true}});
+                    binarta.application.refresh();
+                    binarta.application.adhesiveReading.read('-');
                 });
-                fetchAccountMetadata.calls.reset();
-                body = $document.find('body');
-                body.removeClass('bin-menu');
 
-                binartaMenu.run();
-            });
-
-            it('do not load the menu', function () {
-                expect(fetchAccountMetadata).not.toHaveBeenCalled();
-                expect(body.hasClass('bin-menu')).toBeFalsy();
+                it('do not load the binarta menu', function () {
+                    expect(binarta.checkpoint.profile.eventRegistry.isEmpty()).toBeTruthy();
+                });
             });
         });
     });

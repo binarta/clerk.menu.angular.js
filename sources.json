@@ -1,5 +1,6 @@
 {
   "default": {
-    "clerk.menu": "bower_components/binarta.clerk.menu.angular/src/clerk.menu.js"
+    "clerk.menu": "bower_components/binarta.clerk.menu.angular/src/clerk.menu.js",
+    "clerk.menu.templates": "bower_components/binarta.clerk.menu.angular/src/clerk-menu-tpls.js"
   }
 }
