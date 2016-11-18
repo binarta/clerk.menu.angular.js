@@ -102,8 +102,12 @@
         }
 
         function renderBinartaMenu() {
+            binarta.application.config.findPublic('application.brand', renderBrandedBinartaMenu);
+        }
+
+        function renderBrandedBinartaMenu(brand) {
             var isClerk = hasEditModePermission();
-            // scope.brand = isClerk ? (brand || 'binarta') : '';
+            scope.brand = brand;
             scope.showBranding = isClerk;
             scope.showUpgradeButton = isTrial() && !isOnBinarta();
             scope.showBasket = !isClerk && !isOnBinarta();
@@ -114,7 +118,7 @@
             scope.showAccount = !isClerk;
             scope.showChangePassword = isClerk;
             scope.showOrderHistory = !isClerk && !isOnBinarta();
-            scope.showExternalApplications = isClerk && !isOnBinarta();
+            scope.showExternalApplications = isClerk && !isOnBinarta() && !isWebstersBrand(brand);
             scope.showInternalApplications = isOnBinarta();
             scope.isPage = isPage;
             scope.signout = signout;
@@ -144,6 +148,10 @@
                     topicMessageDispatcher.fire('checkpoint.signout', 'ok');
                 }
             });
+        }
+
+        function isWebstersBrand(brand) {
+            return brand == 'websters';
         }
 
         function registerEditModeRendererEvents() {

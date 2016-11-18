@@ -169,6 +169,10 @@ describe('clerk menu module', function () {
                     expect(body.html()).toContain('id="bin-menu"');
                 });
 
+                it('not branded by default', function () {
+                    expect(scope.brand).toEqual('');
+                });
+
                 describe('on isPage', function () {
                     beforeEach(function () {
                         binarta.application.setLocaleForPresentation('en');
@@ -545,6 +549,44 @@ describe('clerk menu module', function () {
 
                 it('do not load the binarta menu', function () {
                     expect(binarta.checkpoint.profile.eventRegistry.isEmpty()).toBeTruthy();
+                });
+            });
+
+            describe('when using the websters brand', function () {
+                beforeEach(function () {
+                    applicationGateway.addPublicConfig({id: 'application.brand', value: 'websters'});
+                });
+
+                describe('is not on binarta namespace', function () {
+                    beforeEach(function () {
+                        config.namespace = '-';
+                        binarta.application.adhesiveReading.read('-');
+                    });
+
+                    describe('when user is signed in', function () {
+                        beforeEach(function () {
+                            binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                        });
+
+                        it('brand is available', function () {
+                            expect(scope.brand).toEqual('websters');
+                        });
+
+                        it('do not show (external) applications link', function () {
+                            expect(scope.showExternalApplications).toBeFalsy();
+                        });
+                    });
+
+                    describe('and user is clerk with edit.mode permission', function () {
+                        beforeEach(function () {
+                            checkpointGateway.addPermission('edit.mode');
+                            binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                        });
+
+                        it('do not show (external) applications link', function () {
+                            expect(scope.showExternalApplications).toBeFalsy();
+                        });
+                    });
                 });
             });
         });

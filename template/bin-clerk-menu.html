@@ -1,11 +1,24 @@
-<div id="bin-menu">
-    <div class="bin-menu-left">
+<div id="bin-menu" ng-switch="::brand">
+    <div class="bin-menu-left" ng-switch-when="websters">
+        <div class="bin-menu-brand">
+            <a bin-href="/" ng-disabled="editModeOpened">
+                <img src="//cdn.binarta.com/image/clerk-menu/websters-logo.png"
+                     srcset="//cdn.binarta.com/image/clerk-menu/websters-logo.png 1x,
+                     //cdn.binarta.com/image/clerk-menu/websters-logo@2x.png 2x"
+                     alt="Websters logo" class="bin-menu-brand-normal">
+                <img src="//cdn.binarta.com/image/clerk-menu/websters-logo-small.png"
+                     srcset="//cdn.binarta.com/image/clerk-menu/websters-logo-small.png 1x,
+                     //cdn.binarta.com/image/clerk-menu/websters-logo-small@2x.png 2x"
+                     alt="Websters logo" class="bin-menu-brand-small">
+            </a>
+        </div>
+    </div>
+    <div class="bin-menu-left" ng-switch-default>
         <a class="btn-bin-menu btn-bin-menu-publish" ng-href="{{binartaUpgradeUri}}"
            ng-disabled="editModeOpened" ng-if="::showUpgradeButton">
             <img src="//cdn.binarta.com/image/clerk-menu/logo-small.png"
                  srcset="//cdn.binarta.com/image/clerk-menu/logo-small.png 1x,
-                 //cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x,
-                 //cdn.binarta.com/image/clerk-menu/logo-small@3x.png 3x"
+                 //cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x"
                  alt="Binarta logo">
             <span i18n code="clerk.menu.upgrade.button" read-only ng-bind="var"></span>
         </a>
@@ -14,13 +27,11 @@
             <a bin-href="/" ng-disabled="editModeOpened">
                 <img src="//cdn.binarta.com/image/clerk-menu/logo.png"
                      srcset="//cdn.binarta.com/image/clerk-menu/logo.png 1x,
-                     //cdn.binarta.com/image/clerk-menu/logo@2x.png 2x,
-                     //cdn.binarta.com/image/clerk-menu/logo@3x.png 3x"
+                     //cdn.binarta.com/image/clerk-menu/logo@2x.png 2x"
                      alt="Binarta logo" class="bin-menu-brand-normal">
                 <img src="//cdn.binarta.com/image/clerk-menu/logo-small.png"
                      srcset="//cdn.binarta.com/image/clerk-menu/logo-small.png 1x,
-                     //cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x,
-                     //cdn.binarta.com/image/clerk-menu/logo-small@3x.png 3x"
+                     //cdn.binarta.com/image/clerk-menu/logo-small@2x.png 2x"
                      alt="Binarta logo" class="bin-menu-brand-small">
             </a>
         </div>
