@@ -554,7 +554,7 @@ describe('clerk menu module', function () {
 
             describe('when using the websters brand', function () {
                 beforeEach(function () {
-                    applicationGateway.addPublicConfig({id: 'application.brand', value: 'websters'});
+                    applicationGateway.addPublicConfig({id: 'platform.brand', value: 'websters'});
                 });
 
                 describe('is not on binarta namespace', function () {

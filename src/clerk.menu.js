@@ -102,7 +102,7 @@
         }
 
         function renderBinartaMenu() {
-            binarta.application.config.findPublic('application.brand', renderBrandedBinartaMenu);
+            binarta.application.config.findPublic('platform.brand', renderBrandedBinartaMenu);
         }
 
         function renderBrandedBinartaMenu(brand) {
