@@ -589,6 +589,24 @@ describe('clerk menu module', function () {
                     });
                 });
             });
+
+            describe('when theme options are disabled', function () {
+                beforeEach(function () {
+                    applicationGateway.addPublicConfig({id: 'platform.theme.options.enabled', value: 'false'});
+                    binarta.application.adhesiveReading.read('-');
+                });
+
+                describe('and user is clerk with edit.mode permission', function () {
+                    beforeEach(function () {
+                        checkpointGateway.addPermission('edit.mode');
+                        binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                    });
+
+                    it('do not show theme button', function () {
+                        expect(scope.showTheme).toBeFalsy();
+                    });
+                });
+            });
         });
     });
 });

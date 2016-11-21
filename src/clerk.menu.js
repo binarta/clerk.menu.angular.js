@@ -112,7 +112,6 @@
             scope.showUpgradeButton = isTrial() && !isOnBinarta();
             scope.showBasket = !isClerk && !isOnBinarta();
             scope.showEdit = isClerk;
-            scope.showTheme = isClerk;
             scope.showSeo = isClerk;
             scope.showSiteSettings = isClerk;
             scope.showAccount = !isClerk;
@@ -120,6 +119,9 @@
             scope.showOrderHistory = !isClerk && !isOnBinarta();
             scope.showExternalApplications = isClerk && !isOnBinarta() && !isWebstersBrand(brand);
             scope.showInternalApplications = isOnBinarta();
+            binarta.application.config.findPublic('platform.theme.options.enabled', function (isEnabled) {
+                scope.showTheme = isClerk && (isEnabled != 'false');
+            });
             scope.isPage = isPage;
             scope.signout = signout;
             if (isClerk) registerEditModeRendererEvents();
