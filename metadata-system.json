@@ -20,7 +20,8 @@
       "clerk.menu.ok.button": "Ok",
       "clerk.menu.close.button": "Sluiten",
       "clerk.menu.back.button": "Terug",
-      "clerk.menu.updating.message": "Updating..."
+      "clerk.menu.updating.message": "Updating...",
+      "clerk.menu.try.again.message": "Er is iets misgegaan. Gelieve opnieuw te proberen."
     },
     "en":{
       "clerk.menu.upgrade.button": "UPGRADE",
@@ -42,7 +43,8 @@
       "clerk.menu.ok.button": "Ok",
       "clerk.menu.close.button": "Close",
       "clerk.menu.back.button": "Back",
-      "clerk.menu.updating.message": "Updating..."
+      "clerk.menu.updating.message": "Updating...",
+      "clerk.menu.try.again.message": "Something went wrong. Please try again."
     },
     "fr":{
       "clerk.menu.upgrade.button": "MISE À NIVEAU",
@@ -64,7 +66,8 @@
       "clerk.menu.ok.button": "Ok",
       "clerk.menu.close.button": "Close",
       "clerk.menu.back.button": "Back",
-      "clerk.menu.updating.message": "Updating..."
+      "clerk.menu.updating.message": "Updating...",
+      "clerk.menu.try.again.message": "Something went wrong. Please try again."
     },
     "de":{
       "clerk.menu.upgrade.button": "AKTUALISIEREN",
@@ -86,7 +89,8 @@
       "clerk.menu.ok.button": "Ok",
       "clerk.menu.close.button": "Close",
       "clerk.menu.back.button": "Back",
-      "clerk.menu.updating.message": "Updating..."
+      "clerk.menu.updating.message": "Updating...",
+      "clerk.menu.try.again.message": "Something went wrong. Please try again."
     }
   }
 }
