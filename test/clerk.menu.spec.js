@@ -411,8 +411,8 @@ describe('clerk menu module', function () {
                             expect(scope.showAccount).toBeFalsy();
                         });
 
-                        it('do not show order history link', function () {
-                            expect(scope.showOrderHistory).toBeFalsy();
+                        it('show order history link', function () {
+                            expect(scope.showOrderHistory).toBeTruthy();
                         });
 
                         it('show (external) applications link', function () {
