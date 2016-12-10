@@ -374,10 +374,6 @@ describe('clerk menu module', function () {
                         expect(scope.showChangePassword).toBeFalsy();
                     });
 
-                    it('show order history link', function () {
-                        expect(scope.showOrderHistory).toBeTruthy();
-                    });
-
                     it('do not show (external) applications link', function () {
                         expect(scope.showExternalApplications).toBeFalsy();
                     });
@@ -409,10 +405,6 @@ describe('clerk menu module', function () {
 
                         it('do not show account link', function () {
                             expect(scope.showAccount).toBeFalsy();
-                        });
-
-                        it('show order history link', function () {
-                            expect(scope.showOrderHistory).toBeTruthy();
                         });
 
                         it('show (external) applications link', function () {
@@ -490,10 +482,6 @@ describe('clerk menu module', function () {
                         expect(scope.showChangePassword).toBeFalsy();
                     });
 
-                    it('do not show order history link', function () {
-                        expect(scope.showOrderHistory).toBeFalsy();
-                    });
-
                     it('do not show (external) applications link', function () {
                         expect(scope.showExternalApplications).toBeFalsy();
                     });
@@ -521,10 +509,6 @@ describe('clerk menu module', function () {
 
                     it('do not show account link', function () {
                         expect(scope.showAccount).toBeFalsy();
-                    });
-
-                    it('do not show order history link', function () {
-                        expect(scope.showOrderHistory).toBeFalsy();
                     });
 
                     it('do not show (external) applications link', function () {

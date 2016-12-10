@@ -116,7 +116,6 @@
             scope.showSiteSettings = isClerk;
             scope.showAccount = !isClerk;
             scope.showChangePassword = isClerk;
-            scope.showOrderHistory = !isOnBinarta();
             scope.showExternalApplications = isClerk && !isOnBinarta() && !isWebstersBrand(brand);
             scope.showInternalApplications = isOnBinarta();
             binarta.application.config.findPublic('platform.theme.options.enabled', function (isEnabled) {

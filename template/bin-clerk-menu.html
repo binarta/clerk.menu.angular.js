@@ -100,11 +100,13 @@
                         <i class="fa fa-lock fa-fw"></i> <span ng-bind="var"></span>
                     </a>
                 </li>
-                <li ng-if="::showOrderHistory">
+                <% if(shop) { %>
+                <li>
                     <a bin-href="/order-history" i18n code="clerk.menu.order.history.link" read-only>
                         <i class="fa fa-archive fa-fw"></i> <span ng-bind="var"></span>
                     </a>
                 </li>
+                <% } %>
                 <li ng-if="::showExternalApplications">
                     <a ng-href="{{binartaBaseUri}}#!/applications" target="_blank" i18n
                        code="clerk.menu.my.applications.link" read-only>
