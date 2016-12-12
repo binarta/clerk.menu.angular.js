@@ -1,11 +1,6 @@
 {
   "name": "binarta.clerk.menu.angular",
-  "main": [
-    "./src/clerk.menu.js",
-    "./less/clerk-menu.less",
-    "./metadata-system.json",
-    "./sources.json"
-  ],
+  "main": "./src/clerk.menu.js",
   "dependencies": {
     "binartajs-angular1": "1.*.*",
     "binarta.angularx": "0.*.*",
