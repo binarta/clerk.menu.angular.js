@@ -130,7 +130,7 @@ describe('clerk menu module', function () {
                         translation: 'translation',
                         editor: 'editor',
                         template: 'template',
-                        href: '#!/link/to/page'
+                        path: '/link/to/page'
                     };
                 });
 

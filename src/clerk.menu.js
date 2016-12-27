@@ -28,9 +28,9 @@
                     editor: args.editor || 'default'
                 });
 
-                if (args.href) {
+                if (args.path) {
                     rendererScope.followLink = function () {
-                        $location.path(removeHashbang(args.href));
+                        $location.path(args.path);
                         editModeRenderer.close();
                     };
                 }
@@ -41,10 +41,6 @@
                 });
             }
         });
-
-        function removeHashbang(href) {
-            return href.replace('#!', '');
-        }
     }
 
     function binartaMenuRunnerService($rootScope, $document, $window, $compile, $templateCache, config, binarta, browserInfo, topicMessageDispatcher) {
