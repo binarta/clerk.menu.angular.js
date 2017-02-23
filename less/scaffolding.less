@@ -1,5 +1,9 @@
 @import "variables";
 
+#bin-menu {
+  display: none;
+}
+
 body.bin-menu {
   margin-top: @cm-total-height-xs;
 
@@ -29,35 +33,36 @@ body.bin-menu {
       }
     }
   }
-}
 
-#bin-menu {
-  position: fixed;
-  top: 0;
-  border-bottom: @cm-border-bottom-height solid @cm-border-color;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-  width: 100%;
-  min-width: 320px;
-  height: @cm-total-height-xs;
-  font-size: 0;
-  background-color: @cm-background-color;
-  background-size: 14px 14px;
-  box-sizing: border-box;
-  z-index: 1035;
-
-  & * {
+  #bin-menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    border-bottom: @cm-border-bottom-height solid @cm-border-color;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    width: 100%;
+    min-width: 320px;
+    height: @cm-total-height-xs;
+    font-size: 0;
+    background-color: @cm-background-color;
+    background-size: 14px 14px;
     box-sizing: border-box;
-  }
+    z-index: 1035;
 
-  .bin-menu-left {
-    float: left;
-  }
+    & * {
+      box-sizing: border-box;
+    }
 
-  .bin-menu-actions {
-    float: right;
-  }
+    .bin-menu-left {
+      float: left;
+    }
 
-  .bin-menu-item {
-    display: inline-block;
+    .bin-menu-actions {
+      float: right;
+    }
+
+    .bin-menu-item {
+      display: inline-block;
+    }
   }
 }
