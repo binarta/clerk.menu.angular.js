@@ -45,8 +45,7 @@
 
     function binartaMenuRunnerService($rootScope, $document, $window, $compile, $templateCache, config, binarta, browserInfo, topicMessageDispatcher) {
         var body = $document.find('body');
-        var scope = $rootScope.$new();
-        var element;
+        var scope, menuIsInitialized;
 
         this.angularScope = function() {
             return scope;
@@ -74,27 +73,11 @@
         }
 
         function onSignedIn() {
-            if(!element) renderBinartaMenu();
+            if(!menuIsInitialized) renderBinartaMenu();
         }
 
         function onSignedOut() {
-            removeElement();
-            removeBodyClass();
-        }
-
-        function removeElement() {
-            if (element) {
-                element.remove();
-                element = undefined;
-            }
-        }
-
-        function removeBodyClass() {
-            body.removeClass('bin-menu');
-        }
-
-        function addBodyClass() {
-            body.addClass('bin-menu');
+            if (menuIsInitialized) scope.$destroy();
         }
 
         function renderBinartaMenu() {
@@ -103,6 +86,8 @@
 
         function renderBrandedBinartaMenu(brand) {
             var isClerk = hasEditModePermission();
+            var element;
+            scope = $rootScope.$new();
             scope.brand = brand;
             scope.showBranding = isClerk;
             scope.showUpgradeButton = isTrial() && !isOnBinarta();
@@ -121,10 +106,24 @@
             scope.signout = signout;
             if (isClerk) registerEditModeRendererEvents();
 
-            element = angular.element($templateCache.get('bin-clerk-menu.html'));
-            $compile(element)(scope);
+            element = $compile($templateCache.get('bin-clerk-menu.html'))(scope);
             addBodyClass();
             body.prepend(element);
+            menuIsInitialized = true;
+
+            scope.$on('$destroy', function () {
+                element.remove();
+                removeBodyClass();
+                menuIsInitialized = false;
+            });
+        }
+
+        function removeBodyClass() {
+            body.removeClass('bin-menu');
+        }
+
+        function addBodyClass() {
+            body.addClass('bin-menu');
         }
 
         function hasEditModePermission() {

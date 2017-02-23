@@ -155,7 +155,6 @@ describe('clerk menu module', function () {
 
             beforeEach(inject(function (binartaMenuRunner) {
                 menuRunner = binartaMenuRunner;
-                scope = menuRunner.angularScope();
                 body = $document.find('body');
                 checkpointGateway.permissions = [];
             }));
@@ -336,6 +335,7 @@ describe('clerk menu module', function () {
                 describe('when user is signed in', function () {
                     beforeEach(function () {
                         binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                        scope = menuRunner.angularScope();
                     });
 
                     it('do not show branding', function () {
@@ -383,6 +383,44 @@ describe('clerk menu module', function () {
                     });
 
                     assertScope();
+
+                    describe('when user is signed in again', function () {
+                        beforeEach(function () {
+                            binarta.checkpoint.profile.refresh();
+                        });
+
+                        it('template is not appended again to body', function () {
+                            expect(body.html().match(/id="bin-menu"/g).length).toEqual(1);
+                        });
+                    });
+
+                    describe('and signed out', function () {
+                        beforeEach(function () {
+                            binarta.checkpoint.profile.signout();
+                        });
+
+                        it('body class is removed', function () {
+                            expect(body.hasClass('bin-menu')).toBeFalsy();
+                        });
+
+                        it('template is removed from body', function () {
+                            expect(body.html()).not.toContain('id="bin-menu"');
+                        });
+
+                        describe('when user is signed in again', function () {
+                            beforeEach(function () {
+                                binarta.checkpoint.signinForm.submit({username: 'u', password: 'p'});
+                            });
+
+                            it('body class is added', function () {
+                                expect(body.hasClass('bin-menu')).toBeTruthy();
+                            });
+
+                            it('template is appended to body', function () {
+                                expect(body.html()).toContain('id="bin-menu"');
+                            });
+                        });
+                    });
                 });
 
                 describe('and user is clerk with edit.mode permission', function () {
@@ -393,6 +431,7 @@ describe('clerk menu module', function () {
                     describe('and app is not in trial', function () {
                         beforeEach(function () {
                             binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                            scope = menuRunner.angularScope();
                         });
 
                         it('do not show upgrade button', function () {
@@ -424,6 +463,7 @@ describe('clerk menu module', function () {
                             applicationGateway.updateApplicationProfile({trial: '-'});
                             binarta.application.refresh();
                             binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                            scope = menuRunner.angularScope();
                         });
 
                         it('show upgrade button', function () {
@@ -444,6 +484,7 @@ describe('clerk menu module', function () {
                 describe('when user is signed in', function () {
                     beforeEach(function () {
                         binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                        scope = menuRunner.angularScope();
                     });
 
                     it('do not show branding', function () {
@@ -497,6 +538,7 @@ describe('clerk menu module', function () {
                     beforeEach(function () {
                         checkpointGateway.addPermission('edit.mode');
                         binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                        scope = menuRunner.angularScope();
                     });
 
                     it('do not show upgrade button', function () {
@@ -550,6 +592,7 @@ describe('clerk menu module', function () {
                     describe('when user is signed in', function () {
                         beforeEach(function () {
                             binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                            scope = menuRunner.angularScope();
                         });
 
                         it('brand is available', function () {
@@ -565,6 +608,7 @@ describe('clerk menu module', function () {
                         beforeEach(function () {
                             checkpointGateway.addPermission('edit.mode');
                             binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                            scope = menuRunner.angularScope();
                         });
 
                         it('do not show (external) applications link', function () {
@@ -584,6 +628,7 @@ describe('clerk menu module', function () {
                     beforeEach(function () {
                         checkpointGateway.addPermission('edit.mode');
                         binarta.checkpoint.registrationForm.submit({username: 'u', password: 'p'});
+                        scope = menuRunner.angularScope();
                     });
 
                     it('do not show theme button', function () {
