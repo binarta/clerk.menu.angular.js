@@ -41,7 +41,6 @@ describe('clerk menu module', function () {
                             submitSpy = translation;
                         },
                         translation: 'translation',
-                        editor: 'editor',
                         template: 'template'
                     });
                     editModeSpy = editModeRenderer.open.calls.mostRecent().args[0];
@@ -50,7 +49,7 @@ describe('clerk menu module', function () {
                 it('editModeRenderer is called', function () {
                     expect(editModeSpy.template).toEqual('template');
                     expect(editModeSpy.scope.translation).toEqual('translation');
-                    expect(editModeSpy.scope.editor).toEqual('editor');
+                    expect(editModeSpy.scope.editor).toEqual('default');
                 });
 
                 it('on submit', function () {
@@ -119,6 +118,21 @@ describe('clerk menu module', function () {
 
                 it('no followLink defined', function () {
                     expect(editModeSpy.scope.followLink).toBeUndefined();
+                });
+            });
+
+            describe('on open with specific editor', function () {
+                beforeEach(function () {
+                    i18nRendererInstaller.calls.mostRecent().args[0].open({
+                        translation: 'translation',
+                        editor: 'editor',
+                        template: 'template'
+                    });
+                    editModeSpy = editModeRenderer.open.calls.mostRecent().args[0];
+                });
+
+                it('editModeRenderer is called', function () {
+                    expect(editModeSpy.scope.editor).toEqual('editor');
                 });
             });
 

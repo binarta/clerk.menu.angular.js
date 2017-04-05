@@ -21,7 +21,7 @@
                         if (rendererScope.i18nForm) {
                             rendererScope.i18nForm.translation.$setViewValue('');
                             rendererScope.i18nForm.translation.$render();
-                            $('[name="translation"]').focus();
+                            if (!args.editor) $('[name="translation"]').focus();
                         }
                     },
                     translation: args.translation,
