@@ -73,7 +73,10 @@
         }
 
         function onSignedIn() {
-            if(!menuIsInitialized) renderBinartaMenu();
+            if(!menuIsInitialized) {
+                menuIsInitialized = true;
+                renderBinartaMenu();
+            }
         }
 
         function onSignedOut() {
@@ -109,7 +112,7 @@
             element = $compile($templateCache.get('bin-clerk-menu.html'))(scope);
             addBodyClass();
             body.prepend(element);
-            menuIsInitialized = true;
+
 
             scope.$on('$destroy', function () {
                 element.remove();
