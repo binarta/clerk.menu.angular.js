@@ -101,7 +101,7 @@
                     </a>
                 </li>
                 <% if(shop) { %>
-                <li>
+                <li ng-if="::showOrderHistory">
                     <a bin-href="/order-history" i18n code="clerk.menu.order.history.link" read-only>
                         <i class="fa fa-archive fa-fw"></i> <span ng-bind="var"></span>
                     </a>

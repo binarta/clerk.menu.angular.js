@@ -384,6 +384,10 @@ describe('clerk menu module', function () {
                         expect(scope.showAccount).toBeTruthy();
                     });
 
+                    it('show order history link', function () {
+                        expect(scope.showOrderHistory).toBeTruthy();
+                    });
+
                     it('do not show change password link', function () {
                         expect(scope.showChangePassword).toBeFalsy();
                     });
@@ -531,6 +535,10 @@ describe('clerk menu module', function () {
 
                     it('show account link', function () {
                         expect(scope.showAccount).toBeTruthy();
+                    });
+
+                    it('do not show order history link', function () {
+                        expect(scope.showOrderHistory).toBeFalsy();
                     });
 
                     it('do not show change password link', function () {
