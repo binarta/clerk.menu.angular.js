@@ -63,11 +63,11 @@
       "clerk.menu.save.button": "Enregistrer",
       "clerk.menu.cancel.button": "Annuler",
       "clerk.menu.remove.button": "Supprimer",
-      "clerk.menu.ok.button": "Ok",
-      "clerk.menu.close.button": "Close",
-      "clerk.menu.back.button": "Back",
-      "clerk.menu.updating.message": "Updating...",
-      "clerk.menu.try.again.message": "Something went wrong. Please try again."
+      "clerk.menu.ok.button": "D'accord",
+      "clerk.menu.close.button": "Fermer",
+      "clerk.menu.back.button": "Retour",
+      "clerk.menu.updating.message": "Mise à jour ...",
+      "clerk.menu.try.again.message": "Quelque chose a mal tourné. Veuillez réessayer."
     },
     "de":{
       "clerk.menu.upgrade.button": "AKTUALISIEREN",
