@@ -157,6 +157,7 @@
         function registerEditModeRendererEvents() {
             var rememberedPosition = 0;
             var menuOpenedClass= 'bin-menu-opened';
+            var isMainMenuOpened = false;
 
             scope.$on('edit.mode.renderer', function (event, args) {
                 args.open ? onOpen(args.id) : onClose(args.id);
@@ -173,24 +174,36 @@
             }
 
             function openMain() {
+                isMainMenuOpened = true;
                 setRememberedPosition();
                 closePopup();
-                scope.editModeOpened = true;
-                body.addClass(menuOpenedClass);
+                openMenu();
             }
 
             function closeMain() {
-                scope.editModeOpened = false;
-                body.removeClass(menuOpenedClass);
+                isMainMenuOpened = false;
+                closeMenu();
                 goToRememberedPosition();
             }
 
             function openPopup() {
                 scope.showPopup = true;
+                if (!isMainMenuOpened) openMenu();
             }
 
             function closePopup() {
                 scope.showPopup = false;
+                if (!isMainMenuOpened) closeMenu();
+            }
+
+            function openMenu() {
+                scope.editModeOpened = true;
+                body.addClass(menuOpenedClass);
+            }
+
+            function closeMenu() {
+                scope.editModeOpened = false;
+                body.removeClass(menuOpenedClass);
             }
 
             function setRememberedPosition() {

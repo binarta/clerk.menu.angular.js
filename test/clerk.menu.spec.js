@@ -312,6 +312,38 @@ describe('clerk menu module', function () {
                         });
                     });
 
+                    describe('open popup edit menu', function () {
+                        beforeEach(function () {
+                            $rootScope.$broadcast('edit.mode.renderer', {open: true, id: 'popup'});
+                        });
+
+                        it('editModeOpened is available', function () {
+                            expect(scope.editModeOpened).toBeTruthy();
+                        });
+
+                        it('popup menu is visible', function () {
+                            expect(scope.showPopup).toBeTruthy();
+                        });
+
+                        it('body class is added', function () {
+                            expect(body.hasClass('bin-menu-opened')).toBeTruthy();
+                        });
+
+                        describe('close popup edit menu', function () {
+                            beforeEach(function () {
+                                $rootScope.$broadcast('edit.mode.renderer', {open: false, id: 'popup'});
+                            });
+
+                            it('editModeOpened is closed', function () {
+                                expect(scope.editModeOpened).toBeFalsy();
+                            });
+
+                            it('body class is removed', function () {
+                                expect(body.hasClass('bin-menu-opened')).toBeFalsy();
+                            });
+                        });
+                    });
+
                     ['mobile', 'tablet'].forEach(function (device) {
                         describe('when ' + device, function () {
                             beforeEach(function () {
