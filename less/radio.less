@@ -9,37 +9,44 @@
 
     & + label {
       position: relative;
-      float: left;
-      padding: 0;
-      margin: 0;
-      width: @radio-size;
-      min-width: @radio-size;
-      height: @radio-size;
-      min-height: @radio-size;
-      background-color: @cm-input-background-gray;
-      border: 1px solid @cm-input-border-gray;
-      border-radius: 50%;
       cursor: pointer;
 
       & > span {
-        margin-left: @radio-size + 10px;
+        display: inline-block;
+        line-height: @radio-size;
+        margin-left: 10px;
       }
 
       &:before {
+        content: "";
+        float: left;
+        padding: 0;
+        margin: 0;
+        width: @radio-size;
+        height: @radio-size;
+        background-color: @cm-input-background-gray;
+        border: 1px solid @cm-input-border-gray;
+        border-radius: 50%;
+      }
+
+      &:after {
         content: "";
         display: block;
         position: absolute;
         top: @radio-padding / 2;
         left: @radio-padding / 2;
-        right: @radio-padding / 2;
-        bottom: @radio-padding / 2;
+        width: @radio-size - @radio-padding;
+        height: @radio-size - @radio-padding;
         border-radius: 50%;
+        background-color: @cm-green;
+        transform: scale(0);
+        transition: transform ease 80ms;
       }
     }
 
     &:checked + label {
-      &:before {
-        background-color: @cm-green;
+      &:after {
+        transform: scale(1);
       }
     }
   }
