@@ -21,7 +21,8 @@
       "clerk.menu.close.button": "Sluiten",
       "clerk.menu.back.button": "Terug",
       "clerk.menu.updating.message": "Updating...",
-      "clerk.menu.try.again.message": "Er is iets misgegaan. Gelieve opnieuw te proberen."
+      "clerk.menu.try.again.message": "Er is iets misgegaan. Gelieve opnieuw te proberen.",
+      "clerk.menu.preview.button": "Voorbeeld"
     },
     "en":{
       "clerk.menu.upgrade.button": "UPGRADE",
@@ -44,7 +45,8 @@
       "clerk.menu.close.button": "Close",
       "clerk.menu.back.button": "Back",
       "clerk.menu.updating.message": "Updating...",
-      "clerk.menu.try.again.message": "Something went wrong. Please try again."
+      "clerk.menu.try.again.message": "Something went wrong. Please try again.",
+      "clerk.menu.preview.button": "Preview"
     },
     "fr":{
       "clerk.menu.upgrade.button": "MISE À NIVEAU",
@@ -67,7 +69,8 @@
       "clerk.menu.close.button": "Fermer",
       "clerk.menu.back.button": "Retour",
       "clerk.menu.updating.message": "Mise à jour ...",
-      "clerk.menu.try.again.message": "Quelque chose a mal tourné. Veuillez réessayer."
+      "clerk.menu.try.again.message": "Quelque chose a mal tourné. Veuillez réessayer.",
+      "clerk.menu.preview.button": "Aperçu"
     },
     "de":{
       "clerk.menu.upgrade.button": "AKTUALISIEREN",
@@ -90,7 +93,8 @@
       "clerk.menu.close.button": "Close",
       "clerk.menu.back.button": "Back",
       "clerk.menu.updating.message": "Updating...",
-      "clerk.menu.try.again.message": "Something went wrong. Please try again."
+      "clerk.menu.try.again.message": "Something went wrong. Please try again.",
+      "clerk.menu.preview.button": "Vorschauen"
     }
   }
 }
